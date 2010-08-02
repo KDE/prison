@@ -65,8 +65,7 @@ class PRISON_EXPORT AbstractBarcodeWidget : public QWidget {
      */
     virtual void paintEvent(QPaintEvent* event );
     /**
-     * the preferred width of a image. Currently, all supported
-     * formats are quadratic.
+     * the preferred width of a image.
      */
     const QSize& imageSize() const;
 

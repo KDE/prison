@@ -60,7 +60,7 @@ class PRISON_EXPORT AbstractBarcodeItem : public QGraphicsItem {
     
   protected:
     /**
-     * the preferred size of the image. Currently, images are quadratic.
+     * the preferred size of the image.
      */
     const QSizeF& imageSize() const;
     /**

@@ -38,11 +38,13 @@ prison::DataMatrixWidget::~DataMatrixWidget() {
 }
 
 QPixmap prison::DataMatrixWidget::redoImage() {
-  QImage tmp =  prison::DataMatrixImage(data(),imageWidth());
+  QSize size = imageSize();
+  int width = qMin(size.height(),size.width());
+  QImage tmp =  prison::DataMatrixImage(data(),width);
   if(tmp.isNull()) {
     return QPixmap();
   }
-  int scale = (int)(imageWidth()/tmp.size().width());
+  int scale = (int)(width/tmp.size().width());
   QPixmap ret;
   if(scale < 1 ) {
     ret = QPixmap::fromImage(tmp);

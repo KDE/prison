@@ -42,6 +42,6 @@ DataMatrixItem::~DataMatrixItem() {
 }
 
 QPixmap DataMatrixItem::redoImage() {
-  return QPixmap::fromImage(prison::DataMatrixImage(data(),std::floor(imageWidth())));
+  return QPixmap::fromImage(prison::DataMatrixImage(data(),std::floor(qMin(imageSize().height(),imageSize().width()))));
 }
 

@@ -34,8 +34,8 @@ class AbstractBarcodeItem::Private {
     QString data;
     QPixmap cache;
     bool dirty;
-    qreal size;
-    Private() : dirty(true), size(10.0) { } 
+    QSizeF size;
+    Private() : dirty(true), size(10.0,10.0) { }
     
 };
 
@@ -55,7 +55,7 @@ void AbstractBarcodeItem::paint(QPainter* painter, const QStyleOptionGraphicsIte
 }
 
 QRectF AbstractBarcodeItem::boundingRect() const {
-  return QRectF(0,0,d->size,d->size);
+  return QRectF(QPointF(0,0),d->size);
 }
 
 const QString& AbstractBarcodeItem::data() const {
@@ -65,7 +65,7 @@ const QString& AbstractBarcodeItem::data() const {
 void AbstractBarcodeItem::setData(const QString& data) {
   d->data = data;
   QPixmap newimage = redoImage();
-  qreal newsize = qMax(newimage.height(),newimage.width());
+  QSizeF newsize = QSizeF(newimage.size());
   if(newsize!=d->size) {
     prepareGeometryChange();
     d->size=newsize;
@@ -75,7 +75,7 @@ void AbstractBarcodeItem::setData(const QString& data) {
 }
 
 
-qreal prison::AbstractBarcodeItem::imageWidth() const {
+const QSizeF& prison::AbstractBarcodeItem::imageSize() const {
   return d->size;
 }
 

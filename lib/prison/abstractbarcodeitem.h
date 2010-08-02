@@ -62,7 +62,7 @@ class PRISON_EXPORT AbstractBarcodeItem : public QGraphicsItem {
     /**
      * the preferred size of the image. Currently, images are quadratic.
      */
-    qreal imageWidth() const;
+    const QSizeF& imageSize() const;
     /**
      * This function is called when data is changed
      * and redos the actual image. This is the function

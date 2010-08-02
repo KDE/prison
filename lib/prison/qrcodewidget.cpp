@@ -40,11 +40,12 @@ QRCodeWidget::~QRCodeWidget() {
 }
 
 QPixmap QRCodeWidget::redoImage() {
-  QImage tmp =  prison::QRCodeImage(data(),imageWidth());
+  int width = qMin(imageSize().width(),imageSize().height());
+  QImage tmp =  prison::QRCodeImage(data(),width);
   if(tmp.isNull()) {
     return QPixmap();
   }
-  int scale = (int)(imageWidth()/tmp.size().width());
+  int scale = (int)(width/tmp.size().width());
   QPixmap ret;
   if(scale < 1 ) {
     ret = QPixmap::fromImage(tmp);

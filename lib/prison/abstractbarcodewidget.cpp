@@ -38,9 +38,9 @@ class prison::AbstractBarcodeWidget::Private {
     QString data;
     bool dirty;
     QPixmap cache;
-    int size;
+    QSize size;
     Private() { dirty = true;
-                size=10; }
+                size=QSize(10,10); }
 };
 
 prison::AbstractBarcodeWidget::AbstractBarcodeWidget(QWidget* parent, Qt::WindowFlags f): QWidget(parent, f), d(new AbstractBarcodeWidget::Private) {
@@ -63,9 +63,8 @@ void prison::AbstractBarcodeWidget::setData(const QString& data) {
 
 void prison::AbstractBarcodeWidget::resizeEvent(QResizeEvent* event) {
   QSize newsize = event->size();
-  int size = qMin(newsize.height(),newsize.width());
-  if(size!=d->size) {
-    d->size=size;
+  if(newsize!=d->size) {
+    d->size=newsize;
     d->dirty=true;
   }
   QWidget::resizeEvent(event);
@@ -86,6 +85,6 @@ void prison::AbstractBarcodeWidget::paintEvent(QPaintEvent* event) {
  // QWidget::paintEvent(event);
 }
 
-int prison::AbstractBarcodeWidget::imageWidth() {
+const QSize& prison::AbstractBarcodeWidget::imageSize() const {
   return d->size;
 }

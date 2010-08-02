@@ -43,11 +43,11 @@ get_filename_component(LIB_OUT_NAME ${LIB_OUT_NAME} NAME)
 set(LIBPATH ${CMAKE_INSTALL_PREFIX}/lib)
 
 configure_file(
-   Prison.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/Prison.cmake @ONLY
+   PrisonConfig.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/PrisonConfig.cmake @ONLY
 )
 
 install( FILES
-         ${CMAKE_CURRENT_BINARY_DIR}/Prison.cmake
+         ${CMAKE_CURRENT_BINARY_DIR}/PrisonConfig.cmake
 	 DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/cmake/Prison
 )
 

@@ -68,7 +68,7 @@ class PRISON_EXPORT AbstractBarcodeItem : public QGraphicsItem {
      * and redos the actual image. This is the function
      * to reimplement to add support new barcode formats.
      */
-    virtual QPixmap redoImage() = 0;
+    virtual QPixmap updateImage() = 0;
     
   private:
     class Private;

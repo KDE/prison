@@ -41,6 +41,6 @@ QRCodeItem::~QRCodeItem() {
 
 }
 
-QPixmap QRCodeItem::redoImage() {
+QPixmap QRCodeItem::updateImage() {
   return QPixmap::fromImage(prison::QRCodeImage(data(),std::floor(qMin(imageSize().width(),imageSize().height()))));
 }

@@ -45,7 +45,7 @@ class PRISON_EXPORT QRCodeItem : public prison::AbstractBarcodeItem {
     /**
      * reimpl
      */
-    virtual QPixmap redoImage();
+    virtual QPixmap updateImage();
 
   private:
     class Private;

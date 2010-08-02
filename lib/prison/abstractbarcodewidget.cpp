@@ -72,7 +72,7 @@ void prison::AbstractBarcodeWidget::resizeEvent(QResizeEvent* event) {
 
 void prison::AbstractBarcodeWidget::paintEvent(QPaintEvent* event) {
   if(d->dirty) {
-    d->cache = redoImage();
+    d->cache = updateImage();
     d->dirty = false;
   }
   if(!d->cache.isNull()) {

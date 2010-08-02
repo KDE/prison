@@ -41,7 +41,7 @@ DataMatrixItem::~DataMatrixItem() {
 
 }
 
-QPixmap DataMatrixItem::redoImage() {
+QPixmap DataMatrixItem::updateImage() {
   return QPixmap::fromImage(prison::DataMatrixImage(data(),std::floor(qMin(imageSize().height(),imageSize().width()))));
 }
 

@@ -39,7 +39,7 @@ QRCodeWidget::~QRCodeWidget() {
 
 }
 
-QPixmap QRCodeWidget::redoImage() {
+QPixmap QRCodeWidget::updateImage() {
   int width = qMin(imageSize().width(),imageSize().height());
   QImage tmp =  prison::QRCodeImage(data(),width);
   if(tmp.isNull()) {

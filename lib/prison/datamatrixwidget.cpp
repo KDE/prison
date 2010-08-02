@@ -37,7 +37,7 @@ prison::DataMatrixWidget::~DataMatrixWidget() {
 
 }
 
-QPixmap prison::DataMatrixWidget::redoImage() {
+QPixmap prison::DataMatrixWidget::updateImage() {
   QSize size = imageSize();
   int width = qMin(size.height(),size.width());
   QImage tmp =  prison::DataMatrixImage(data(),width);

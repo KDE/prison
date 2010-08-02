@@ -47,7 +47,7 @@ AbstractBarcodeItem::AbstractBarcodeItem(QGraphicsItem* parent, QGraphicsScene* 
 
 void AbstractBarcodeItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
   if(d->dirty) {
-    d->cache = redoImage();
+    d->cache = updateImage();
     d->dirty = false;
   }
 
@@ -64,7 +64,7 @@ const QString& AbstractBarcodeItem::data() const {
 
 void AbstractBarcodeItem::setData(const QString& data) {
   d->data = data;
-  QPixmap newimage = redoImage();
+  QPixmap newimage = updateImage();
   QSizeF newsize = QSizeF(newimage.size());
   if(newsize!=d->size) {
     prepareGeometryChange();

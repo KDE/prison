@@ -44,7 +44,7 @@ class PRISON_EXPORT QRCodeWidget : public AbstractBarcodeWidget {
     /**
      * reimpl
      */
-    virtual QPixmap redoImage();
+    virtual QPixmap updateImage();
 
   private:
     class Private;

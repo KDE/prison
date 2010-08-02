@@ -38,7 +38,7 @@ class PRISON_EXPORT DataMatrixWidget : public AbstractBarcodeWidget {
     virtual ~DataMatrixWidget();
     
   protected:
-    virtual QPixmap redoImage();
+    virtual QPixmap updateImage();
     
   private:
     class Private;

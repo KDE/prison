@@ -55,7 +55,7 @@ class PRISON_EXPORT AbstractBarcodeWidget : public QWidget {
      * This function is the one to implement to add
      * support for new formats.
      */
-    virtual QPixmap redoImage()=0;
+    virtual QPixmap updateImage()=0;
     /**
      * reimpl
      */

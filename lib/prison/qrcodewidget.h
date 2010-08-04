@@ -26,8 +26,8 @@
 #ifndef PRISON_QRCODEWIDGET_H
 #define PRISON_QRCODEWIDGET_H
 
-#include "abstractbarcodewidget.h"
-#include "prison_export.h"
+#include <prison/AbstractBarcodeWidget>
+#include <prison/prison_export.h>
 
 
 namespace prison {

@@ -26,9 +26,10 @@
 
 #ifndef PRISON_DATAMATRIXIMAGE_H
 #define PRISON_DATAMATRIXIMAGE_H
-#include <QString>
 #include <QImage>
-#include "prison_export.h"
+#include <prison/prison_export.h>
+
+class QString;
 
 namespace prison {
   /**

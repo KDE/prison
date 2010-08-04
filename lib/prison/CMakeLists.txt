@@ -36,6 +36,7 @@ install( FILES
 	 QRCodeItem
 	 qrcodewidget.h
 	 QRCodeWidget
+	 prison_export.h
 	 DESTINATION ${CMAKE_INSTALL_PREFIX}/include/prison COMPONENT devel
 	 )
 

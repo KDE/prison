@@ -28,7 +28,7 @@
 #define PRISON_ABSTRACTBARCODEWIDGET_H
 
 #include <QWidget>
-#include "prison_export.h"
+#include <prison/prison_export.h>
 
 namespace prison {
 

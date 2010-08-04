@@ -25,7 +25,7 @@
 */
 
 #include "abstractbarcodeitem.h"
-#include <qpainter.h>
+#include <QPainter>
 
 using namespace prison;
 

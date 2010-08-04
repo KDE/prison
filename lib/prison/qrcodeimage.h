@@ -27,7 +27,7 @@
 #ifndef PRISON_QRCODEIMAGE_H
 #define PRISON_QRCODEIMAGE_H
 #include <QImage>
-#include "prison_export.h"
+#include <prison/prison_export.h>
 
 namespace prison {
   

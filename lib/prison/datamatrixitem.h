@@ -27,8 +27,8 @@
 #ifndef PRISON_DATAMATRIXITEM_H
 #define PRISON_DATAMATRIXITEM_H
 
-#include "AbstractBarcodeItem"
-#include "prison_export.h"
+#include <prison/AbstractBarcodeItem>
+#include <prison/prison_export.h>
 
 
 namespace prison {

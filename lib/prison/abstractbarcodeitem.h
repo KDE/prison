@@ -28,7 +28,7 @@
 #define PRISON_ABSTRACTBARCODEITEM_H
 
 #include <QGraphicsItem>
-#include "prison_export.h"
+#include <prison/prison_export.h>
 
 
 namespace prison {

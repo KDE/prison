@@ -44,7 +44,6 @@ class PRISON_EXPORT BarcodeWidget : public QWidget {
     BarcodeWidget(AbstractBarcode* barcode, QWidget* parent=0);
     virtual ~BarcodeWidget();
     void setData(QString data);
-    virtual QSize sizeHint() const;
     virtual QSize minimumSizeHint() const;
   protected:
     virtual void paintEvent(QPaintEvent* event );

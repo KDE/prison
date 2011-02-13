@@ -68,19 +68,10 @@ void BarcodeWidget::paintEvent(QPaintEvent* event) {
 
 void BarcodeWidget::resizeEvent(QResizeEvent* event) {
   if(d->m_barcode) {
-    d->m_barcode->resize(event->size());
     updateGeometry();
     repaint();
   }
   QWidget::resizeEvent(event);
-}
-
-QSize BarcodeWidget::sizeHint() const {
-  if(d->m_barcode) {
-    return d->m_barcode->size().toSize();
-  } else {
-    return QWidget::sizeHint();
-  }
 }
 
 QSize BarcodeWidget::minimumSizeHint() const

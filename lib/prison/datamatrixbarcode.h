@@ -36,7 +36,7 @@ class PRISON_EXPORT DataMatrixBarcode : public prison::AbstractBarcode {
   public:
     DataMatrixBarcode();
     virtual ~DataMatrixBarcode();
-    virtual QImage toImage();
+    virtual QImage toImage(const QSizeF& size);
   private:
     class Private;
     Private *d;

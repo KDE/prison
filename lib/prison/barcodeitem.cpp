@@ -49,6 +49,7 @@ void BarcodeItem::setData(const QString& data) {
   if(!d->m_barcode) {
     return;
   }
+  prepareGeometryChange();
   d->m_barcode->setData(data);
   update();
 }
@@ -64,7 +65,7 @@ void BarcodeItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
 
 QRectF BarcodeItem::boundingRect() const {
   if(d->m_barcode) {
-    return QRectF(QPointF(0.0,0.0),d->m_barcode->size());
+    return QRectF(QPointF(0.0,0.0),d->m_barcode->minimumSize());
   } else {
     return QRectF();
   }

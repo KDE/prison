@@ -34,7 +34,7 @@ class PRISON_EXPORT QRCodeBarcode : public prison::AbstractBarcode {
   public:
     QRCodeBarcode();
     virtual ~QRCodeBarcode();
-    virtual QImage toImage();
+    virtual QImage toImage(const QSizeF& size);
   private:
     class Private;
     Private *d;

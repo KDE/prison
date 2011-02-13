@@ -42,8 +42,8 @@ QRCodeBarcode::~QRCodeBarcode() {
 
 
 
-QImage QRCodeBarcode::toImage() {
-  int width = qRound(qMin(size().width(),size().height()));
+QImage QRCodeBarcode::toImage(const QSizeF& size) {
+  int width = qRound(qMin(size.width(),size.height()));
   if(data().size()==0 || width==0) {
     return QImage();
   }

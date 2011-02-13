@@ -55,19 +55,10 @@ class PRISON_EXPORT AbstractBarcode {
      */
     void paint(QPainter* painter, const QRectF& targetrect);
     /**
-     * Resizes the barcode to the requested size.
-     */
-    QSizeF resize(const QSizeF& newsize);
-    /**
      * Creates a image with a barcode on
      * This is the function that actually does all the interesting things, the rest is just icing and api.
      */
-    virtual QImage toImage() = 0 ;
-    /**
-     * returns the actual size for the barcode ; the same as
-     * 'resize' returns
-     */
-    QSizeF size() const;
+    virtual QImage toImage(const QSizeF& size) = 0 ;
     /**
      * returns the minimal size for this barcode.
      */

@@ -36,10 +36,6 @@ QRCodeBarcode::QRCodeBarcode() : AbstractBarcode(), d(new QRCodeBarcode::Private
   
 }
 
-QRCodeBarcode::QRCodeBarcode(const QString& data): AbstractBarcode(data), d(new QRCodeBarcode::Private()) {
-
-}
-
 QRCodeBarcode::~QRCodeBarcode() {
   delete d;
 }

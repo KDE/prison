@@ -36,14 +36,12 @@ class AbstractBarcode::Private {
     QSizeF m_size;
     QPixmap m_cache;
     QSizeF m_minimum_size;
-    Private(const QString& data) : m_data(data), m_minimum_size(10,10) { }
+    void updatecache();
+    AbstractBarcode* q;
+    Private(AbstractBarcode* barcode) : m_minimum_size(10,10), q(barcode) { }
 };
 
-AbstractBarcode::AbstractBarcode() : d(new AbstractBarcode::Private(QString())) {
-
-}
-
-AbstractBarcode::AbstractBarcode(const QString& data) : d(new AbstractBarcode::Private(data)) {
+AbstractBarcode::AbstractBarcode() : d(new AbstractBarcode::Private(this)) {
 
 }
 
@@ -53,7 +51,7 @@ QString AbstractBarcode::data() const {
 
 void AbstractBarcode::paint(QPainter* painter, const QRectF& targetrect) {
   if(d->m_cache.isNull()) {
-    d->m_cache= QPixmap::fromImage(toImage());
+    d->updatecache();
   }
   QRectF rect(targetrect.left() + targetrect.width() /2 - d->m_size.width() /2,
               targetrect.top() + targetrect.height()/2 - d->m_size.height()/2,
@@ -64,16 +62,14 @@ void AbstractBarcode::paint(QPainter* painter, const QRectF& targetrect) {
 }
 
 QSizeF AbstractBarcode::resize(const QSizeF& newsize) {
-  QSizeF oldsize = d->m_size;
   d->m_size=newsize;
-  d->m_cache=QPixmap::fromImage(toImage());
-  d->m_size=d->m_cache.size();
+  d->updatecache();
   return d->m_size;
 }
 
 void AbstractBarcode::setData(const QString& data) {
   d->m_data=data;
-  d->m_cache = QPixmap();
+  d->updatecache();
 }
 
 QSizeF AbstractBarcode::size() const {
@@ -90,5 +86,10 @@ void AbstractBarcode::setMinimumSize(const QSizeF& minimumSize) {
 
 AbstractBarcode::~AbstractBarcode() {
   delete d;
+}
+
+void AbstractBarcode::Private::updatecache() {
+  m_cache=QPixmap::fromImage(q->toImage());
+  m_size=m_cache.size();
 }
 

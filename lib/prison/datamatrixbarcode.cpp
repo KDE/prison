@@ -36,10 +36,6 @@ DataMatrixBarcode::DataMatrixBarcode() : d(new DataMatrixBarcode::Private()) {
 
 }
 
-DataMatrixBarcode::DataMatrixBarcode(const QString& data): AbstractBarcode(data), d(new DataMatrixBarcode::Private()) {
-
-}
-
 DataMatrixBarcode::~DataMatrixBarcode() {
   delete d;
 }

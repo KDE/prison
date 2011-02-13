@@ -50,6 +50,13 @@ main_window::main_window() {
   m_qri->setPos(200,200);
   scene->addItem(m_nulli);
   m_nulli->setPos(0,200);
+
+  prison::BarcodeItem* with_value = new prison::BarcodeItem();
+  with_value->setBarcode(new prison::QRCodeBarcode());
+  with_value->setData("hello");
+  scene->addItem(with_value);
+  with_value->setPos(200,0);
+  
   QGraphicsView* v = new QGraphicsView(this);
   v->setScene(scene);
 

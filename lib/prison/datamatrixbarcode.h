@@ -35,7 +35,6 @@ namespace prison {
 class PRISON_EXPORT DataMatrixBarcode : public prison::AbstractBarcode {
   public:
     DataMatrixBarcode();
-    DataMatrixBarcode(const QString& data);
     virtual ~DataMatrixBarcode();
     virtual QImage toImage();
   private:

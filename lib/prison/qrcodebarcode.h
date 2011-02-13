@@ -33,7 +33,6 @@ namespace prison {
 class PRISON_EXPORT QRCodeBarcode : public prison::AbstractBarcode {
   public:
     QRCodeBarcode();
-    QRCodeBarcode(const QString& data);
     virtual ~QRCodeBarcode();
     virtual QImage toImage();
   private:

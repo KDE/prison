@@ -41,10 +41,6 @@ class PRISON_EXPORT AbstractBarcode {
      * creates a barcode generator without any data
      */
     AbstractBarcode();
-    /**
-     * creates a barcode with a QString 'data' as data
-     */
-    AbstractBarcode(const QString& data);
     virtual ~AbstractBarcode();
     /**
      * returns the QString encoded in this barcode.

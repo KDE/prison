@@ -32,7 +32,7 @@ class DataMatrixBarcode::Private {
   public:
 };
 
-DataMatrixBarcode::DataMatrixBarcode() : d(new DataMatrixBarcode::Private()) {
+DataMatrixBarcode::DataMatrixBarcode() : d(0) {
 
 }
 

@@ -32,7 +32,7 @@ class QRCodeBarcode::Private {
   public:
 };
 
-QRCodeBarcode::QRCodeBarcode() : AbstractBarcode(), d(new QRCodeBarcode::Private()){
+QRCodeBarcode::QRCodeBarcode() : AbstractBarcode(), d(0){
   
 }
 

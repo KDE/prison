@@ -1,13 +1,9 @@
-SET(prison_SRC 
-        abstractbarcodewidget.cpp
-        abstractbarcodeitem.cpp
-        datamatriximage.cpp
-        datamatrixwidget.cpp
-        datamatrixitem.cpp
-        datamatriximage.cpp
-        qrcodeitem.cpp
-        qrcodewidget.cpp
-        qrcodeimage.cpp
+SET(    prison_SRC
+        abstractbarcode.cpp
+        barcodewidget.cpp
+        barcodeitem.cpp
+        datamatrixbarcode.cpp
+        qrcodebarcode.cpp
         )
 
 add_library(prison SHARED ${prison_SRC})
@@ -20,25 +16,17 @@ set(LIB_SUFFIX "" CACHE STRING "Define suffix of directory name (32/64)" )
 install( TARGETS prison DESTINATION ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX} )
 
 install( FILES
-         abstractbarcodeitem.h
-	 AbstractBarcodeItem
-	 abstractbarcodewidget.h
-	 AbstractBarcodeWidget
-	 datamatriximage.h
-	 DataMatrixImage
-	 datamatrixitem.h
-	 DataMatrixItem
-	 datamatrixwidget.h
-	 DataMatrixWidget
-	 qrcodeimage.h
-	 QRCodeImage
-	 qrcodeitem.h
-	 QRCodeItem
-	 qrcodewidget.h
-	 QRCodeWidget
-	 prison_export.h
-	 DESTINATION ${CMAKE_INSTALL_PREFIX}/include/prison COMPONENT devel
-	 )
+         barcodeitem.h
+         BarcodeItem
+         barcodewidget.h
+         BarcodeWidget
+         datamatrixbarcode.h
+         DataMatrixBarcode
+         qrcodebarcode.h
+         QRCodeBarcode
+         prison_export.h
+         DESTINATION ${CMAKE_INSTALL_PREFIX}/include/prison COMPONENT devel
+         )
 
 set(INCLUDE_DIRECTORY ${CMAKE_INSTALL_PREFIX}/include)
 get_target_property(LIB_OUT_NAME prison LOCATION)

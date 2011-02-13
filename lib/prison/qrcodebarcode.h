@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2010 Sune Vuorela <sune@vuorela.dk>
+    Copyright (c) 2010-2011 Sune Vuorela <sune@vuorela.dk>
 
     Permission is hereby granted, free of charge, to any person
     obtaining a copy of this software and associated documentation
@@ -24,27 +24,22 @@
 
 */
 
-#ifndef PRISON_DATAMATRIXWIDGET_H
-#define PRISON_DATAMATRIXWIDGET_H
+#ifndef PRISON_QRCODEBARCODE_H
+#define PRISON_QRCODEBARCODE_H
 
-#include <prison/AbstractBarcodeWidget>
-#include <prison/prison_export.h>
+#include <prison/abstractbarcode.h>
 
 namespace prison {
-
-class PRISON_EXPORT DataMatrixWidget : public AbstractBarcodeWidget {
+class PRISON_EXPORT QRCodeBarcode : public prison::AbstractBarcode {
   public:
-    DataMatrixWidget(QWidget* parent = 0, Qt::WindowFlags f = 0);
-    virtual ~DataMatrixWidget();
-    
-  protected:
-    virtual QPixmap updateImage();
-    
+    QRCodeBarcode();
+    QRCodeBarcode(const QString& data);
+    virtual ~QRCodeBarcode();
+    virtual QImage toImage();
   private:
     class Private;
-    Private* d;
+    Private *d;
 };
+}; // namespace 
 
-} //namespace
-
-#endif // PRISON_DATAMATRIXWIDGET_H
+#endif // PRISON_QRCODEBARCODE_H

@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2010 Sune Vuorela <sune@vuorela.dk>
+    Copyright (c) 2010-2011 Sune Vuorela <sune@vuorela.dk>
 
     Permission is hereby granted, free of charge, to any person
     obtaining a copy of this software and associated documentation
@@ -24,23 +24,33 @@
 
 */
 
-#include "qrcodeitem.h"
-#include "qrcodeimage.h"
+#ifndef PRISON_BARCODEITEM_H
+#define PRISON_BARCODEITEM_H
 
-#include <cmath>
+#include <QGraphicsItem>
+#include <prison/prison_export.h>
 
-#include <QPixmap>
+namespace prison {
 
-using namespace prison;
+class AbstractBarcode;
 
-QRCodeItem::QRCodeItem(QGraphicsItem* parent, QGraphicsScene* scene): AbstractBarcodeItem(parent, scene) {
+class PRISON_EXPORT BarcodeItem : public QGraphicsItem {
+  public:
+    BarcodeItem(QGraphicsItem* parent=0);
+    BarcodeItem(prison::AbstractBarcode* barcode, QGraphicsItem* parent=0);
+    /**
+     * sets the barcode generator to barcode, and deletes the existing barcode generator if exists.
+     * This function takes ownership over the barcode generator
+     */
+    void setBarcode(prison::AbstractBarcode* barcode);
+    virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = 0);
+    virtual QRectF boundingRect() const;
+    void setData(const QString& data);
+    virtual ~BarcodeItem();
+  private:
+    class Private;
+    Private* d;
+};
+}; //namespace
 
-}
-
-QRCodeItem::~QRCodeItem() {
-
-}
-
-QPixmap QRCodeItem::updateImage() {
-  return QPixmap::fromImage(prison::QRCodeImage(data(),std::floor(qMin(imageSize().width(),imageSize().height()))));
-}
+#endif // PRISON_BARCODEITEM_H

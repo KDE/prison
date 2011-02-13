@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2010 Sune Vuorela <sune@vuorela.dk>
+    Copyright (c) 2010-2011 Sune Vuorela <sune@vuorela.dk>
 
     Permission is hereby granted, free of charge, to any person
     obtaining a copy of this software and associated documentation
@@ -24,34 +24,51 @@
 
 */
 
-#include "datamatriximage.h"
-
+#include "datamatrixbarcode.h"
 #include <dmtx.h>
+using namespace prison;
 
-#include <QDebug>
+class DataMatrixBarcode::Private {
+  public:
+};
 
-namespace prison {
+DataMatrixBarcode::DataMatrixBarcode() : d(new DataMatrixBarcode::Private()) {
 
-QImage DataMatrixImage(const QString& data , int size) {
-  if(data.size()==0||size==0) {
+}
+
+DataMatrixBarcode::DataMatrixBarcode(const QString& data): AbstractBarcode(data), d(new DataMatrixBarcode::Private()) {
+
+}
+
+DataMatrixBarcode::~DataMatrixBarcode() {
+  delete d;
+}
+
+
+QImage DataMatrixBarcode::toImage() {
+  int width = qRound(qMin(size().width(),size().height()));
+  if(data().size()==0 || width == 0) {
     return QImage();
   }
   
   DmtxEncode * enc = dmtxEncodeCreate();
   dmtxEncodeSetProp( enc, DmtxPropPixelPacking, DmtxPack32bppRGBX );
-  dmtxEncodeSetProp( enc, DmtxPropWidth, size );
-  dmtxEncodeSetProp( enc, DmtxPropHeight, size );
+  dmtxEncodeSetProp( enc, DmtxPropWidth, width );
+  dmtxEncodeSetProp( enc, DmtxPropHeight, width );
   
-  char* raw_string = qstrdup( data.toUtf8().trimmed().constData() );
+  char* raw_string = qstrdup( data().toUtf8().trimmed().constData() );
   dmtxEncodeDataMatrix(enc,strlen(raw_string),(unsigned char*) raw_string);
   free(raw_string);
   Q_ASSERT(enc->image->width == enc->image->height);
   
+  setMinimumSize(QSizeF(enc->image->width,enc->image->height));
+  
   QImage tmp(enc->image->pxl,enc->image->width,enc->image->height, QImage::Format_RGB32);
   QImage ret=tmp.convertToFormat(QImage::Format_Mono); //we need to copy, because QImage generated from a char pointer requires the
-                         //char pointer to be kept around forever, and manually deleted.
+                                                       //char pointer to be kept around forever, and manually deleted.
+  if(ret.width() < width) {
+    ret = ret.scaled(width,width);
+  }
   dmtxEncodeDestroy(&enc);
   return ret;
 }
-
-};

@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2010 Sune Vuorela <sune@vuorela.dk>
+    Copyright (c) 2010-2011 Sune Vuorela <sune@vuorela.dk>
 
     Permission is hereby granted, free of charge, to any person
     obtaining a copy of this software and associated documentation
@@ -24,37 +24,35 @@
 
 */
 
-#include "datamatrixwidget.h"
-#include "datamatriximage.h"
+#ifndef PRISON_BARCODEWIDGET_H
+#define PRISON_BARCODEWIDGET_H
 
-#include <QPixmap>
+#include <QWidget>
+#include <prison/prison_export.h>
 
-prison::DataMatrixWidget::DataMatrixWidget(QWidget* parent, Qt::WindowFlags f): AbstractBarcodeWidget(parent, f) {
 
-}
+namespace prison {
+class AbstractBarcode;
 
-prison::DataMatrixWidget::~DataMatrixWidget() {
+class PRISON_EXPORT BarcodeWidget : public QWidget {
+  public:
+    BarcodeWidget(QWidget* parent=0);
+    /**
+     * Creates a barcode widget with 'barcode' as barcode generator
+     * Takes ownership over the barcode generator
+     */
+    BarcodeWidget(AbstractBarcode* barcode, QWidget* parent=0);
+    virtual ~BarcodeWidget();
+    void setData(QString data);
+    virtual QSize sizeHint() const;
+    virtual QSize minimumSizeHint() const;
+  protected:
+    virtual void paintEvent(QPaintEvent* event );
+    virtual void resizeEvent(QResizeEvent* );
+  private:
+    class Private;
+    Private* d;
+};
+}; //namespace 
 
-}
-
-QPixmap prison::DataMatrixWidget::updateImage() {
-  QSize size = imageSize();
-  int width = qMin(size.height(),size.width());
-  QImage tmp =  prison::DataMatrixImage(data(),width);
-  if(tmp.isNull()) {
-    return QPixmap();
-  }
-  int scale = (int)(width/tmp.size().width());
-  QPixmap ret;
-  if(scale < 1 ) {
-    ret = QPixmap::fromImage(tmp);
-  } else {
-    ret = QPixmap::fromImage(tmp.scaled(tmp.size().width()*scale, tmp.size().height()*scale));
-  }
-  QSize minimum_size = QSize(qMax(tmp.width(),10),qMax(tmp.height(),10));
-  if(minimum_size!= minimumSize()) {
-    setMinimumSize(minimum_size);
-    updateGeometry();
-  }
-  return ret;
-}
+#endif // PRISON_BARCODEWIDGET_H

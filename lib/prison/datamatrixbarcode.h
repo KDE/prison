@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2010 Sune Vuorela <sune@vuorela.dk>
+    Copyright (c) 2010-2011 Sune Vuorela <sune@vuorela.dk>
 
     Permission is hereby granted, free of charge, to any person
     obtaining a copy of this software and associated documentation
@@ -24,24 +24,24 @@
 
 */
 
-#include "datamatrixitem.h"
-#include "datamatriximage.h"
+#ifndef PRISON_DATAMATRIXBARCODE_H
+#define PRISON_DATAMATRIXBARCODE_H
 
-#include <cmath>
+#include <prison/abstractbarcode.h>
+#include <prison/prison_export.h>
 
-#include <QPixmap>
+namespace prison {
 
-using namespace prison;
+class PRISON_EXPORT DataMatrixBarcode : public prison::AbstractBarcode {
+  public:
+    DataMatrixBarcode();
+    DataMatrixBarcode(const QString& data);
+    virtual ~DataMatrixBarcode();
+    virtual QImage toImage();
+  private:
+    class Private;
+    Private *d;
+};
+};
 
-DataMatrixItem::DataMatrixItem(QGraphicsItem* parent, QGraphicsScene* scene): AbstractBarcodeItem(parent, scene) {
-
-}
-
-DataMatrixItem::~DataMatrixItem() {
-
-}
-
-QPixmap DataMatrixItem::updateImage() {
-  return QPixmap::fromImage(prison::DataMatrixImage(data(),std::floor(qMin(imageSize().height(),imageSize().width()))));
-}
-
+#endif // PRISON_DATAMATRIXBARCODE_H

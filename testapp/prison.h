@@ -4,8 +4,8 @@
 #include <QWidget>
 
 namespace prison {
-  class AbstractBarcodeWidget;
-  class AbstractBarcodeItem;
+  class BarcodeWidget;
+  class BarcodeItem;
 }
 
 class QLineEdit;
@@ -17,10 +17,13 @@ class main_window : public QWidget {
     void data_changed();
   private:
     QLineEdit* m_lineedit;
-    prison::AbstractBarcodeWidget* m_dmw;
-    prison::AbstractBarcodeWidget* m_qrw;
-    prison::AbstractBarcodeItem* m_dmi;
-    prison::AbstractBarcodeItem* m_qri;
+    prison::BarcodeWidget* m_dmw;
+    prison::BarcodeWidget* m_qrw;
+    prison::BarcodeItem* m_dmi;
+    prison::BarcodeItem* m_qri;
+    prison::BarcodeItem* m_nulli;
+    prison::BarcodeWidget* m_nullw;
+    
 
 };
 

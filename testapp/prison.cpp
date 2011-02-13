@@ -2,10 +2,10 @@
 
 #include <QLineEdit>
 #include <QPushButton>
-#include "prison/QRCodeWidget"
-#include "prison/QRCodeItem"
-#include "prison/DataMatrixWidget"
-#include "prison/DataMatrixItem"
+#include "prison/BarcodeItem"
+#include "prison/BarcodeWidget"
+#include "prison/DataMatrixBarcode"
+#include "prison/QRCodeBarcode"
 #include <QHBoxLayout>
 #include <QGraphicsScene>
 #include <QGraphicsView>
@@ -18,6 +18,9 @@ void main_window::data_changed() {
   m_dmw->setData(result);
   m_qri->setData(result);
   m_qrw->setData(result);
+  m_nulli->setData(result);
+  m_nullw->setData(result);
+  
 }
 
 main_window::main_window() {
@@ -30,18 +33,23 @@ main_window::main_window() {
 
   QVBoxLayout* mainlay = new QVBoxLayout();
 
-  m_dmw = new prison::DataMatrixWidget();
-  m_qrw = new prison::QRCodeWidget();
+  m_dmw = new prison::BarcodeWidget(new prison::DataMatrixBarcode(),this);
+  m_qrw = new prison::BarcodeWidget(new prison::QRCodeBarcode(),this);
 
   QGraphicsScene* scene = new QGraphicsScene(this);
 
-  m_dmi = new prison::DataMatrixItem();
-  m_qri = new prison::QRCodeItem();
+  m_dmi = new prison::BarcodeItem(new prison::DataMatrixBarcode());
+  m_qri = new prison::BarcodeItem(new prison::QRCodeBarcode());
+
+  m_nulli = new prison::BarcodeItem();
+  m_nullw = new prison::BarcodeWidget();
 
   scene->addItem(m_dmi);
   m_dmi->setPos(0,0);
   scene->addItem(m_qri);
   m_qri->setPos(200,200);
+  scene->addItem(m_nulli);
+  m_nulli->setPos(0,200);
   QGraphicsView* v = new QGraphicsView(this);
   v->setScene(scene);
 
@@ -49,6 +57,7 @@ main_window::main_window() {
   splitter->addWidget(v);
   splitter->addWidget(m_dmw);
   splitter->addWidget(m_qrw);
+  splitter->addWidget(m_nullw);
 
   mainlay->addLayout(lay);
   mainlay->addWidget(splitter);

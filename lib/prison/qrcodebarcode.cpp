@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2010 Sune Vuorela <sune@vuorela.dk>
+    Copyright (c) 2010-2011 Sune Vuorela <sune@vuorela.dk>
 
     Permission is hereby granted, free of charge, to any person
     obtaining a copy of this software and associated documentation
@@ -24,17 +24,34 @@
 
 */
 
-#include "qrcodeimage.h"
-
+#include "qrcodebarcode.h"
 #include <qrencode.h>
+using namespace prison;
 
-#include <QDebug>
+class QRCodeBarcode::Private {
+  public:
+};
 
-QImage prison::QRCodeImage(const QString& data, int size) {
-  if(data.size()==0) {
+QRCodeBarcode::QRCodeBarcode() : AbstractBarcode(), d(new QRCodeBarcode::Private()){
+  
+}
+
+QRCodeBarcode::QRCodeBarcode(const QString& data): AbstractBarcode(data), d(new QRCodeBarcode::Private()) {
+
+}
+
+QRCodeBarcode::~QRCodeBarcode() {
+  delete d;
+}
+
+
+
+QImage QRCodeBarcode::toImage() {
+  int width = qRound(qMin(size().width(),size().height()));
+  if(data().size()==0 || width==0) {
     return QImage();
   }
-  char* raw_string = qstrdup( data.toUtf8().trimmed().constData() );
+  char* raw_string = qstrdup( data().toUtf8().trimmed().constData() );
   QRcode* code = QRcode_encodeString8bit(raw_string,0, QR_ECLEVEL_Q);
   free(raw_string);
   const int margin = 2;
@@ -66,7 +83,8 @@ QImage prison::QRCodeImage(const QString& data, int size) {
     }
   }
   QImage tmp(img,code->width+2*margin,code->width+2*margin,QImage::Format_RGB32);
-  QImage ret = tmp.convertToFormat(QImage::Format_Mono).scaled(tmp.width()*4,tmp.height()*4); //4 is determined by trial and error.
+  setMinimumSize(QSizeF(tmp.width()*4,tmp.height()*4));
+  QImage ret = tmp.convertToFormat(QImage::Format_Mono).scaled(qMax(tmp.width()*4,width),qMax(tmp.height()*4,width)); //4 is determined by trial and error.
   free(img);
   QRcode_free(code);
   return ret;

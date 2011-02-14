@@ -60,8 +60,9 @@ QImage DataMatrixBarcode::toImage(const QSizeF& size) {
   setMinimumSize(QSizeF(enc->image->width,enc->image->height));
   
   QImage tmp(enc->image->pxl,enc->image->width,enc->image->height, QImage::Format_RGB32);
-  QImage ret=tmp.convertToFormat(QImage::Format_Mono); //we need to copy, because QImage generated from a char pointer requires the
-                                                       //char pointer to be kept around forever, and manually deleted.
+  //we need to copy, because QImage generated from a char pointer requires the
+  //char pointer to be kept around forever, and manually deleted.
+  QImage ret=tmp.convertToFormat(QImage::Format_Mono);
   if(ret.width() < width) {
     ret = ret.scaled(width,width);
   }

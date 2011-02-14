@@ -51,26 +51,31 @@ QImage QRCodeBarcode::toImage(const QSizeF& size) {
   QRcode* code = QRcode_encodeString8bit(raw_string,0, QR_ECLEVEL_Q);
   free(raw_string);
   const int margin = 2;
-  uchar* img = new uchar[4 /*32bit colors*/*sizeof(char*)*(2*margin + code->width)*(2*margin* + code->width)];
+  /*32 bit colors, 8 bit pr byte*/
+  uchar* img = new uchar[4 *sizeof(char*)*(2*margin + code->width)*(2*margin* + code->width)];
   uchar* p = img;
   const char white = 0xff;
   const char black = 0x00;
   for(int row = 0 ; row < code->width+2*margin ; row++) {
     for(int col = 0 ; col < code->width+2*margin ; col++) {
       if(row < margin || row >= (code->width+margin) || col < margin || col >= (code->width+margin)) {
-        for(int i =0 ; i<4 /*4 bytes for color*/ ; i++) {
+        /*4 bytes for color*/
+        for(int i =0 ; i<4 ; i++) {
           *p = white;
           p++;
         }
       } else {
         int  c= (row-margin)*code->width + (col-margin);
+        /*it is bit 1 that is the interesting bit for us from libqrencode*/
         if(code->data[c] & 1) {
-          for(int i =0 ; i<4 /*4 bytes for color*/ ; i++) {
+          /*4 bytes for color*/
+          for(int i =0 ; i<4 ; i++) {
             *p = black;
             p++;
           }
         } else {
-          for(int i =0 ; i<4 /*4 bytes for color*/ ; i++) {
+          /*4 bytes for color*/
+          for(int i =0 ; i<4 ; i++) {
             *p = white;
             p++;
           }

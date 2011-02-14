@@ -92,6 +92,9 @@ class PRISON_EXPORT AbstractBarcode {
     void setMinimumSize(const QSizeF& minimumSize);
   private:
    class Private;
+   /**
+    * d-pointer
+    */
    Private* d;
    
 };

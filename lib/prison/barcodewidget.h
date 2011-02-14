@@ -63,18 +63,31 @@ class PRISON_EXPORT BarcodeWidget : public QWidget {
      */
     void setBarcode(AbstractBarcode* barcode);
     /**
-     * \reimpl
+     * Reimplementation
+     * @return minimumSizeHint for this widget
      */
     virtual QSize minimumSizeHint() const;
   protected:
+    /**
+     * paintEvent
+     * @param event QPaintEvent
+     */
     virtual void paintEvent(QPaintEvent* event );
-    virtual void resizeEvent(QResizeEvent* );
+    /**
+     * resizeEvent
+     * @param event QResizeEvent
+     */
+    virtual void resizeEvent(QResizeEvent* event );
     /**
      * enables drag from the barcodewidget
+     * @param event QMouseEvent
      */
     virtual void mousePressEvent(QMouseEvent* event);
   private:
     class Private;
+    /**
+     * d pointer
+     */
     Private* d;
 };
 }; //namespace 

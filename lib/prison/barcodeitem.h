@@ -63,15 +63,22 @@ class PRISON_EXPORT BarcodeItem : public QGraphicsItem {
      */
     void setBarcode(prison::AbstractBarcode* barcode);
     /**
-     * \reimpl
+     * Reimpl;
+     * @param painter painter to paint on
+     * @param option styleoption
+     * @param widget 
      */
     virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = 0);
     /**
-     * \reimpl
+     * Reimplementation
+     * @return boundingRect for this item
      */
     virtual QRectF boundingRect() const;
   private:
     class Private;
+    /**
+     * d pointer
+     */
     Private* d;
 };
 }; //namespace

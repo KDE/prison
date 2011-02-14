@@ -1,0 +1,24 @@
+/**
+ * \mainpage prison Prison barcode library 
+ *
+ * %prison is a <a href="http://qt.nokia.com">Qt</a>-based barcode abstraction layer/library and provides uniform access 
+ * to generation of barcodes with data.
+ *
+ * \section overview Overview
+ *
+ * %prison has a prison::AbstractBarcode, which is the base class for the actual barcode generators, currently prison::QRCodeBarcode
+ * and prison::DataMatrixBarcode is the two implemented barcode generators.
+ *
+ * %prison currently ships a BarcodeWidget, which is a QWidget with a barcode painted upon, as well as a BarcodeItem, which is a 
+ * QGraphicsItem with a barcode painted upon.
+ *
+ */
+
+
+// DOXYGEN_NAME=Prison
+// DOXYGEN_COPYRIGHT=2010-2011 <a href='mailto:sune@vuorela.dk'>Sune Vuorela</a>
+// DOXYGEN_SET_FILE_PATTERNS = *.h
+// DOXYGEN_SET_RECURSIVE = NO
+// DOXYGEN_SET_INPUT = @topdir@/lib/
+// DOXYGEN_SET_EXCLUDE = @topdir@/testapp/prison.h
+

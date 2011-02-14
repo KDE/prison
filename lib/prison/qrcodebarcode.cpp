@@ -64,7 +64,7 @@ QImage QRCodeBarcode::toImage(const QSizeF& size) {
         }
       } else {
         int  c= (row-margin)*code->width + (col-margin);
-        if(code->data[c] & (1<<0)) {
+        if(code->data[c] & 1) {
           for(int i =0 ; i<4 /*4 bytes for color*/ ; i++) {
             *p = black;
             p++;

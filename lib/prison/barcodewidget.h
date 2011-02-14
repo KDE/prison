@@ -48,6 +48,7 @@ class PRISON_EXPORT BarcodeWidget : public QWidget {
   protected:
     virtual void paintEvent(QPaintEvent* event );
     virtual void resizeEvent(QResizeEvent* );
+    virtual void mousePressEvent(QMouseEvent* event);
   private:
     class Private;
     Private* d;

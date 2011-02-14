@@ -28,9 +28,15 @@
 #include <dmtx.h>
 using namespace prison;
 
+/**
+ * @cond PRIVATE
+ */
 class DataMatrixBarcode::Private {
   public:
 };
+/**
+ * @endcond
+ */
 
 DataMatrixBarcode::DataMatrixBarcode() : d(0) {
 

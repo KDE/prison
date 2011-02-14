@@ -30,6 +30,10 @@
 #include <prison/abstractbarcode.h>
 
 namespace prison {
+  /**
+   * QRCode Barcode generator ; uses libqrencode to do the actual encoding
+   * of the barcode.
+   */
 class PRISON_EXPORT QRCodeBarcode : public prison::AbstractBarcode {
   public:
     /**
@@ -37,6 +41,12 @@ class PRISON_EXPORT QRCodeBarcode : public prison::AbstractBarcode {
      */
     QRCodeBarcode();
     virtual ~QRCodeBarcode();
+    /**
+     * This is the function doing the actual work in generating the barcode
+     * @return QImage containing a QRCode, trying to approximate the requested sizes
+     * @param size The requested size of the barcode, approximate. if the barcode generator can't get the data to fit in there, it might be larger
+     * \reimpl
+     */
     virtual QImage toImage(const QSizeF& size);
   private:
     class Private;

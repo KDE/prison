@@ -27,10 +27,15 @@
 #include "qrcodebarcode.h"
 #include <qrencode.h>
 using namespace prison;
-
+/**
+@cond PRIVATE
+*/
 class QRCodeBarcode::Private {
   public:
 };
+/**
+@endcond
+*/
 
 QRCodeBarcode::QRCodeBarcode() : AbstractBarcode(), d(0){
   

@@ -31,6 +31,9 @@
 
 using namespace prison;
 
+/**
+ * @cond PRIVATE
+ */
 class BarcodeWidget::Private {
   public:
     AbstractBarcode* m_barcode;
@@ -38,6 +41,9 @@ class BarcodeWidget::Private {
     Private(AbstractBarcode* barcode,BarcodeWidget* parent) : m_barcode(barcode), q(parent) {
     }
 };
+/**
+ * @endcond
+ */
 
 BarcodeWidget::BarcodeWidget(QWidget* parent): QWidget(parent), d(new BarcodeWidget::Private(0,this)) {
 }

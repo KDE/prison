@@ -35,6 +35,17 @@
 class QPainter;
 
 namespace prison {
+  /**
+   * base class for barcode generators
+   * To add your own barcode generator, subclass this class
+   * and reimplement toImage(const QSizeF&) to do the actual
+   * work of generating the barcode.
+   *
+   * The barcode is cached in AbstractBarcode when painting and
+   * the size and the data doesn't change. Using the same AbstractBarcode
+   * to paint on several surfaces, if they aren't of the exact same size
+   * will break the caching
+   */
 class PRISON_EXPORT AbstractBarcode {
   public:
     /**
@@ -43,30 +54,40 @@ class PRISON_EXPORT AbstractBarcode {
     AbstractBarcode();
     virtual ~AbstractBarcode();
     /**
-     * returns the QString encoded in this barcode.
+     * @return the QString encoded in this barcode.
      */
     QString data() const;
     /**
      * sets the data to be drawn by this function
+     * calling this function does not do any repaints of anything, they are
+     * your own responsibility. If you are using the barcodes thru BarcodeWidget or BarcodeItem, you
+     * should rather use their setData function, as they handle the relevant updates.
+     * @param data QString containing the data
      */
     void setData(const QString& data);
     /**
-     * paints the barcode at the given position.
+     * paints the barcode in the given rectangle.
+     * @param painter The QPainter to paint upon
+     * @param targetrect The rectangle to paint within
      */
     void paint(QPainter* painter, const QRectF& targetrect);
     /**
      * Creates a image with a barcode on
      * This is the function that actually does all the interesting things, the rest is just icing and api.
+     * @return QImage with a barcode on, trying to match the requested size
+     * @param size Requested size for the barcode, if smaller than minimumSize, a image fitting within minimumsize will be  returned
      */
     virtual QImage toImage(const QSizeF& size) = 0 ;
     /**
-     * returns the minimal size for this barcode.
+     * Note! minimalSize() doesn't work as expected if this is not painting on something.
+     * @return the minimal size for this barcode.
      */
     QSizeF minimumSize() const;
   protected:
     /**
      * Sets the minimum size for this barcode.
      * Some barcodes have minimum sizes for when they are readable and such
+     * @param minimumSize QSizeF holding the minimum size for this barcode
      */
     void setMinimumSize(const QSizeF& minimumSize);
   private:

@@ -31,11 +31,17 @@
 
 using namespace prison;
 
+/**
+ * @cond PRIVATE
+ */
 class BarcodeItem::Private {
   public:
     AbstractBarcode* m_barcode;
     Private(AbstractBarcode* barcode) : m_barcode(barcode) {}
 };
+/**
+ * @endcond
+ */
 
 BarcodeItem::BarcodeItem(QGraphicsItem* parent): QGraphicsItem(parent), d(new BarcodeItem::Private(0)) {
 

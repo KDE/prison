@@ -29,7 +29,9 @@
 #include <QPainter>
 
 using namespace prison;
-
+/**
+ * @cond private
+ */
 class AbstractBarcode::Private {
   public:
     QString m_data;
@@ -39,6 +41,9 @@ class AbstractBarcode::Private {
     AbstractBarcode* q;
     Private(AbstractBarcode* barcode) : m_minimum_size(10,10), q(barcode) { }
 };
+/**
+ * @endcond
+ */
 
 AbstractBarcode::AbstractBarcode() : d(new AbstractBarcode::Private(this)) {
 

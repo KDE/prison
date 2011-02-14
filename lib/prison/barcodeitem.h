@@ -33,27 +33,33 @@
 namespace prison {
 
 class AbstractBarcode;
-
+/**
+ * QGraphicsItem with a barcode 
+ */
 class PRISON_EXPORT BarcodeItem : public QGraphicsItem {
   public:
     /**
-     * Creates a barcodeitem without a barcode generator, and parent as parent
+     * Creates a barcodeitem without a barcode generator
      * use setBarcode() to set a barcode generator
+     * @param parent QGraphicsItem that this item is a child of
      */
     BarcodeItem(QGraphicsItem* parent=0);
     /**
      * creates a barcode item with barcode as barcode generator, and parent as parent
-     * This function takes ownership over the barcode
+     * @param barcode Barcode generator, this function takes ownership over the barcode
+     * @param parent QGraphicsItem that this item is a child of
      */
     BarcodeItem(prison::AbstractBarcode* barcode, QGraphicsItem* parent=0);
     virtual ~BarcodeItem();
     /**
-     * sets the data on the barcode to data
+     * sets the data on the barcode to data. THis function repaints and changes geometry
+     * if needed.
+     * @param data QString with the data to show on the barcode
      */
     void setData(const QString& data);
     /**
      * sets the barcode generator to barcode, and deletes the existing barcode generator if exists.
-     * This function takes ownership over the barcode generator
+     * @param barcode barcode generator to use in this BarcodeItem. This function takes ownership over the barcode generator
      */
     void setBarcode(prison::AbstractBarcode* barcode);
     /**

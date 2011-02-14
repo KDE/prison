@@ -33,27 +33,33 @@
 
 namespace prison {
 class AbstractBarcode;
+/**
+ * QWidget with a barcode on
+ */
 
 class PRISON_EXPORT BarcodeWidget : public QWidget {
   public:
     /**
-     * Creates a barcodewidget with no barcode generator, and parent as parent
+     * Creates a barcodewidget with no barcode generator
      * use setBarcode() to set the barcode
+     * @param parent the parent in QWidget hierachy
      */
     BarcodeWidget(QWidget* parent=0);
     /**
      * Creates a barcode widget with 'barcode' as barcode generator
-     * and parent as parent 
-     * Takes ownership over the barcode generator
+     * @param barcode The barcode generator for this widget. Takes ownership over the barcode generator
+     * @param parent the parent in QWidget hierachy
      */
     BarcodeWidget(AbstractBarcode* barcode, QWidget* parent=0);
     virtual ~BarcodeWidget();
     /**
-     * sets the data shown to data
+     * sets the data shown to data, and triggers a repaint and resize if needed
+     * @param data QString holding the data to be shown
      */
     void setData(QString data);
     /**
      * sets the barcode generator to barcode, and deletes the existing barcode.
+     * @param barcode USes this barcode generator for this widget, and takes ownership over it
      */
     void setBarcode(AbstractBarcode* barcode);
     /**

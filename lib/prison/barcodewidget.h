@@ -44,6 +44,10 @@ class PRISON_EXPORT BarcodeWidget : public QWidget {
     BarcodeWidget(AbstractBarcode* barcode, QWidget* parent=0);
     virtual ~BarcodeWidget();
     void setData(QString data);
+    /**
+     * sets the barcode generator to barcode, and deletes the existing barcode.
+     */
+    void setBarcode(AbstractBarcode* barcode);
     virtual QSize minimumSizeHint() const;
   protected:
     virtual void paintEvent(QPaintEvent* event );

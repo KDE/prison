@@ -101,3 +101,9 @@ prison::BarcodeWidget::~BarcodeWidget() {
   delete d;
 }
 
+void BarcodeWidget::setBarcode(AbstractBarcode* barcode) {
+  delete d->m_barcode;
+  d->m_barcode=barcode;
+}
+
+

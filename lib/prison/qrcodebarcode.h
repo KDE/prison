@@ -32,6 +32,9 @@
 namespace prison {
 class PRISON_EXPORT QRCodeBarcode : public prison::AbstractBarcode {
   public:
+    /**
+     * creates a QRCode generator
+     */
     QRCodeBarcode();
     virtual ~QRCodeBarcode();
     virtual QImage toImage(const QSizeF& size);

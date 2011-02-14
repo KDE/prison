@@ -36,17 +36,34 @@ class AbstractBarcode;
 
 class PRISON_EXPORT BarcodeItem : public QGraphicsItem {
   public:
+    /**
+     * Creates a barcodeitem without a barcode generator, and parent as parent
+     * use setBarcode() to set a barcode generator
+     */
     BarcodeItem(QGraphicsItem* parent=0);
+    /**
+     * creates a barcode item with barcode as barcode generator, and parent as parent
+     * This function takes ownership over the barcode
+     */
     BarcodeItem(prison::AbstractBarcode* barcode, QGraphicsItem* parent=0);
+    virtual ~BarcodeItem();
+    /**
+     * sets the data on the barcode to data
+     */
+    void setData(const QString& data);
     /**
      * sets the barcode generator to barcode, and deletes the existing barcode generator if exists.
      * This function takes ownership over the barcode generator
      */
     void setBarcode(prison::AbstractBarcode* barcode);
+    /**
+     * \reimpl
+     */
     virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = 0);
+    /**
+     * \reimpl
+     */
     virtual QRectF boundingRect() const;
-    void setData(const QString& data);
-    virtual ~BarcodeItem();
   private:
     class Private;
     Private* d;

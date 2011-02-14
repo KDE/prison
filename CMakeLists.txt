@@ -12,3 +12,5 @@ include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DI
 
 add_subdirectory(lib)
 add_subdirectory(testapp)
+
+add_subdirectory(tools)

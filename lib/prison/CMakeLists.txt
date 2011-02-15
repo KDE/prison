@@ -1,3 +1,4 @@
+include_directories(${QRENCODE_INCLUDE_DIR})
 SET(    prison_SRC
         abstractbarcode.cpp
         barcodewidget.cpp

@@ -1,7 +1,7 @@
 /**
- * \mainpage prison Prison barcode library 
+ * \mainpage prison Prison barcode library
  *
- * %prison is a <a href="http://qt.nokia.com">Qt</a>-based barcode abstraction layer/library and provides uniform access 
+ * %prison is a <a href="http://qt.nokia.com">Qt</a>-based barcode abstraction layer/library and provides uniform access
  * to generation of barcodes with data.
  *
  * \section overview Overview
@@ -9,8 +9,21 @@
  * %prison has a prison::AbstractBarcode, which is the base class for the actual barcode generators, currently prison::QRCodeBarcode
  * and prison::DataMatrixBarcode is the two implemented barcode generators.
  *
- * %prison currently ships a BarcodeWidget, which is a QWidget with a barcode painted upon, as well as a BarcodeItem, which is a 
+ * %prison currently ships a BarcodeWidget, which is a QWidget with a barcode painted upon, as well as a BarcodeItem, which is a
  * QGraphicsItem with a barcode painted upon.
+ *
+ * \section supported Supported Barcode types
+ *
+ * There is basically two types of barcodes:
+ * \li barcodes that carries the data
+ * \li barcodes that carries a lookup number, and requires a specific server to look up the actual data.
+ *
+ * %prison isn't as such designed for the latter, it will probably work, but patches implementing barcode
+ * support for such barcodes will not be accepted. A example is <a href="http://en.wikipedia.org/wiki/EZcode">EZCode</a>.
+ *
+ * %prison is currently using <a href="http://www.libdmtx.org/">libdmtx</a> for generation of  <a href="http://en.wikipedia.org/wiki/Datamatrix">DataMatrix</a> barcodes
+ *
+ * %prison is currently using <a href="http://fukuchi.org/works/qrencode/index.en.html">libqrencode</a> for generation of <a href="http://en.wikipedia.org/wiki/QR_Code">QRCode</a> barcodes
  *
  */
 

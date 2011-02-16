@@ -91,7 +91,7 @@ QImage QRCodeBarcode::toImage(const QSizeF& size) {
   QImage tmp(img,code->width+2*margin,code->width+2*margin,QImage::Format_RGB32);
   setMinimumSize(QSizeF(tmp.width()*4,tmp.height()*4));
   QImage ret = tmp.convertToFormat(QImage::Format_Mono).scaled(qMax(tmp.width()*4,width),qMax(tmp.height()*4,width)); //4 is determined by trial and error.
-  free(img);
+  delete[] img;
   QRcode_free(code);
   return ret;
 }

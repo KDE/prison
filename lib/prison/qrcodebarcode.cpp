@@ -52,9 +52,8 @@ QImage QRCodeBarcode::toImage(const QSizeF& size) {
   if(data().size()==0 || width==0) {
     return QImage();
   }
-  char* raw_string = qstrdup( data().toUtf8().trimmed().constData() );
-  QRcode* code = QRcode_encodeString8bit(raw_string,0, QR_ECLEVEL_Q);
-  free(raw_string);
+  const QByteArray trimmedData(data().trimmed().toUtf8());
+  QRcode* code = QRcode_encodeString8bit(trimmedData.constData(), 0, QR_ECLEVEL_Q);
   const int margin = 2;
   /*32 bit colors, 8 bit pr byte*/
   uchar* img = new uchar[4 *sizeof(char*)*(2*margin + code->width)*(2*margin* + code->width)];

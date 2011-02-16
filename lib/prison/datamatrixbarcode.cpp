@@ -57,10 +57,10 @@ QImage DataMatrixBarcode::toImage(const QSizeF& size) {
   dmtxEncodeSetProp( enc, DmtxPropPixelPacking, DmtxPack32bppRGBX );
   dmtxEncodeSetProp( enc, DmtxPropWidth, width );
   dmtxEncodeSetProp( enc, DmtxPropHeight, width );
-  
-  char* raw_string = qstrdup( data().toUtf8().trimmed().constData() );
-  dmtxEncodeDataMatrix(enc,strlen(raw_string),(unsigned char*) raw_string);
-  free(raw_string);
+
+  QByteArray trimmedData(data().trimmed().toUtf8());
+  dmtxEncodeDataMatrix(enc, trimmedData.length(),
+                       reinterpret_cast<unsigned char*>(trimmedData.data()));
   Q_ASSERT(enc->image->width == enc->image->height);
   
   setMinimumSize(QSizeF(enc->image->width,enc->image->height));

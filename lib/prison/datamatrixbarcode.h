@@ -42,7 +42,7 @@ class PRISON_EXPORT DataMatrixBarcode : public prison::AbstractBarcode {
      */
     DataMatrixBarcode();
     virtual ~DataMatrixBarcode();
-    /**    /**
+    /**
     * This is the function doing the actual work in generating the barcode
     * @return QImage containing a DataMatrix, trying to approximate the requested sizes
     * @param size The requested size of the barcode, approximate. if the barcode generator can't get the data to fit in there, it might be larger

@@ -66,6 +66,7 @@ void BarcodeWidget::paintEvent(QPaintEvent* event) {
   QPainter painter(this);
   if(d->m_barcode) {
     d->m_barcode->paint(&painter,QRectF(QPointF(0,0),size()));
+    updateGeometry();
   } else {
     painter.fillRect(QRectF(QPointF(0,0),size()),Qt::black);
   }

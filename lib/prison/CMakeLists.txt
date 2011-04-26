@@ -17,6 +17,8 @@ set(LIB_SUFFIX "" CACHE STRING "Define suffix of directory name (32/64)" )
 install( TARGETS prison DESTINATION ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX} )
 
 install( FILES
+         abstractbarcode.h
+         AbstractBarcode
          barcodeitem.h
          BarcodeItem
          barcodewidget.h

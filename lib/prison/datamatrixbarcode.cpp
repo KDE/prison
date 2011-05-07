@@ -49,7 +49,7 @@ DataMatrixBarcode::~DataMatrixBarcode() {
 
 QImage DataMatrixBarcode::toImage(const QSizeF& size) {
   const int width = qRound(qMin(size.width(),size.height()));
-  if(data().size()==0 || width == 0) {
+  if(data().size()==0 || width == 0 || data().size() > 1200) {
     return QImage();
   }
   

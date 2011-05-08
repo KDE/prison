@@ -1,4 +1,4 @@
-include_directories(${QRENCODE_INCLUDE_DIR})
+include_directories(${QRENCODE_INCLUDE_DIR} ${DMTX_INCLUDE_DIR})
 SET(    prison_SRC
         abstractbarcode.cpp
         barcodewidget.cpp

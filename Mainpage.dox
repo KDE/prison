@@ -30,8 +30,5 @@
 
 // DOXYGEN_NAME=Prison
 // DOXYGEN_COPYRIGHT=2010-2011 <a href='mailto:sune@vuorela.dk'>Sune Vuorela</a>
-// DOXYGEN_SET_FILE_PATTERNS = *.h
-// DOXYGEN_SET_RECURSIVE = NO
-// DOXYGEN_SET_INPUT = @topdir@/lib/
 // DOXYGEN_SET_EXCLUDE = @topdir@/testapp/prison.h
 

@@ -30,5 +30,4 @@
 
 // DOXYGEN_NAME=Prison
 // DOXYGEN_COPYRIGHT=2010-2011 <a href='mailto:sune@vuorela.dk'>Sune Vuorela</a>
-// DOXYGEN_SET_EXCLUDE = @topdir@/testapp/prison.h
-
+// DOXYGEN_EXCLUDE = testapp

@@ -26,6 +26,7 @@
 
 #include "datamatrixbarcode.h"
 #include <dmtx.h>
+#include <QColor>
 using namespace prison;
 
 /**
@@ -64,12 +65,46 @@ QImage DataMatrixBarcode::toImage(const QSizeF& size) {
   Q_ASSERT(enc->image->width == enc->image->height);
   
   setMinimumSize(QSizeF(enc->image->width,enc->image->height));
+  QImage ret;
   
-  QImage tmp(enc->image->pxl,enc->image->width,enc->image->height, QImage::Format_RGB32);
-  //we need to copy, because QImage generated from a char pointer requires the
-  //char pointer to be kept around forever, and manually deleted.
-  QImage ret=tmp.convertToFormat(QImage::Format_Mono);
-  if(ret.width() < width) {
+  if(foregroundColor()==Qt::black && backgroundColor() == Qt::white) {
+    QImage tmp(enc->image->pxl,enc->image->width,enc->image->height, QImage::Format_ARGB32);
+    //we need to copy, because QImage generated from a char pointer requires the
+    //char pointer to be kept around forever, and manually deleted.
+    ret=tmp.copy();
+  } else {
+    if(enc->image->width>0) {
+      int size = enc->image->width*enc->image->height*4;
+      uchar* img = new uchar[size];
+      QByteArray background;
+      background[3] = qAlpha(backgroundColor().rgba());
+      background[2] = qRed(backgroundColor().rgba());
+      background[1] = qGreen(backgroundColor().rgba());
+      background[0] = qBlue(backgroundColor().rgba());
+      QByteArray foreground = new char[4];
+      foreground[3] = qAlpha(foregroundColor().rgba());
+      foreground[2] = qRed(foregroundColor().rgba());
+      foreground[1] = qGreen(foregroundColor().rgba());
+      foreground[0] = qBlue(foregroundColor().rgba());
+      for(int i = 1 ; i < size; i+=4) {
+	QByteArray color;
+	if(enc->image->pxl[i]==0x00) {
+	  color = foreground;
+	} else {
+	  color = background;
+	}
+	for(int j = 0 ; j < 4 ; j++) {
+	  img[i-1+j] = color[j];
+	}
+      }
+      QImage tmp(img,enc->image->width,enc->image->height, QImage::Format_ARGB32);
+      //we need to copy, because QImage generated from a char pointer requires the
+      //char pointer to be kept around forever, and manually deleted.
+      ret=tmp.copy();
+      delete[] img;
+    }
+  }
+  if(!ret.isNull() && ret.width() < width) {
     ret = ret.scaled(width,width);
   }
   dmtxEncodeDestroy(&enc);

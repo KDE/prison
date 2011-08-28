@@ -7,7 +7,7 @@ find_package(QRencode REQUIRED)
 find_package(Dmtx REQUIRED)
 
 
-include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DIR}/lib)
+include_directories(${CMAKE_SOURCE_DIR}/lib ${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} )
 
 
 add_subdirectory(lib)

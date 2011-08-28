@@ -26,6 +26,8 @@
 
 #include "qrcodebarcode.h"
 #include <qrencode.h>
+#include <QColor>
+
 using namespace prison;
 /**
 @cond PRIVATE
@@ -61,14 +63,22 @@ QImage QRCodeBarcode::toImage(const QSizeF& size) {
   /*32 bit colors, 8 bit pr byte*/
   uchar* img = new uchar[4 *sizeof(char*)*(2*margin + code->width)*(2*margin* + code->width)];
   uchar* p = img;
-  const char white = 0xff;
-  const char black = 0x00;
+  QByteArray background;
+  background[3] = qAlpha(backgroundColor().rgba());
+  background[2] = qRed(backgroundColor().rgba());
+  background[1] = qGreen(backgroundColor().rgba());
+  background[0] = qBlue(backgroundColor().rgba());
+  QByteArray foreground;
+  foreground[3] = qAlpha(foregroundColor().rgba());
+  foreground[2] = qRed(foregroundColor().rgba());
+  foreground[1] = qGreen(foregroundColor().rgba());
+  foreground[0] = qBlue(foregroundColor().rgba());
   for(int row = 0 ; row < code->width+2*margin ; row++) {
     for(int col = 0 ; col < code->width+2*margin ; col++) {
       if(row < margin || row >= (code->width+margin) || col < margin || col >= (code->width+margin)) {
         /*4 bytes for color*/
         for(int i =0 ; i<4 ; i++) {
-          *p = white;
+          *p = background[i];
           p++;
         }
       } else {
@@ -77,22 +87,22 @@ QImage QRCodeBarcode::toImage(const QSizeF& size) {
         if(code->data[c] & 1) {
           /*4 bytes for color*/
           for(int i =0 ; i<4 ; i++) {
-            *p = black;
+            *p = foreground[i];
             p++;
           }
         } else {
           /*4 bytes for color*/
           for(int i =0 ; i<4 ; i++) {
-            *p = white;
+            *p = background[i];
             p++;
           }
         }
       }
     }
   }
-  QImage tmp(img,code->width+2*margin,code->width+2*margin,QImage::Format_RGB32);
+  QImage tmp(img,code->width+2*margin,code->width+2*margin,QImage::Format_ARGB32);
   setMinimumSize(QSizeF(tmp.width()*4,tmp.height()*4));
-  QImage ret = tmp.convertToFormat(QImage::Format_Mono).scaled(qMax(tmp.width()*4,width),qMax(tmp.height()*4,width)); //4 is determined by trial and error.
+  QImage ret = tmp.convertToFormat(QImage::Format_ARGB32).scaled(qMax(tmp.width()*4,width),qMax(tmp.height()*4,width)); //4 is determined by trial and error.
   delete[] img;
   QRcode_free(code);
   return ret;

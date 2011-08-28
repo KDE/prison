@@ -32,6 +32,7 @@
 
 #include <prison/prison_export.h>
 
+class QColor;
 class QPainter;
 
 namespace prison {
@@ -83,6 +84,25 @@ class PRISON_EXPORT AbstractBarcode {
      * @return the minimal size for this barcode.
      */
     QSizeF minimumSize() const;
+    /**
+     * @return the foreground color (by default black) to be used for the barcode.
+     */
+    const QColor& foregroundColor() const;
+    /**
+     * @return the background color (by default white) to be used for the barcode.
+     */
+    const QColor& backgroundColor() const;
+    /**
+     * sets the foreground color
+     * @param foregroundcolor - the new foreground color
+     */
+    void setForegroundColor(const QColor& foregroundcolor);
+    /**
+     * sets the background color
+     * @param backgroundcolor - the new background color
+     */
+    void setBackgroundColor(const QColor& backgroundcolor);
+
   protected:
     /**
      * Sets the minimum size for this barcode.

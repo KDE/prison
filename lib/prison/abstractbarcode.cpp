@@ -27,6 +27,7 @@
 #include "abstractbarcode.h"
 #include <QPixmap>
 #include <QPainter>
+#include <QColor>
 
 using namespace prison;
 /**
@@ -37,9 +38,11 @@ class AbstractBarcode::Private {
     QString m_data;
     QSizeF m_size;
     QPixmap m_cache;
+    QColor m_foreground;
+    QColor m_background;
     QSizeF m_minimum_size;
     AbstractBarcode* q;
-    Private(AbstractBarcode* barcode) : m_minimum_size(10,10), q(barcode) { }
+    Private(AbstractBarcode* barcode) : m_minimum_size(10,10), q(barcode), m_foreground(Qt::black), m_background(Qt::white) { }
 };
 /**
  * @endcond
@@ -76,6 +79,29 @@ QSizeF AbstractBarcode::minimumSize() const {
 
 void AbstractBarcode::setMinimumSize(const QSizeF& minimumSize) {
   d->m_minimum_size = minimumSize;
+}
+
+const QColor& AbstractBarcode::backgroundColor() const {
+  return d->m_background;
+}
+
+const QColor& AbstractBarcode::foregroundColor() const {
+  return d->m_foreground;
+}
+
+void AbstractBarcode::setBackgroundColor(const QColor& backgroundcolor) {
+  if(backgroundcolor!=backgroundColor()) {
+    d->m_background=backgroundcolor;
+    d->m_cache=QPixmap();
+  }
+}
+
+void AbstractBarcode::setForegroundColor(const QColor& foregroundcolor) {
+  if(foregroundcolor!=foregroundColor()) {
+    d->m_foreground=foregroundcolor;
+    d->m_cache=QPixmap();
+  }
+
 }
 
 AbstractBarcode::~AbstractBarcode() {

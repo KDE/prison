@@ -19,6 +19,8 @@ class main_window : public QWidget {
     QLineEdit* m_lineedit;
     prison::BarcodeWidget* m_dmw;
     prison::BarcodeWidget* m_qrw;
+    prison::BarcodeWidget* m_dmcolor;
+    prison::BarcodeWidget* m_qrcolor;
     prison::BarcodeItem* m_dmi;
     prison::BarcodeItem* m_qri;
     prison::BarcodeItem* m_nulli;

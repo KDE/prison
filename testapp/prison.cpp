@@ -20,6 +20,8 @@ void main_window::data_changed() {
   m_qrw->setData(result);
   m_nulli->setData(result);
   m_nullw->setData(result);
+  m_dmcolor->setData(result);
+  m_qrcolor->setData(result);
   
 }
 
@@ -35,6 +37,20 @@ main_window::main_window() {
 
   m_dmw = new prison::BarcodeWidget(new prison::DataMatrixBarcode(),this);
   m_qrw = new prison::BarcodeWidget(new prison::QRCodeBarcode(),this);
+  m_dmcolor = new prison::BarcodeWidget(this);
+  {
+    prison::DataMatrixBarcode* dmcolorcode = new prison::DataMatrixBarcode();
+    dmcolorcode->setForegroundColor(Qt::red);
+    dmcolorcode->setBackgroundColor(Qt::darkBlue);
+    m_dmcolor->setBarcode(dmcolorcode);
+  }
+  m_qrcolor = new prison::BarcodeWidget(this);
+  {
+    prison::QRCodeBarcode* qrcolorcode =  new prison::QRCodeBarcode();
+    qrcolorcode->setForegroundColor(Qt::red);
+    qrcolorcode->setBackgroundColor(Qt::darkBlue);
+    m_qrcolor->setBarcode(qrcolorcode);
+  }
 
   QGraphicsScene* scene = new QGraphicsScene(this);
 
@@ -64,11 +80,17 @@ main_window::main_window() {
   splitter->addWidget(v);
   splitter->addWidget(m_dmw);
   splitter->addWidget(m_qrw);
+  splitter->addWidget(m_dmcolor);
+  splitter->addWidget(m_qrcolor);
   splitter->addWidget(m_nullw);
 
   mainlay->addLayout(lay);
   mainlay->addWidget(splitter);
   setLayout(mainlay);
+
+  m_lineedit->setText("AOEUIAOEUIAOEUI");
+  data_changed();
+
 }
 
 

@@ -82,7 +82,7 @@ void BarcodeWidget::resizeEvent(QResizeEvent* event) {
 }
 
 void BarcodeWidget::mousePressEvent(QMouseEvent* event) {
-  if(event->buttons() & Qt::LeftButton) {
+  if(d->m_barcode && event->buttons() & Qt::LeftButton) {
     QMimeData* data = new QMimeData();
     data->setImageData(d->m_barcode->toImage(size()));
     QDrag* drag = new QDrag(this);

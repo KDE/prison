@@ -3,6 +3,7 @@ SET(    prison_SRC
         abstractbarcode.cpp
         barcodewidget.cpp
         barcodeitem.cpp
+        code39barcode.cpp
         datamatrixbarcode.cpp
         qrcodebarcode.cpp
         )
@@ -37,6 +38,8 @@ install( FILES
          BarcodeItem
          barcodewidget.h
          BarcodeWidget
+         code39barcode.h
+         Code39Barcode
          datamatrixbarcode.h
          DataMatrixBarcode
          qrcodebarcode.h

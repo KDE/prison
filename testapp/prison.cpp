@@ -6,6 +6,7 @@
 #include "prison/BarcodeWidget"
 #include "prison/DataMatrixBarcode"
 #include "prison/QRCodeBarcode"
+#include "prison/Code39Barcode"
 #include <QHBoxLayout>
 #include <QGraphicsScene>
 #include <QGraphicsView>
@@ -18,10 +19,13 @@ void main_window::data_changed() {
   m_dmw->setData(result);
   m_qri->setData(result);
   m_qrw->setData(result);
+  m_39i->setData(result);
+  m_39w->setData(result);
   m_nulli->setData(result);
   m_nullw->setData(result);
   m_dmcolor->setData(result);
   m_qrcolor->setData(result);
+  m_39color->setData(result);
   
 }
 
@@ -37,6 +41,7 @@ main_window::main_window() {
 
   m_dmw = new prison::BarcodeWidget(new prison::DataMatrixBarcode(),this);
   m_qrw = new prison::BarcodeWidget(new prison::QRCodeBarcode(),this);
+  m_39w = new prison::BarcodeWidget(new prison::Code39Barcode(),this);
   m_dmcolor = new prison::BarcodeWidget(this);
   {
     prison::DataMatrixBarcode* dmcolorcode = new prison::DataMatrixBarcode();
@@ -51,11 +56,19 @@ main_window::main_window() {
     qrcolorcode->setBackgroundColor(Qt::darkBlue);
     m_qrcolor->setBarcode(qrcolorcode);
   }
+  m_39color = new prison::BarcodeWidget(this);
+  {
+    prison::Code39Barcode* c39colorcode =  new prison::Code39Barcode();
+    c39colorcode->setForegroundColor(Qt::red);
+    c39colorcode->setBackgroundColor(Qt::darkBlue);
+    m_39color->setBarcode(c39colorcode);
+  }
 
   QGraphicsScene* scene = new QGraphicsScene(this);
 
   m_dmi = new prison::BarcodeItem(new prison::DataMatrixBarcode());
   m_qri = new prison::BarcodeItem(new prison::QRCodeBarcode());
+  m_39i = new prison::BarcodeItem(new prison::Code39Barcode());
 
   m_nulli = new prison::BarcodeItem();
   m_nullw = new prison::BarcodeWidget();
@@ -64,6 +77,8 @@ main_window::main_window() {
   m_dmi->setPos(0,0);
   scene->addItem(m_qri);
   m_qri->setPos(200,200);
+  scene->addItem(m_39i);
+  m_39i->setPos(0,400);
   scene->addItem(m_nulli);
   m_nulli->setPos(0,200);
 
@@ -80,8 +95,10 @@ main_window::main_window() {
   splitter->addWidget(v);
   splitter->addWidget(m_dmw);
   splitter->addWidget(m_qrw);
+  splitter->addWidget(m_39w);
   splitter->addWidget(m_dmcolor);
   splitter->addWidget(m_qrcolor);
+  splitter->addWidget(m_39color);
   splitter->addWidget(m_nullw);
 
   mainlay->addLayout(lay);

@@ -20,12 +20,15 @@ class main_window : public QWidget {
     prison::BarcodeWidget* m_dmw;
     prison::BarcodeWidget* m_qrw;
     prison::BarcodeWidget* m_39w;
+    prison::BarcodeWidget* m_93w;
     prison::BarcodeWidget* m_dmcolor;
     prison::BarcodeWidget* m_qrcolor;
     prison::BarcodeWidget* m_39color;
+    prison::BarcodeWidget* m_93color;
     prison::BarcodeItem* m_dmi;
     prison::BarcodeItem* m_qri;
     prison::BarcodeItem* m_39i;
+    prison::BarcodeItem* m_93i;
     prison::BarcodeItem* m_nulli;
     prison::BarcodeWidget* m_nullw;
     

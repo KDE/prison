@@ -60,8 +60,12 @@ QImage DataMatrixBarcode::toImage(const QSizeF& size) {
   dmtxEncodeSetProp( enc, DmtxPropHeight, width );
 
   QByteArray trimmedData(data().trimmed().toUtf8());
-  dmtxEncodeDataMatrix(enc, trimmedData.length(),
-                       reinterpret_cast<unsigned char*>(trimmedData.data()));
+  DmtxPassFail result =  dmtxEncodeDataMatrix(enc, trimmedData.length(),
+                                              reinterpret_cast<unsigned char*>(trimmedData.data()));
+  if(result == DmtxFail) {
+    dmtxEncodeDestroy(&enc);
+    return QImage();
+  }
   Q_ASSERT(enc->image->width == enc->image->height);
 
   setMinimumSize(QSizeF(enc->image->width,enc->image->height));

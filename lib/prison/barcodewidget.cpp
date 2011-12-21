@@ -88,8 +88,9 @@ void BarcodeWidget::mousePressEvent(QMouseEvent* event) {
     QDrag* drag = new QDrag(this);
     drag->setMimeData(data);
     drag->exec();
+  } else {
+    QWidget::mousePressEvent(event);
   }
-  QWidget::mousePressEvent(event);
 }
 
 

@@ -52,6 +52,6 @@ class PRISON_EXPORT DataMatrixBarcode : public prison::AbstractBarcode {
     class Private;
     Private *d;
 };
-};
+}
 
 #endif // PRISON_DATAMATRIXBARCODE_H

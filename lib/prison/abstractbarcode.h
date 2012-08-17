@@ -118,6 +118,6 @@ class PRISON_EXPORT AbstractBarcode {
    Private* d;
    
 };
-}; //namespace
+} //namespace
 
 #endif // PRISON_ABSTRACTBARCODE_H

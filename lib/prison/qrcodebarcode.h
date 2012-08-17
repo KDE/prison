@@ -51,6 +51,6 @@ class PRISON_EXPORT QRCodeBarcode : public prison::AbstractBarcode {
     class Private;
     Private *d;
 };
-}; // namespace 
+} // namespace 
 
 #endif // PRISON_QRCODEBARCODE_H

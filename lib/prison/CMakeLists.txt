@@ -12,7 +12,7 @@ SET(    prison_SRC
 add_library(prison SHARED ${prison_SRC})
 target_link_libraries(prison ${DMTX_LIBRARIES} ${QRENCODE_LIBRARIES} ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY})
 
-set_target_properties(prison PROPERTIES VERSION "0.1.0" SOVERSION "0" LINK_INTERFACE_LIBRARIES "" DEFINE_SYMBOL BUILDING_PRISON)
+set_target_properties(prison PROPERTIES VERSION "0.2.0" SOVERSION "0" LINK_INTERFACE_LIBRARIES "" DEFINE_SYMBOL BUILDING_PRISON)
 
 set(LIB_SUFFIX "" CACHE STRING "Define suffix of directory name (32/64)" )
 

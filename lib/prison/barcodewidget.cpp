@@ -28,6 +28,8 @@
 #include "abstractbarcode.h"
 #include <QResizeEvent>
 #include <QPainter>
+#include <QMimeData>
+#include <QDrag>
 
 using namespace prison;
 

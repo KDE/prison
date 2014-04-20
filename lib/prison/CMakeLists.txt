@@ -1,3 +1,13 @@
+include(CMakePackageConfigHelpers)
+
+set(PRISON_VERSION_MAJOR "0")
+set(PRISON_VERSION_MINOR "2")
+set(PRISON_VERSION_PATCH "0")
+
+set(PRISON_VERSION "${PRISON_VERSION_MAJOR}.${PRISON_VERSION_MINOR}.${PRISON_VERSION_PATCH}")
+set(PRISON_VERSION_STRING "${PRISON_VERSION}")
+
+
 include_directories(${QRENCODE_INCLUDE_DIR} ${DMTX_INCLUDE_DIR})
 SET(    prison_SRC
         abstractbarcode.cpp
@@ -12,7 +22,7 @@ SET(    prison_SRC
 add_library(prison SHARED ${prison_SRC})
 target_link_libraries(prison ${DMTX_LIBRARIES} ${QRENCODE_LIBRARIES} ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY})
 
-set_target_properties(prison PROPERTIES VERSION "0.2.0" SOVERSION "0" LINK_INTERFACE_LIBRARIES "" DEFINE_SYMBOL BUILDING_PRISON)
+set_target_properties(prison PROPERTIES VERSION "${PRISON_VERSION_STRING}" SOVERSION "${PRISON_VERSION_PATCH}" LINK_INTERFACE_LIBRARIES "" DEFINE_SYMBOL BUILDING_PRISON)
 
 set(LIB_SUFFIX "" CACHE STRING "Define suffix of directory name (32/64)" )
 
@@ -60,8 +70,16 @@ configure_file(
    PrisonConfig.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/PrisonConfig.cmake @ONLY
 )
 
+# this file is used by to check if the installed version can be used.
+write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/PrisonConfigVersion.cmake
+                                 VERSION "${PRISON_VERSION_STRING}"
+                                 COMPATIBILITY SameMajorVersion
+                                )
+
+
 install( FILES
          ${CMAKE_CURRENT_BINARY_DIR}/PrisonConfig.cmake
+         ${CMAKE_CURRENT_BINARY_DIR}/PrisonConfigVersion.cmake
 	 DESTINATION ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/cmake/Prison
 )
 

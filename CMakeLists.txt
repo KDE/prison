@@ -11,7 +11,7 @@ find_package(Dmtx REQUIRED)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-option(QT5_BUILD "Build Akonadi using the Qt5 framework" FALSE)
+option(QT5_BUILD "Build libprison using the Qt5 framework" FALSE)
 
 
 include_directories(${CMAKE_SOURCE_DIR}/lib ${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} )

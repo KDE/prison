@@ -46,7 +46,11 @@ if (CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
     endif (_HAVE_GCC_VISIBILITY)
 endif (CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
 
-install( TARGETS prison DESTINATION ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX} )
+if(QT5_BUILD)
+  install(TARGETS prison ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
+else()
+  install( TARGETS prison DESTINATION ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX} )
+endif()
 
 install( FILES
          abstractbarcode.h
@@ -70,7 +74,14 @@ install( FILES
 set(INCLUDE_DIRECTORY ${CMAKE_INSTALL_PREFIX}/include)
 get_target_property(LIB_OUT_NAME prison LOCATION)
 get_filename_component(LIB_OUT_NAME ${LIB_OUT_NAME} NAME)
-set(LIBPATH ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX})
+
+if(QT5_BUILD)
+  set(LIBPATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
+  set(CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/Prison")
+else()
+  set(LIBPATH ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX})
+  set(CMAKECONFIG_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/cmake/Prison")
+endif()
 
 configure_file(
    PrisonConfig.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/PrisonConfig.cmake @ONLY
@@ -86,7 +97,7 @@ write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/PrisonConfigVersion
 install( FILES
          ${CMAKE_CURRENT_BINARY_DIR}/PrisonConfig.cmake
          ${CMAKE_CURRENT_BINARY_DIR}/PrisonConfigVersion.cmake
-	 DESTINATION ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/cmake/Prison
+	 DESTINATION ${CMAKECONFIG_INSTALL_DIR}
 )
 
 

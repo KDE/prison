@@ -18,7 +18,7 @@ include_directories(${CMAKE_SOURCE_DIR}/lib ${QT_INCLUDES} ${CMAKE_CURRENT_BINAR
 
 #### Qt 4 and 5 ####
 if(QT5_BUILD)
-  find_package(ECM 0.0.13 REQUIRED NO_MODULE)
+  find_package(ECM 0.0.14 REQUIRED NO_MODULE)
   set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR})
   include(KDEInstallDirs)
 

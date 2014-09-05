@@ -1,10 +1,6 @@
 include(CMakePackageConfigHelpers)
 
-if(QT5_BUILD)
-   set(PRISON_VERSION_MAJOR "1")
-else()
-   set(PRISON_VERSION_MAJOR "0")
-endif()
+set(PRISON_VERSION_MAJOR "1")
 set(PRISON_VERSION_MINOR "2")
 set(PRISON_VERSION_PATCH "0")
 
@@ -17,8 +13,6 @@ set(PRISON_VERSION_STRING "${PRISON_VERSION}")
 include_directories(${QRENCODE_INCLUDE_DIR} ${DMTX_INCLUDE_DIR})
 SET(    prison_SRC
         abstractbarcode.cpp
-        barcodewidget.cpp
-        barcodeitem.cpp
         code39barcode.cpp
         code93barcode.cpp
         datamatrixbarcode.cpp
@@ -26,7 +20,7 @@ SET(    prison_SRC
         )
 
 add_library(prison SHARED ${prison_SRC})
-target_link_libraries(prison ${DMTX_LIBRARIES} ${QRENCODE_LIBRARIES} ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY})
+target_link_libraries(prison ${DMTX_LIBRARIES} ${QRENCODE_LIBRARIES} Qt5::Gui)
 
 set_target_properties(prison PROPERTIES VERSION "${PRISON_VERSION_STRING}" SOVERSION "${PRISON_VERSION_MAJOR}" LINK_INTERFACE_LIBRARIES "" DEFINE_SYMBOL BUILDING_PRISON)
 
@@ -46,19 +40,11 @@ if (CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
     endif (_HAVE_GCC_VISIBILITY)
 endif (CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
 
-if(QT5_BUILD)
-  install(TARGETS prison ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
-else()
-  install( TARGETS prison DESTINATION ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX} )
-endif()
+install(TARGETS prison ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install( FILES
          abstractbarcode.h
          AbstractBarcode
-         barcodeitem.h
-         BarcodeItem
-         barcodewidget.h
-         BarcodeWidget
          code39barcode.h
          Code39Barcode
          code93barcode.h
@@ -75,13 +61,8 @@ set(INCLUDE_DIRECTORY ${CMAKE_INSTALL_PREFIX}/include)
 get_target_property(LIB_OUT_NAME prison LOCATION)
 get_filename_component(LIB_OUT_NAME ${LIB_OUT_NAME} NAME)
 
-if(QT5_BUILD)
-  set(LIBPATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
-  set(CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/Prison")
-else()
-  set(LIBPATH ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX})
-  set(CMAKECONFIG_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/cmake/Prison")
-endif()
+set(LIBPATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
+set(CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/Prison")
 
 configure_file(
    PrisonConfig.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/PrisonConfig.cmake @ONLY

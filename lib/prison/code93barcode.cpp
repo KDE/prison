@@ -257,7 +257,7 @@ Code93Barcode::~Code93Barcode() {
   delete d;
 }
 
-QImage Code93Barcode::toImage(const QSizeF& size) {
+QImage Code93Barcode::paintImage(const QSizeF& size) {
   if(size.height() == 0) {
     return QImage();
   }
@@ -290,7 +290,10 @@ QImage Code93Barcode::toImage(const QSizeF& size) {
   }
 
   // try to fill the requested size
-  const int barWidth = qMax(int(size.width() / barcode.size()), 1); // can't go below 1 pixel
+  const int barWidth = int(size.width() / barcode.size());
+  if(barWidth < 1 ) { // can't go below 1 pixel
+      return QImage();
+  }
 
   // build one line of the result image
   QVector<QRgb> line;

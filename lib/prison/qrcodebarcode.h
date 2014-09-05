@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2010-2011 Sune Vuorela <sune@vuorela.dk>
+    Copyright (c) 2010-2014 Sune Vuorela <sune@vuorela.dk>
 
     Permission is hereby granted, free of charge, to any person
     obtaining a copy of this software and associated documentation
@@ -44,9 +44,9 @@ class PRISON_EXPORT QRCodeBarcode : public prison::AbstractBarcode {
     /**
      * This is the function doing the actual work in generating the barcode
      * @return QImage containing a QRCode, trying to approximate the requested sizes
-     * @param size The requested size of the barcode, approximate. if the barcode generator can't get the data to fit in there, it might be larger
+     * @param size The requested size of the barcode, approximate. if the barcode generator can't get the data to fit in there, it might be a null QImage
      */
-    virtual QImage toImage(const QSizeF& size);
+    virtual QImage paintImage(const QSizeF& size) Q_DECL_OVERRIDE;
   private:
     class Private;
     Private *d;

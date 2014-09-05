@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2010-2011 Sune Vuorela <sune@vuorela.dk>
+    Copyright (c) 2010-2014 Sune Vuorela <sune@vuorela.dk>
 
     Permission is hereby granted, free of charge, to any person
     obtaining a copy of this software and associated documentation
@@ -49,7 +49,7 @@ QRCodeBarcode::~QRCodeBarcode() {
 
 
 
-QImage QRCodeBarcode::toImage(const QSizeF& size) {
+QImage QRCodeBarcode::paintImage(const QSizeF& size) {
   const int width = qRound(qMin(size.width(),size.height()));
   if(data().size()==0 || width==0) {
     return QImage();

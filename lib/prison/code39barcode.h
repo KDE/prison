@@ -34,21 +34,22 @@ namespace prison {
    * Code 39 Barcode generator
    */
 class PRISON_EXPORT Code39Barcode : public prison::AbstractBarcode {
-  public:
-    /**
-     * creates a Code 39 generator
-     */
-    Code39Barcode();
-    virtual ~Code39Barcode();
-    /**
-     * This function generates the barcode
-     * @return QImage containing a barcode, trying to approximate the requested sizes
-     * @param size The requested size of the barcode, approximate. if the barcode generator can't get the data to fit in there, it might be larger
-     */
-    virtual QImage toImage(const QSizeF& size);
-  private:
-    class Private;
-    Private *d;
+    public:
+        /**
+        * creates a Code 39 generator
+        */
+        Code39Barcode();
+        virtual ~Code39Barcode();
+    protected:
+        /**
+        * This function generates the barcode
+        * @return QImage containing a barcode, trying to approximate the requested sizes, or a null QImage if it can't be painted within requested size
+        * @param size
+        */
+        virtual QImage paintImage(const QSizeF& size ) Q_DECL_OVERRIDE;
+    private:
+        class Private;
+        Private *d;
 };
 }; // namespace
 

@@ -83,8 +83,3 @@ main_window::main_window() {
   m_lineedit->setText("AOEUIAOEUIAOEUI");
   data_changed();
 }
-
-
-
-
-#include "prison.moc"

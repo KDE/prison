@@ -30,9 +30,11 @@ target_include_directories(KF5Prison PUBLIC "$<BUILD_INTERFACE:${Prison_SOURCE_D
 
 
 target_link_libraries(KF5Prison
+PUBLIC
+   Qt5::Gui
+PRIVATE
    ${DMTX_LIBRARIES} 
    ${QRENCODE_LIBRARIES} 
-   Qt5::Gui
 )
 
 set_target_properties(KF5Prison PROPERTIES

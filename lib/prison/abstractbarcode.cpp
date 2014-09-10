@@ -50,7 +50,7 @@ class AbstractBarcode::Private {
         }
         return false;
     }
-    Private(AbstractBarcode* barcode) : m_minimum_size(10,10), q(barcode), m_foreground(Qt::black), m_background(Qt::white) { }
+    Private(AbstractBarcode* barcode) : m_foreground(Qt::black), m_background(Qt::white), m_minimum_size(10,10), q(barcode) { }
 };
 /**
  * @endcond

@@ -11,7 +11,7 @@ set(PRISON_VERSION_STRING "${PRISON_VERSION}")
 
 
 include_directories(${QRENCODE_INCLUDE_DIR} ${DMTX_INCLUDE_DIR})
-SET(    prison_SRC
+SET(    prison_SRCS
         abstractbarcode.cpp
         code39barcode.cpp
         code93barcode.cpp
@@ -19,66 +19,57 @@ SET(    prison_SRC
         qrcodebarcode.cpp
         )
 
-add_library(prison SHARED ${prison_SRC})
-target_link_libraries(prison ${DMTX_LIBRARIES} ${QRENCODE_LIBRARIES} Qt5::Gui)
+add_library(KF5Prison ${prison_SRCS})
 
-set_target_properties(prison PROPERTIES VERSION "${PRISON_VERSION_STRING}" SOVERSION "${PRISON_VERSION_MAJOR}" LINK_INTERFACE_LIBRARIES "" DEFINE_SYMBOL BUILDING_PRISON)
+generate_export_header(KF5Prison BASE_NAME prison)
 
-set(LIB_SUFFIX "" CACHE STRING "Define suffix of directory name (32/64)" )
+add_library(KF5::Prison ALIAS KF5Prison)
 
-include(CheckCXXCompilerFlag)
+target_include_directories(KF5Prison INTERFACE "$<INSTALL_INTERFACE:${KF5_INCLUDE_INSTALL_DIR}/PRISON/prison>")
+target_include_directories(KF5Prison PUBLIC "$<BUILD_INTERFACE:${Prison_SOURCE_DIR}/lib/prison;${Prison_BINARY_DIR}/lib/prison>")
 
-if (CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
-    check_cxx_compiler_flag(-fvisibility=hidden _HAVE_GCC_VISIBILITY)
-    if (_HAVE_GCC_VISIBILITY)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
 
-        check_cxx_compiler_flag(-fvisibility-inlines-hidden _HAVE_GCC_VISIBILITY_INLINES)
-        if (_HAVE_GCC_VISIBILITY_INLINES)
-            set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility-inlines-hidden")
-        endif (_HAVE_GCC_VISIBILITY_INLINES)
-    endif (_HAVE_GCC_VISIBILITY)
-endif (CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
+target_link_libraries(KF5Prison
+   ${DMTX_LIBRARIES} 
+   ${QRENCODE_LIBRARIES} 
+   Qt5::Gui
+)
 
-install(TARGETS prison ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
+set_target_properties(KF5Prison PROPERTIES
+    VERSION ${PRISON_VERSION_STRING}
+    SOVERSION ${PRISON_SOVERSION}
+    EXPORT_NAME Prison
+)
 
-install( FILES
-         abstractbarcode.h
-         AbstractBarcode
-         code39barcode.h
-         Code39Barcode
-         code93barcode.h
-         Code93Barcode
-         datamatrixbarcode.h
-         DataMatrixBarcode
-         qrcodebarcode.h
-         QRCodeBarcode
-         prison_export.h
-         DESTINATION ${CMAKE_INSTALL_PREFIX}/include/prison COMPONENT devel
-         )
+install(TARGETS KF5Prison EXPORT KF5PrisonTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
 
-set(INCLUDE_DIRECTORY ${CMAKE_INSTALL_PREFIX}/include)
-get_target_property(LIB_OUT_NAME prison LOCATION)
-get_filename_component(LIB_OUT_NAME ${LIB_OUT_NAME} NAME)
 
-set(LIBPATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
-set(CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/Prison")
+ecm_generate_headers(Prison_CamelCase_HEADERS
+  HEADER_NAMES
+  AbstractBarcode
+  Code39Barcode
+  Code93Barcode
+  DataMatrixBarcode
+  QRCodeBarcode
+  PREFIX PRISON
+  REQUIRED_HEADERS Prison_HEADERS
+)
+
+install(FILES ${Prison_CamelCase_HEADERS} DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/PRISON/prison COMPONENT Devel)
+
 
 configure_file(
    PrisonConfig.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/PrisonConfig.cmake @ONLY
 )
 
-# this file is used by to check if the installed version can be used.
-write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/PrisonConfigVersion.cmake
-                                 VERSION "${PRISON_VERSION_STRING}"
-                                 COMPATIBILITY SameMajorVersion
-                                )
 
-
-install( FILES
-         ${CMAKE_CURRENT_BINARY_DIR}/PrisonConfig.cmake
-         ${CMAKE_CURRENT_BINARY_DIR}/PrisonConfigVersion.cmake
-	 DESTINATION ${CMAKECONFIG_INSTALL_DIR}
+install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/prison_export.h
+    ${Prison_HEADERS}
+    DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/PRISON/prison
+    COMPONENT Devel
 )
 
+ecm_generate_pri_file(BASE_NAME Prison LIB_NAME KF5Prison DEPS "Qt5::Gui" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KF5_INCLUDE_INSTALL_DIR}/PRISON)
+install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
 

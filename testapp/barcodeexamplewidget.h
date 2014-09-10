@@ -37,7 +37,6 @@ namespace prison {
  */
 class BarcodeExampleWidget : public QWidget {
   public:
-    /*V*
     /**
      * Creates a barcode widget with 'barcode' as barcode generator
      * @param barcode The barcode generator for this widget. Takes ownership over the barcode generator

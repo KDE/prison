@@ -7,12 +7,6 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules/")
 find_package(QRencode REQUIRED)
 find_package(Dmtx REQUIRED)
 
-# Enable CMake's Automoc
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-include_directories(${CMAKE_SOURCE_DIR}/lib ${CMAKE_CURRENT_BINARY_DIR} )
-
 find_package(ECM 1.2.0 CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 include(GenerateExportHeader)

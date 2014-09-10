@@ -27,7 +27,7 @@
 #ifndef PRISON_QRCODEBARCODE_H
 #define PRISON_QRCODEBARCODE_H
 
-#include <prison/abstractbarcode.h>
+#include "abstractbarcode.h"
 
 namespace prison {
   /**

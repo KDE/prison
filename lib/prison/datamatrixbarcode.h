@@ -27,8 +27,8 @@
 #ifndef PRISON_DATAMATRIXBARCODE_H
 #define PRISON_DATAMATRIXBARCODE_H
 
-#include <prison/abstractbarcode.h>
-#include <prison_export.h>
+#include "abstractbarcode.h"
+#include "prison_export.h"
 
 namespace prison {
 /**

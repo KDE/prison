@@ -27,7 +27,7 @@
 #ifndef PRISON_CODE39BARCODE_H
 #define PRISON_CODE39BARCODE_H
 
-#include <prison/abstractbarcode.h>
+#include "abstractbarcode.h"
 
 namespace prison {
   /**

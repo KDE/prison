@@ -1,5 +1,5 @@
 #include <QCoreApplication>
-#include <prison/DataMatrixBarcode>
+#include <prison/datamatrixbarcode.h>
 #include <qstringlist.h>
 #include <QImageWriter>
 #include <QDebug>

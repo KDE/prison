@@ -30,7 +30,7 @@
 #include <QSizeF>
 #include <QImage>
 
-#include <prison/prison_export.h>
+#include <prison_export.h>
 
 class QColor;
 class QPainter;

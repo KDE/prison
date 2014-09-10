@@ -43,7 +43,7 @@ ecm_generate_headers(Prison_CamelCase_HEADERS
   Code93Barcode
   DataMatrixBarcode
   QRCodeBarcode
-  PREFIX PRISON
+  PREFIX PRISON/prison
   REQUIRED_HEADERS Prison_HEADERS
 )
 

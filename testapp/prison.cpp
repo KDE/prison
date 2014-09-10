@@ -2,10 +2,10 @@
 
 #include <QLineEdit>
 #include <QPushButton>
-#include "prison/DataMatrixBarcode"
-#include "prison/QRCodeBarcode"
-#include "prison/Code39Barcode"
-#include "prison/Code93Barcode"
+#include <prison/datamatrixbarcode.h>
+#include <prison/qrcodebarcode.h>
+#include <prison/code39barcode.h>
+#include <prison/code93barcode.h>
 #include <QHBoxLayout>
 #include <QSplitter>
 #include "barcodeexamplewidget.h"

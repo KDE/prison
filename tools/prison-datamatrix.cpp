@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
     } else if(argument==QLatin1String("--output-format") || argument==QLatin1String("--output-format") || argument==QLatin1String("-f")) {
       outputformat = arguments.takeFirst();
     } else if(argument.startsWith(QLatin1String("-"))) {
-      error("unknown argument",argument);
+      error(QLatin1String("unknown argument"),argument);
     } else {
       break;
     }
@@ -44,20 +44,20 @@ int main(int argc, char* argv[]) {
   }
 
   if(!QImageWriter::supportedImageFormats().contains(outputformat.toLocal8Bit())) {
-    error("unsupported output format", outputformat);
+    error(QLatin1String("unsupported output format"), outputformat);
   }
   
   if(outputfile.isEmpty()) {
-    error("outputfile is missing",QString());
+    error(QLatin1String("outputfile is missing"),QString());
   }
 
   bool ok=false;
   int intsize = size.toInt(&ok);
   if(!ok) {
-    error("size not a int",size);
+    error(QLatin1String("size not a int"),size);
   }
   if(intsize < 10) {
-    error("needs a larger output size",size);
+    error(QLatin1String("needs a larger output size"),size);
   }
 
   
@@ -67,7 +67,7 @@ int main(int argc, char* argv[]) {
     QTextStream in(stdin);
     data = in.readAll();
     if(data.size()==0) {
-      error("No data, neither on commandline nor on stdin",QString());
+      error(QLatin1String("No data, neither on commandline nor on stdin"),QString());
     }
   }
 
@@ -76,7 +76,7 @@ int main(int argc, char* argv[]) {
   QImage result = barcode.toImage(QSizeF(intsize,intsize));
   QImageWriter w(outputfile,outputformat.toLocal8Bit());
   if(!w.write(result)) {
-    error("writing failed",w.errorString());
+    error(QLatin1String("writing failed"),w.errorString());
   }
   
 }

@@ -13,9 +13,18 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 include_directories(${CMAKE_SOURCE_DIR}/lib ${CMAKE_CURRENT_BINARY_DIR} )
 
-find_package(ECM 1.1.0 REQUIRED NO_MODULE)
-set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR})
+find_package(ECM 1.2.0 CONFIG REQUIRED)
+set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
+include(GenerateExportHeader)
+include(ECMGenerateHeaders)
+include(ECMGeneratePriFile)
+include(ECMPackageConfigHelpers)
+include(ECMSetupVersion)
+include(FeatureSummary)
 include(KDEInstallDirs)
+include(KDECMakeSettings)
+include(KDEFrameworkCompilerSettings)
+
 
 set(QT_REQUIRED_VERSION "5.2.0")
 

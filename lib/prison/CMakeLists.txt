@@ -1,15 +1,5 @@
 include(CMakePackageConfigHelpers)
 
-set(PRISON_VERSION_MAJOR "1")
-set(PRISON_VERSION_MINOR "2")
-set(PRISON_VERSION_PATCH "0")
-
-
-
-set(PRISON_VERSION "${PRISON_VERSION_MAJOR}.${PRISON_VERSION_MINOR}.${PRISON_VERSION_PATCH}")
-set(PRISON_VERSION_STRING "${PRISON_VERSION}")
-
-
 include_directories(${QRENCODE_INCLUDE_DIR} ${DMTX_INCLUDE_DIR})
 SET(    prison_SRCS
         abstractbarcode.cpp
@@ -58,11 +48,6 @@ ecm_generate_headers(Prison_CamelCase_HEADERS
 )
 
 install(FILES ${Prison_CamelCase_HEADERS} DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/PRISON/prison COMPONENT Devel)
-
-
-configure_file(
-   PrisonConfig.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/PrisonConfig.cmake @ONLY
-)
 
 
 install(FILES

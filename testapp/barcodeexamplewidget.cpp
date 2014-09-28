@@ -40,7 +40,7 @@ BarcodeExampleWidget::BarcodeExampleWidget(AbstractBarcode* barcode, QWidget* pa
 
 
 
-void BarcodeExampleWidget::setData(QString data) {
+void BarcodeExampleWidget::setData(const QString &data) {
   if(m_barcode)
     m_barcode->setData(data);
   updateGeometry();

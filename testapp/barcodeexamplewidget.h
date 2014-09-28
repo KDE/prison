@@ -48,7 +48,7 @@ class BarcodeExampleWidget : public QWidget {
      * sets the data shown to data, and triggers a repaint and resize if needed
      * @param data QString holding the data to be shown
      */
-    void setData(QString data);
+    void setData(const QString &data);
     /**
      * Reimplementation
      * @return minimumSizeHint for this widget

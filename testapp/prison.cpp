@@ -28,7 +28,7 @@ main_window::main_window() {
   QHBoxLayout* lay = new QHBoxLayout();
   m_lineedit = new QLineEdit(this);
   QPushButton* but = new QPushButton(this);
-  connect(but,SIGNAL(clicked()),SLOT(data_changed()));
+  connect(but, &QPushButton::clicked, this, &main_window::data_changed);
   lay->addWidget(m_lineedit);
   lay->addWidget(but);
 

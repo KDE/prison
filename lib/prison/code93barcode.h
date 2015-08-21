@@ -50,6 +50,6 @@ class PRISON_EXPORT Code93Barcode : public prison::AbstractBarcode {
     class Private;
     Private *d;
 };
-}; // namespace
+} // namespace
 
 #endif // PRISON_CODE39BARCODE_H

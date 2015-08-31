@@ -81,6 +81,8 @@ QImage AbstractBarcode::toImage(const QSizeF& size) {
 void AbstractBarcode::setData(const QString& data) {
   d->m_data=data;
   d->m_cache=QImage();
+  d->m_size=QSize();
+  d->m_minimum_size=QSizeF(10,10);
 }
 
 QSizeF AbstractBarcode::minimumSize() const {

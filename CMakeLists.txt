@@ -31,7 +31,7 @@ if(QT5_BUILD)
   include_directories(${QT_INCLUDES}) # TODO: Port away from this.
 
   if(CMAKE_VERSION VERSION_LESS 2.8.9)
-    message(FATAL_ERROR "Akonadi Qt 5 build requires at least CMake version 2.8.9")
+    message(FATAL_ERROR "Prison Qt 5 build requires at least CMake version 2.8.9")
   endif()
 
   if (Qt5_POSITION_INDEPENDENT_CODE)

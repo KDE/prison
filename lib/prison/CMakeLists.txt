@@ -7,6 +7,7 @@ SET(    prison_SRCS
         code93barcode.cpp
         datamatrixbarcode.cpp
         qrcodebarcode.cpp
+        prison.cpp
         )
 
 add_library(KF5Prison ${prison_SRCS})
@@ -37,10 +38,7 @@ install(TARGETS KF5Prison EXPORT KF5PrisonTargets ${KF5_INSTALL_TARGETS_DEFAULT_
 ecm_generate_headers(Prison_CamelCase_HEADERS
   HEADER_NAMES
   AbstractBarcode
-  Code39Barcode
-  Code93Barcode
-  DataMatrixBarcode
-  QRCodeBarcode
+  Prison
   PREFIX PRISON/
   REQUIRED_HEADERS Prison_HEADERS
 )

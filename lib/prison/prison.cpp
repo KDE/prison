@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2011 Geoffry Song <goffrie@gmail.com>
+    Copyright (c) 2010-2016 Sune Vuorela <sune@vuorela.dk>
 
     Permission is hereby granted, free of charge, to any person
     obtaining a copy of this software and associated documentation
@@ -24,32 +24,29 @@
 
 */
 
-#ifndef PRISON_CODE93BARCODE_H
-#define PRISON_CODE93BARCODE_H
+#include "prison.h"
+#include "datamatrixbarcode.h"
+#include "qrcodebarcode.h"
+#include "code39barcode.h"
+#include "code93barcode.h"
 
-#include "abstractbarcode.h"
+Prison::AbstractBarcode *Prison::createBarcode(BarcodeType type)
+{
+    switch(type)
+    {
+        case Prison::Null:
+            return nullptr;
+        case Prison::QRCode:
+            return new QRCodeBarcode;
+        case Prison::DataMatrix:
+            return new DataMatrixBarcode;
+        case Prison::Aztec:
+            return nullptr;
+        case Prison::Code39:
+            return new Code39Barcode;
+        case Prison::Code93:
+            return new Code93Barcode;
+    }
+    return nullptr;
 
-namespace Prison {
-  /**
-   * Code 93 Barcode generator
-   */
-class Code93Barcode : public Prison::AbstractBarcode {
-  public:
-    /**
-     * creates a Code 93 generator
-     */
-    Code93Barcode();
-    virtual ~Code93Barcode();
-    /**
-     * This function generates the barcode
-     * @return QImage containing a barcode, trying to approximate the requested sizes
-     * @param size The requested size of the barcode, approximate. if the barcode generator can't generate it, it can return a null QImage
-     */
-    virtual QImage paintImage(const QSizeF& size) Q_DECL_OVERRIDE;
-  private:
-    class Private;
-    Private *d;
-};
-} // namespace
-
-#endif // PRISON_CODE39BARCODE_H
+}

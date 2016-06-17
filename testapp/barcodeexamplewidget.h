@@ -29,7 +29,7 @@
 
 #include <QWidget>
 
-namespace prison {
+namespace Prison {
     class AbstractBarcode;
 }
 /**
@@ -42,7 +42,7 @@ class BarcodeExampleWidget : public QWidget {
      * @param barcode The barcode generator for this widget. Takes ownership over the barcode generator
      * @param parent the parent in QWidget hierachy
      */
-    BarcodeExampleWidget(prison::AbstractBarcode* barcode, QWidget* parent=0);
+    BarcodeExampleWidget(Prison::AbstractBarcode* barcode, QWidget* parent=0);
     virtual ~BarcodeExampleWidget();
     /**
      * sets the data shown to data, and triggers a repaint and resize if needed
@@ -71,7 +71,7 @@ class BarcodeExampleWidget : public QWidget {
      */
     virtual void mousePressEvent(QMouseEvent* event);
   private:
-    prison::AbstractBarcode* m_barcode;
+    Prison::AbstractBarcode* m_barcode;
 };
 
 #endif // PRISON_BARCODEWIDGET_H

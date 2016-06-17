@@ -29,12 +29,12 @@
 
 #include "abstractbarcode.h"
 
-namespace prison {
+namespace Prison {
   /**
    * QRCode Barcode generator ; uses libqrencode to do the actual encoding
    * of the barcode.
    */
-class PRISON_EXPORT QRCodeBarcode : public prison::AbstractBarcode {
+class PRISON_EXPORT QRCodeBarcode : public Prison::AbstractBarcode {
   public:
     /**
      * creates a QRCode generator

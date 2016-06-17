@@ -28,7 +28,7 @@
 #include <QChar>
 #include <QColor>
 
-using namespace prison;
+using namespace Prison;
 /**
 @cond PRIVATE
 */

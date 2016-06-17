@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2010-2014 Sune Vuorela <sune@vuorela.dk>
+    Copyright (c) 2010-2016 Sune Vuorela <sune@vuorela.dk>
 
     Permission is hereby granted, free of charge, to any person
     obtaining a copy of this software and associated documentation
@@ -29,7 +29,7 @@
 #include <QPainter>
 #include <QColor>
 
-using namespace prison;
+using namespace Prison;
 /**
  * @cond private
  */

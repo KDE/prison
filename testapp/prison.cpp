@@ -1,13 +1,38 @@
+/*
+    Copyright (c) 2010-2016 Sune Vuorela <sune@vuorela.dk>
+
+    Permission is hereby granted, free of charge, to any person
+    obtaining a copy of this software and associated documentation
+    files (the "Software"), to deal in the Software without
+    restriction, including without limitation the rights to use,
+    copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the
+    Software is furnished to do so, subject to the following
+    conditions:
+
+    The above copyright notice and this permission notice shall be
+    included in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+    OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+    NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+    HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+    WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+    OTHER DEALINGS IN THE SOFTWARE.
+
+*/
+
 #include "prison.h"
 
 #include <QLineEdit>
 #include <QPushButton>
-#include <prison/datamatrixbarcode.h>
-#include <prison/qrcodebarcode.h>
-#include <prison/code39barcode.h>
-#include <prison/code93barcode.h>
+#include <prison/prison.h>
+#include <prison/abstractbarcode.h>
 #include <QHBoxLayout>
 #include <QSplitter>
+#include <QDebug>
 #include "barcodeexamplewidget.h"
 
 void main_window::data_changed() {
@@ -34,33 +59,73 @@ main_window::main_window() {
 
   QVBoxLayout* mainlay = new QVBoxLayout();
 
-  m_dmw = new BarcodeExampleWidget(new prison::DataMatrixBarcode(),this);
-  m_qrw = new BarcodeExampleWidget(new prison::QRCodeBarcode(),this);
-  m_39w = new BarcodeExampleWidget(new prison::Code39Barcode(),this);
-  m_93w = new BarcodeExampleWidget(new prison::Code93Barcode(),this);
   {
-    prison::DataMatrixBarcode* dmcolorcode = new prison::DataMatrixBarcode();
-    dmcolorcode->setForegroundColor(Qt::red);
-    dmcolorcode->setBackgroundColor(Qt::darkBlue);
-    m_dmcolor = new BarcodeExampleWidget(dmcolorcode,this);
+    Prison::AbstractBarcode* barcode = Prison::createBarcode(Prison::DataMatrix);
+    if (!barcode) {
+        qDebug() << "unsupported barcode, showing a black square";
+    }
+    m_dmw = new BarcodeExampleWidget(barcode,this);
   }
   {
-    prison::QRCodeBarcode* qrcolorcode =  new prison::QRCodeBarcode();
-    qrcolorcode->setForegroundColor(Qt::red);
-    qrcolorcode->setBackgroundColor(Qt::darkBlue);
-    m_qrcolor = new BarcodeExampleWidget(qrcolorcode,this);
+    Prison::AbstractBarcode* barcode = Prison::createBarcode(Prison::QRCode);
+    if (!barcode) {
+        qDebug() << "unsupported barcode, showing a black square";
+    }
+    m_qrw = new BarcodeExampleWidget(barcode, this);
   }
   {
-    prison::Code39Barcode* c39colorcode =  new prison::Code39Barcode();
-    c39colorcode->setForegroundColor(Qt::red);
-    c39colorcode->setBackgroundColor(Qt::darkBlue);
-    m_39color = new BarcodeExampleWidget(c39colorcode,this);
+    Prison::AbstractBarcode* barcode = Prison::createBarcode(Prison::Code39);
+    if (!barcode) {
+        qDebug() << "unsupported barcode, showing a black square";
+    }
+    m_39w = new BarcodeExampleWidget(barcode, this);
   }
   {
-    prison::Code93Barcode* c93colorcode =  new prison::Code93Barcode();
-    c93colorcode->setForegroundColor(Qt::red);
-    c93colorcode->setBackgroundColor(Qt::darkBlue);
-    m_93color = new BarcodeExampleWidget(c93colorcode,this);
+    Prison::AbstractBarcode* barcode = Prison::createBarcode(Prison::Code93);
+    if (!barcode) {
+        qDebug() << "unsupported barcode, showing a black square";
+    }
+    m_93w = new BarcodeExampleWidget(barcode, this);
+  }
+  {
+    Prison::AbstractBarcode* dmcolorcode = Prison::createBarcode(Prison::DataMatrix);
+    if(dmcolorcode) {
+      dmcolorcode->setForegroundColor(Qt::red);
+      dmcolorcode->setBackgroundColor(Qt::darkBlue);
+    } else {
+      qDebug() << "unsupported barcode, showing a black square";
+    }
+    m_dmcolor = new BarcodeExampleWidget(dmcolorcode, this);
+  }
+  {
+    Prison::AbstractBarcode* qrcolorcode = Prison::createBarcode(Prison::QRCode);
+    if(qrcolorcode) {
+      qrcolorcode->setForegroundColor(Qt::red);
+      qrcolorcode->setBackgroundColor(Qt::darkBlue);
+    } else {
+      qDebug() << "unsupported barcode, showing a black square";
+    }
+    m_qrcolor = new BarcodeExampleWidget(qrcolorcode, this);
+  }
+  {
+    Prison::AbstractBarcode* c39colorcode = Prison::createBarcode(Prison::Code39);
+    if(c39colorcode) {
+      c39colorcode->setForegroundColor(Qt::red);
+      c39colorcode->setBackgroundColor(Qt::darkBlue);
+    } else {
+      qDebug() << "unsupported barcode, showing a black square";
+    }
+    m_39color = new BarcodeExampleWidget(c39colorcode, this);
+  }
+  {
+    Prison::AbstractBarcode* c93colorcode = Prison::createBarcode(Prison::Code93);
+    if(c93colorcode) {
+      c93colorcode->setForegroundColor(Qt::red);
+      c93colorcode->setBackgroundColor(Qt::darkBlue);
+    } else {
+      qDebug() << "unsupported barcode, showing a black square";
+    }
+    m_93color = new BarcodeExampleWidget(c93colorcode, this);
   }
 
   m_nullw = new BarcodeExampleWidget(0,this);

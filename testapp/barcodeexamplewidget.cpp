@@ -31,7 +31,7 @@
 #include <QMimeData>
 #include <QDrag>
 
-using namespace prison;
+using namespace Prison;
 
 BarcodeExampleWidget::BarcodeExampleWidget(AbstractBarcode* barcode, QWidget* parent): QWidget(parent), m_barcode(barcode)
 {

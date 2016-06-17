@@ -29,11 +29,11 @@
 
 #include "abstractbarcode.h"
 
-namespace prison {
+namespace Prison {
   /**
    * Code 39 Barcode generator
    */
-class PRISON_EXPORT Code39Barcode : public prison::AbstractBarcode {
+class Code39Barcode : public Prison::AbstractBarcode {
     public:
         /**
         * creates a Code 39 generator

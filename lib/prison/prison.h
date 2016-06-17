@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2011 Geoffry Song <goffrie@gmail.com>
+    Copyright (c) 2010-2016 Sune Vuorela <sune@vuorela.dk>
 
     Permission is hereby granted, free of charge, to any person
     obtaining a copy of this software and associated documentation
@@ -24,32 +24,38 @@
 
 */
 
-#ifndef PRISON_CODE93BARCODE_H
-#define PRISON_CODE93BARCODE_H
-
+#ifndef PRISON_PRISON_H
+#define PRISON_PRISON_H
+#include "prison_export.h"
 #include "abstractbarcode.h"
 
 namespace Prison {
-  /**
-   * Code 93 Barcode generator
-   */
-class Code93Barcode : public Prison::AbstractBarcode {
-  public:
+    class AbstractBarcode;
     /**
-     * creates a Code 93 generator
+     * possible supported barcode types
      */
-    Code93Barcode();
-    virtual ~Code93Barcode();
-    /**
-     * This function generates the barcode
-     * @return QImage containing a barcode, trying to approximate the requested sizes
-     * @param size The requested size of the barcode, approximate. if the barcode generator can't generate it, it can return a null QImage
-     */
-    virtual QImage paintImage(const QSizeF& size) Q_DECL_OVERRIDE;
-  private:
-    class Private;
-    Private *d;
-};
-} // namespace
+    enum BarcodeType
+    {
+        /** Null barcode */
+        Null = 0,
+        /** QRCode 2d barcode */
+        QRCode = 1,
+        /** DataMatrix 2d barcode */
+        DataMatrix = 2,
+        /** Aztec 2d barcode (currently unsupported)*/
+        Aztec,
+        /** Code39 barcode */
+        Code39,
+        /** Code93 barcode */
+        Code93
 
-#endif // PRISON_CODE39BARCODE_H
+    };
+    /**
+     * Factory method to create a barcode of a given type.
+     * @param type barcode type. See @ref BarcodeType enum for values
+     * @return a barcode provider, or a null pointer if unsupported. Ownership is passed to the caller.
+     */
+    PRISON_EXPORT Prison::AbstractBarcode* createBarcode(BarcodeType type);
+}
+
+#endif // PRISON_PRISON_H

@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2010-2014 Sune Vuorela <sune@vuorela.dk>
+    Copyright (c) 2010-2016 Sune Vuorela <sune@vuorela.dk>
 
     Permission is hereby granted, free of charge, to any person
     obtaining a copy of this software and associated documentation
@@ -35,7 +35,7 @@
 class QColor;
 class QPainter;
 
-namespace prison {
+namespace Prison {
   /**
    * base class for barcode generators
    * To add your own barcode generator, subclass this class

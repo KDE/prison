@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2010-2014 Sune Vuorela <sune@vuorela.dk>
+    Copyright (c) 2010-2016 Sune Vuorela <sune@vuorela.dk>
 
     Permission is hereby granted, free of charge, to any person
     obtaining a copy of this software and associated documentation
@@ -30,12 +30,12 @@
 #include "abstractbarcode.h"
 #include "prison_export.h"
 
-namespace prison {
+namespace Prison {
 /**
  * This is a Datamatrix barcode generator that uses libdmtx
  * for the actual generation of barcodes.
  */
-class PRISON_EXPORT DataMatrixBarcode : public prison::AbstractBarcode {
+class DataMatrixBarcode : public Prison::AbstractBarcode {
     public:
         /**
         * creates a datamatrixbarcode generator

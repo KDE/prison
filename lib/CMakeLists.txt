@@ -1,39 +1,56 @@
+include(CMakePackageConfigHelpers)
 
-set(PRISON_VERSION "1.2.2")
-
-set(CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/KF5Prison")
-
-ecm_setup_version(${PRISON_VERSION} VARIABLE_PREFIX PRISON
-                        VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/prison_version.h"
-                        PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5PrisonConfigVersion.cmake"
-                        SOVERSION 1
+include_directories(${QRENCODE_INCLUDE_DIR} ${DMTX_INCLUDE_DIR})
+SET(prison_SRCS
+    abstractbarcode.cpp
+    code39barcode.cpp
+    code93barcode.cpp
+    datamatrixbarcode.cpp
+    qrcodebarcode.cpp
+    prison.cpp
 )
 
+add_library(KF5Prison ${prison_SRCS})
 
-ecm_configure_package_config_file(
-  "${prison_SOURCE_DIR}/lib/KF5PrisonConfig.cmake.in"
-  "${prison_BINARY_DIR}/lib/KF5PrisonConfig.cmake"
-  INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
+generate_export_header(KF5Prison BASE_NAME prison)
+
+add_library(KF5::Prison ALIAS KF5Prison)
+
+target_include_directories(KF5Prison INTERFACE "$<INSTALL_INTERFACE:${KF5_INCLUDE_INSTALL_DIR}/PRISON/>")
+
+target_link_libraries(KF5Prison
+PUBLIC
+   Qt5::Gui
+PRIVATE
+   ${DMTX_LIBRARIES} 
+   ${QRENCODE_LIBRARIES} 
 )
+
+set_target_properties(KF5Prison PROPERTIES
+    VERSION ${PRISON_VERSION_STRING}
+    SOVERSION ${PRISON_SOVERSION}
+    EXPORT_NAME Prison
+)
+
+install(TARGETS KF5Prison EXPORT KF5PrisonTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
+
+ecm_generate_headers(Prison_CamelCase_HEADERS
+    HEADER_NAMES
+    AbstractBarcode
+    Prison
+    PREFIX PRISON/
+    REQUIRED_HEADERS Prison_HEADERS
+)
+
+install(FILES ${Prison_CamelCase_HEADERS} DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/PRISON/prison COMPONENT Devel)
 
 install(FILES
-  "${prison_BINARY_DIR}/lib/KF5PrisonConfig.cmake"
-  "${prison_BINARY_DIR}/lib/KF5PrisonConfigVersion.cmake"
-  DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
-  COMPONENT Devel
+    ${CMAKE_CURRENT_BINARY_DIR}/prison_export.h
+    ${Prison_HEADERS}
+    DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/PRISON/prison
+    COMPONENT Devel
 )
 
-install(EXPORT KF5PrisonTargets
-        DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
-        FILE KF5PrisonTargets.cmake
-        NAMESPACE KF5::
-)
+ecm_generate_pri_file(BASE_NAME Prison LIB_NAME KF5Prison DEPS "Qt5::Gui" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KF5_INCLUDE_INSTALL_DIR}/PRISON)
+install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
 
-install(FILES
-   ${CMAKE_CURRENT_BINARY_DIR}/prison_version.h
-   DESTINATION ${KF5_INCLUDE_INSTALL_DIR}
-   COMPONENT Devel
-)
-
-
-add_subdirectory(prison)

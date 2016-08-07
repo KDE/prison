@@ -39,7 +39,7 @@ add_subdirectory(lib)
 add_subdirectory(tools)
 if(BUILD_TESTING)
     find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Test Widgets)
-    add_subdirectory(test)
+    add_subdirectory(tests)
 endif()
 
 set(CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/KF5Prison")

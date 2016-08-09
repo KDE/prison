@@ -43,10 +43,6 @@ ecm_generate_headers(Prison_CamelCase_HEADERS
 )
 
 install(FILES
-    code39barcode.h
-    code93barcode.h
-    datamatrixbarcode.h
-    qrcodebarcode.h
     ${Prison_CamelCase_HEADERS}
     DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/prison COMPONENT Devel)
 

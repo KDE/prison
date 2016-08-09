@@ -25,7 +25,7 @@
 */
 
 #include "barcodeexamplewidget.h"
-#include "prison/abstractbarcode.h"
+#include "lib/abstractbarcode.h"
 #include <QResizeEvent>
 #include <QPainter>
 #include <QMimeData>

@@ -12,11 +12,11 @@ SET(prison_SRCS
 
 add_library(KF5Prison ${prison_SRCS})
 
-generate_export_header(KF5Prison BASE_NAME prison)
+generate_export_header(KF5Prison BASE_NAME Prison)
 
 add_library(KF5::Prison ALIAS KF5Prison)
 
-target_include_directories(KF5Prison INTERFACE "$<INSTALL_INTERFACE:${KF5_INCLUDE_INSTALL_DIR}/PRISON/>")
+target_include_directories(KF5Prison INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/Prison/>")
 
 target_link_libraries(KF5Prison
 PUBLIC
@@ -38,19 +38,22 @@ ecm_generate_headers(Prison_CamelCase_HEADERS
     HEADER_NAMES
     AbstractBarcode
     Prison
-    PREFIX PRISON/
+    Code39barcode
+    Code93barcode
+    Datamatrixbarcode
+    Qrcodebarcode
     REQUIRED_HEADERS Prison_HEADERS
 )
 
-install(FILES ${Prison_CamelCase_HEADERS} DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/PRISON/prison COMPONENT Devel)
+install(FILES ${Prison_CamelCase_HEADERS} DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/Prison COMPONENT Devel)
 
 install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/prison_export.h
     ${Prison_HEADERS}
-    DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/PRISON/prison
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/Prison
     COMPONENT Devel
 )
 
-ecm_generate_pri_file(BASE_NAME Prison LIB_NAME KF5Prison DEPS "Qt5::Gui" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KF5_INCLUDE_INSTALL_DIR}/PRISON)
+ecm_generate_pri_file(BASE_NAME Prison LIB_NAME KF5Prison DEPS "Qt5::Gui" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF5}/Prison)
 install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
 

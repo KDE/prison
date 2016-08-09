@@ -25,8 +25,8 @@
 */
 
 #include <QCoreApplication>
-#include <prison/prison.h>
-#include <prison/abstractbarcode.h>
+#include "lib/prison.h"
+#include "lib/abstractbarcode.h"
 #include <qstringlist.h>
 #include <QImageWriter>
 #include <QDebug>

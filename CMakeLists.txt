@@ -35,6 +35,8 @@ ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX PRISON
                         SOVERSION 1
 )
 
+include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
+
 add_subdirectory(lib)
 add_subdirectory(tools)
 if(BUILD_TESTING)

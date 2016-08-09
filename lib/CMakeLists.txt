@@ -1,6 +1,6 @@
 include(CMakePackageConfigHelpers)
 
-include_directories(${QRENCODE_INCLUDE_DIR} ${DMTX_INCLUDE_DIR})
+include_directories(${QRENCODE_INCLUDE_DIR})
 SET(prison_SRCS
     abstractbarcode.cpp
     code39barcode.cpp
@@ -22,7 +22,7 @@ target_link_libraries(KF5Prison
 PUBLIC
    Qt5::Gui
 PRIVATE
-   ${DMTX_LIBRARIES} 
+   Dmtx::Dmtx
    ${QRENCODE_LIBRARIES} 
 )
 

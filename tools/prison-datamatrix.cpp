@@ -1,5 +1,32 @@
+/*
+    Copyright (c) 2010-2016 Sune Vuorela <sune@vuorela.dk>
+
+    Permission is hereby granted, free of charge, to any person
+    obtaining a copy of this software and associated documentation
+    files (the "Software"), to deal in the Software without
+    restriction, including without limitation the rights to use,
+    copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the
+    Software is furnished to do so, subject to the following
+    conditions:
+
+    The above copyright notice and this permission notice shall be
+    included in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+    OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+    NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+    HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+    WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+    OTHER DEALINGS IN THE SOFTWARE.
+
+*/
+
 #include <QCoreApplication>
-#include <prison/DataMatrixBarcode>
+#include "lib/prison.h"
+#include "lib/abstractbarcode.h"
 #include <qstringlist.h>
 #include <QImageWriter>
 #include <QDebug>
@@ -33,7 +60,7 @@ int main(int argc, char* argv[]) {
     } else if(argument==QLatin1String("--output-format") || argument==QLatin1String("--output-format") || argument==QLatin1String("-f")) {
       outputformat = arguments.takeFirst();
     } else if(argument.startsWith(QLatin1String("-"))) {
-      error("unknown argument",argument);
+      error(QLatin1String("unknown argument"),argument);
     } else {
       break;
     }
@@ -44,20 +71,20 @@ int main(int argc, char* argv[]) {
   }
 
   if(!QImageWriter::supportedImageFormats().contains(outputformat.toLocal8Bit())) {
-    error("unsupported output format", outputformat);
+    error(QLatin1String("unsupported output format"), outputformat);
   }
   
   if(outputfile.isEmpty()) {
-    error("outputfile is missing",QString());
+    error(QLatin1String("outputfile is missing"),QString());
   }
 
   bool ok=false;
   int intsize = size.toInt(&ok);
   if(!ok) {
-    error("size not a int",size);
+    error(QLatin1String("size not a int"),size);
   }
   if(intsize < 10) {
-    error("needs a larger output size",size);
+    error(QLatin1String("needs a larger output size"),size);
   }
 
   
@@ -67,16 +94,21 @@ int main(int argc, char* argv[]) {
     QTextStream in(stdin);
     data = in.readAll();
     if(data.size()==0) {
-      error("No data, neither on commandline nor on stdin",QString());
+      error(QLatin1String("No data, neither on commandline nor on stdin"),QString());
     }
   }
 
-  prison::DataMatrixBarcode barcode;
-  barcode.setData(data);
-  QImage result = barcode.toImage(QSizeF(intsize,intsize));
+  QScopedPointer<Prison::AbstractBarcode> barcode;
+  barcode.reset(Prison::createBarcode(Prison::DataMatrix));
+  if(!barcode) {
+    error(QLatin1String("unsupported barcode type"), QString());
+  }
+
+  barcode->setData(data);
+  QImage result = barcode->toImage(QSizeF(intsize,intsize));
   QImageWriter w(outputfile,outputformat.toLocal8Bit());
   if(!w.write(result)) {
-    error("writing failed",w.errorString());
+    error(QLatin1String("writing failed"),w.errorString());
   }
   
 }

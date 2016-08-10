@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2010-2011 Sune Vuorela <sune@vuorela.dk>
+    Copyright (c) 2010-2016 Sune Vuorela <sune@vuorela.dk>
 
     Permission is hereby granted, free of charge, to any person
     obtaining a copy of this software and associated documentation
@@ -30,12 +30,12 @@
 #include <QSizeF>
 #include <QImage>
 
-#include <prison/prison_export.h>
+#include "prison_export.h"
 
 class QColor;
 class QPainter;
 
-namespace prison {
+namespace Prison {
   /**
    * base class for barcode generators
    * To add your own barcode generator, subclass this class
@@ -67,18 +67,15 @@ class PRISON_EXPORT AbstractBarcode {
      */
     void setData(const QString& data);
     /**
-     * paints the barcode in the given rectangle.
-     * @param painter The QPainter to paint upon
-     * @param targetrect The rectangle to paint within
-     */
-    void paint(QPainter* painter, const QRectF& targetrect);
-    /**
      * Creates a image with a barcode on
-     * This is the function that actually does all the interesting things, the rest is just icing and api.
-     * @return QImage with a barcode on, trying to match the requested size
-     * @param size Requested size for the barcode, if smaller than minimumSize, a image fitting within minimumsize will be  returned
+     * @return QImage with a barcode on, trying to match the requested \param size
+     *
+     * The image function is cached and painted on demand.
+     *
+     * if one of the dimensions of @param size is smaller than the matching dimension in \ref minimumSize,
+     * a null QImage will be returned 
      */
-    virtual QImage toImage(const QSizeF& size) = 0 ;
+    QImage toImage(const QSizeF& size) ;
     /**
      * Note! minimalSize() doesn't work as expected if this is not painting on something.
      * @return the minimal size for this barcode.
@@ -110,6 +107,12 @@ class PRISON_EXPORT AbstractBarcode {
      * @param minimumSize QSizeF holding the minimum size for this barcode
      */
     void setMinimumSize(const QSizeF& minimumSize);
+    /**
+     * Doing the actual painting of the image
+     * @param size requested size of the miage
+     * @return image with barcode, or null image
+     */
+    virtual QImage paintImage(const QSizeF& size) = 0;
   private:
    class Private;
    /**

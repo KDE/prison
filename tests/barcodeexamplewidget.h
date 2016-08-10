@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2010-2011 Sune Vuorela <sune@vuorela.dk>
+    Copyright (c) 2010-2014 Sune Vuorela <sune@vuorela.dk>
 
     Permission is hereby granted, free of charge, to any person
     obtaining a copy of this software and associated documentation
@@ -28,40 +28,27 @@
 #define PRISON_BARCODEWIDGET_H
 
 #include <QWidget>
-#include <prison/prison_export.h>
 
-
-namespace prison {
-class AbstractBarcode;
+namespace Prison {
+    class AbstractBarcode;
+}
 /**
  * QWidget with a barcode on
  */
-
-class PRISON_EXPORT BarcodeWidget : public QWidget {
+class BarcodeExampleWidget : public QWidget {
   public:
-    /**
-     * Creates a barcodewidget with no barcode generator
-     * use setBarcode() to set the barcode
-     * @param parent the parent in QWidget hierachy
-     */
-    BarcodeWidget(QWidget* parent=0);
     /**
      * Creates a barcode widget with 'barcode' as barcode generator
      * @param barcode The barcode generator for this widget. Takes ownership over the barcode generator
      * @param parent the parent in QWidget hierachy
      */
-    BarcodeWidget(AbstractBarcode* barcode, QWidget* parent=0);
-    virtual ~BarcodeWidget();
+    BarcodeExampleWidget(Prison::AbstractBarcode* barcode, QWidget* parent=0);
+    virtual ~BarcodeExampleWidget();
     /**
      * sets the data shown to data, and triggers a repaint and resize if needed
      * @param data QString holding the data to be shown
      */
-    void setData(QString data);
-    /**
-     * sets the barcode generator to barcode, and deletes the existing barcode.
-     * @param barcode USes this barcode generator for this widget, and takes ownership over it
-     */
-    void setBarcode(AbstractBarcode* barcode);
+    void setData(const QString &data);
     /**
      * Reimplementation
      * @return minimumSizeHint for this widget
@@ -84,12 +71,7 @@ class PRISON_EXPORT BarcodeWidget : public QWidget {
      */
     virtual void mousePressEvent(QMouseEvent* event);
   private:
-    class Private;
-    /**
-     * d pointer
-     */
-    Private* d;
+    Prison::AbstractBarcode* m_barcode;
 };
-}; //namespace 
 
 #endif // PRISON_BARCODEWIDGET_H

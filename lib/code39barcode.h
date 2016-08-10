@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2010-2011 Sune Vuorela <sune@vuorela.dk>
+    Copyright (c) 2011 Geoffry Song <goffrie@gmail.com>
 
     Permission is hereby granted, free of charge, to any person
     obtaining a copy of this software and associated documentation
@@ -24,34 +24,33 @@
 
 */
 
-#ifndef PRISON_DATAMATRIXBARCODE_H
-#define PRISON_DATAMATRIXBARCODE_H
+#ifndef PRISON_CODE39BARCODE_H
+#define PRISON_CODE39BARCODE_H
 
-#include <prison/abstractbarcode.h>
-#include <prison/prison_export.h>
+#include "abstractbarcode.h"
 
-namespace prison {
-/**
- * This is a Datamatrix barcode generator that uses libdmtx
- * for the actual generation of barcodes.
- */
-class PRISON_EXPORT DataMatrixBarcode : public prison::AbstractBarcode {
-  public:
-    /**
-     * creates a datamatrixbarcode generator
-     */
-    DataMatrixBarcode();
-    virtual ~DataMatrixBarcode();
-    /**
-    * This is the function doing the actual work in generating the barcode
-    * @return QImage containing a DataMatrix, trying to approximate the requested sizes
-    * @param size The requested size of the barcode, approximate. if the barcode generator can't get the data to fit in there, it might be larger
-    */
-    virtual QImage toImage(const QSizeF& size);
-  private:
-    class Private;
-    Private *d;
+namespace Prison {
+  /**
+   * Code 39 Barcode generator
+   */
+class Code39Barcode : public Prison::AbstractBarcode {
+    public:
+        /**
+        * creates a Code 39 generator
+        */
+        Code39Barcode();
+        virtual ~Code39Barcode();
+    protected:
+        /**
+        * This function generates the barcode
+        * @return QImage containing a barcode, trying to approximate the requested sizes, or a null QImage if it can't be painted within requested size
+        * @param size
+        */
+        virtual QImage paintImage(const QSizeF& size ) Q_DECL_OVERRIDE;
+    private:
+        class Private;
+        Private *d;
 };
-}
+} // namespace
 
-#endif // PRISON_DATAMATRIXBARCODE_H
+#endif // PRISON_CODE39BARCODE_H

@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2010-2011 Sune Vuorela <sune@vuorela.dk>
+    Copyright (c) 2010-2014 Sune Vuorela <sune@vuorela.dk>
 
     Permission is hereby granted, free of charge, to any person
     obtaining a copy of this software and associated documentation
@@ -27,7 +27,7 @@
 #include "datamatrixbarcode.h"
 #include <dmtx.h>
 #include <QColor>
-using namespace prison;
+using namespace Prison;
 
 /**
  * @cond PRIVATE
@@ -48,7 +48,7 @@ DataMatrixBarcode::~DataMatrixBarcode() {
 }
 
 
-QImage DataMatrixBarcode::toImage(const QSizeF& size) {
+QImage DataMatrixBarcode::paintImage(const QSizeF& size) {
   const int width = qRound(qMin(size.width(),size.height()));
   if(data().size()==0 || width == 0 || data().size() > 1200) {
     return QImage();

@@ -1,55 +1,71 @@
+cmake_minimum_required(VERSION 2.8.12)
+
 project(prison)
-cmake_minimum_required(VERSION 2.8.8 FATAL_ERROR)
 
-# where to look first for cmake modules, before ${CMAKE_ROOT}/Modules/ is checked
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules/")
+# ECM setup
+include(FeatureSummary)
+find_package(ECM 5.24.0  NO_MODULE)
+set_package_properties(ECM PROPERTIES TYPE REQUIRED DESCRIPTION "Extra CMake Modules." URL "https://projects.kde.org/projects/kdesupport/extra-cmake-modules")
+feature_summary(WHAT REQUIRED_PACKAGES_NOT_FOUND FATAL_ON_MISSING_REQUIRED_PACKAGES)
+set(CMAKE_MODULE_PATH "${ECM_MODULE_PATH}" "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
+include(GenerateExportHeader)
+include(ECMGenerateHeaders)
+include(ECMGeneratePriFile)
+include(ECMPackageConfigHelpers)
+include(ECMSetupVersion)
+include(KDEInstallDirs)
+include(KDECMakeSettings)
+include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 
+set(REQUIRED_QT_VERSION "5.4.0")
+find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core Gui)
 find_package(QRencode REQUIRED)
 find_package(Dmtx REQUIRED)
 
-# Enable CMake's Automoc
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-option(QT5_BUILD "Build libprison using the Qt5 framework" FALSE)
-
-
-include_directories(${CMAKE_SOURCE_DIR}/lib ${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} )
-
-#### Qt 4 and 5 ####
-if(QT5_BUILD)
-  find_package(ECM 0.0.14 REQUIRED NO_MODULE)
-  set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR})
-  include(KDEInstallDirs)
-
-  find_package(Qt5Core REQUIRED)
-  find_package(Qt5Gui REQUIRED)
-  find_package(Qt5Widgets REQUIRED)
-  find_package(Qt5Test REQUIRED)
-
-  include("cmake/modules/ECMQt4To5Porting.cmake")
-  include_directories(${QT_INCLUDES}) # TODO: Port away from this.
-
-  if(CMAKE_VERSION VERSION_LESS 2.8.9)
-    message(FATAL_ERROR "Prison Qt 5 build requires at least CMake version 2.8.9")
-  endif()
-
-  if (Qt5_POSITION_INDEPENDENT_CODE)
-    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-  endif()
-
-  set(QT_QTTEST_LIBRARIES Qt5::Test)
-else()
-  set(QT_USE_IMPORTED_TARGETS TRUE) # Qt 4 only
-  set(QT_MIN_VERSION 4.8.0)         # Qt 4 only
-
-  find_package(Qt4 REQUIRED)
-  include(${QT_USE_FILE})
+if (Qt5_POSITION_INDEPENDENT_CODE)
+  set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 endif()
 
+set(KF5_VERSION "5.25.0") # handled by release scripts
+ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX PRISON
+                        VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/prison_version.h"
+                        PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5PrisonConfigVersion.cmake"
+                        SOVERSION 5
+)
 
+include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
 
 add_subdirectory(lib)
-add_subdirectory(testapp)
-
 add_subdirectory(tools)
+if(BUILD_TESTING)
+    find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Test Widgets)
+    add_subdirectory(tests)
+endif()
+
+set(CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/KF5Prison")
+ecm_configure_package_config_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/KF5PrisonConfig.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/KF5PrisonConfig.cmake"
+  INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
+)
+
+install(FILES
+  "${CMAKE_CURRENT_BINARY_DIR}/KF5PrisonConfig.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/KF5PrisonConfigVersion.cmake"
+  DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
+  COMPONENT Devel
+)
+
+install(EXPORT KF5PrisonTargets
+  DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
+  FILE KF5PrisonTargets.cmake
+  NAMESPACE KF5::
+)
+
+install(FILES
+  ${CMAKE_CURRENT_BINARY_DIR}/prison_version.h
+  DESTINATION ${KF5_INCLUDE_INSTALL_DIR}
+  COMPONENT Devel
+)
+
+feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)

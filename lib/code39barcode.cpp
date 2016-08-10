@@ -28,7 +28,7 @@
 #include <QChar>
 #include <QColor>
 
-using namespace prison;
+using namespace Prison;
 /**
 @cond PRIVATE
 */
@@ -103,7 +103,7 @@ Code39Barcode::~Code39Barcode() {
   delete d;
 }
 
-QImage Code39Barcode::toImage(const QSizeF& size) {
+QImage Code39Barcode::paintImage(const QSizeF& size) {
   if(size.height() == 0) return QImage();
   QList<bool> barcode;
   // convert text into sequences of wide/narrow bars
@@ -141,12 +141,12 @@ QImage Code39Barcode::toImage(const QSizeF& size) {
   int largeWidth = 2*w / (2*wide + narrow);
   // then maximize narrow bar width
   int smallWidth = (w - largeWidth*wide) / narrow;
-  // if the requested size was too small then we just have to make as small a barcode as possible
+  // if the requested size was too small return a null image
   if(largeWidth<2) {
-    largeWidth = 2;
+      return QImage();
   }
   if(smallWidth<1) {
-    smallWidth = 1;
+        return QImage();
   }
   Q_ASSERT(largeWidth > smallWidth);
 
@@ -169,3 +169,4 @@ QImage Code39Barcode::toImage(const QSizeF& size) {
   }
   return ret;
 }
+

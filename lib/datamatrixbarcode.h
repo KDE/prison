@@ -1,4 +1,5 @@
-    Copyright (c) 2010-2014 Sune Vuorela <sune@vuorela.dk>
+/*
+    Copyright (c) 2010-2016 Sune Vuorela <sune@vuorela.dk>
 
     Permission is hereby granted, free of charge, to any person
     obtaining a copy of this software and associated documentation
@@ -20,3 +21,37 @@
     WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
     OTHER DEALINGS IN THE SOFTWARE.
+
+*/
+
+#ifndef PRISON_DATAMATRIXBARCODE_H
+#define PRISON_DATAMATRIXBARCODE_H
+
+#include "abstractbarcode.h"
+#include "prison_export.h"
+
+namespace Prison {
+/**
+ * This is a Datamatrix barcode generator that uses libdmtx
+ * for the actual generation of barcodes.
+ */
+class DataMatrixBarcode : public Prison::AbstractBarcode {
+    public:
+        /**
+        * creates a datamatrixbarcode generator
+        */
+        DataMatrixBarcode();
+        virtual ~DataMatrixBarcode();
+    protected:
+        /**
+        * This is the function doing the actual work in generating the barcode
+        * @return QImage containing a DataMatrix, trying to approximate the requested sizes
+        */
+        virtual QImage paintImage(const QSizeF& size) Q_DECL_OVERRIDE;
+    private:
+        class Private;
+        Private *d;
+};
+}
+
+#endif // PRISON_DATAMATRIXBARCODE_H

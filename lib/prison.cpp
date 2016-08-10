@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2010-2011 Sune Vuorela <sune@vuorela.dk>
+    Copyright (c) 2010-2016 Sune Vuorela <sune@vuorela.dk>
 
     Permission is hereby granted, free of charge, to any person
     obtaining a copy of this software and associated documentation
@@ -24,33 +24,29 @@
 
 */
 
-#ifndef PRISON_QRCODEBARCODE_H
-#define PRISON_QRCODEBARCODE_H
+#include "prison.h"
+#include "datamatrixbarcode.h"
+#include "qrcodebarcode.h"
+#include "code39barcode.h"
+#include "code93barcode.h"
 
-#include <prison/abstractbarcode.h>
+Prison::AbstractBarcode *Prison::createBarcode(BarcodeType type)
+{
+    switch(type)
+    {
+        case Prison::Null:
+            return nullptr;
+        case Prison::QRCode:
+            return new QRCodeBarcode;
+        case Prison::DataMatrix:
+            return new DataMatrixBarcode;
+        case Prison::Aztec:
+            return nullptr;
+        case Prison::Code39:
+            return new Code39Barcode;
+        case Prison::Code93:
+            return new Code93Barcode;
+    }
+    return nullptr;
 
-namespace prison {
-  /**
-   * QRCode Barcode generator ; uses libqrencode to do the actual encoding
-   * of the barcode.
-   */
-class PRISON_EXPORT QRCodeBarcode : public prison::AbstractBarcode {
-  public:
-    /**
-     * creates a QRCode generator
-     */
-    QRCodeBarcode();
-    virtual ~QRCodeBarcode();
-    /**
-     * This is the function doing the actual work in generating the barcode
-     * @return QImage containing a QRCode, trying to approximate the requested sizes
-     * @param size The requested size of the barcode, approximate. if the barcode generator can't get the data to fit in there, it might be larger
-     */
-    virtual QImage toImage(const QSizeF& size);
-  private:
-    class Private;
-    Private *d;
-};
-} // namespace 
-
-#endif // PRISON_QRCODEBARCODE_H
+}

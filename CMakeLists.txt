@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 2.8.12)
 
 project(prison)
-set(PROJECT_VERSION "1.2.2")
 
 # ECM setup
 include(FeatureSummary)
@@ -27,12 +26,11 @@ if (Qt5_POSITION_INDEPENDENT_CODE)
   set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 endif()
 
-set(KF5_VERSION ${PROJECT_VERSION}) #When we are happy with the api, we can sync with frameworks
-#set(KF5_VERSION "5.25.0") # handled by release scripts
+set(KF5_VERSION "5.25.0") # handled by release scripts
 ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX PRISON
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/prison_version.h"
                         PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5PrisonConfigVersion.cmake"
-                        SOVERSION 1
+                        SOVERSION 5
 )
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR})

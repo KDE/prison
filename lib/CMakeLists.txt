@@ -1,7 +1,6 @@
 include(CMakePackageConfigHelpers)
 
-include_directories(${QRENCODE_INCLUDE_DIR})
-SET(prison_SRCS
+set(prison_SRCS
     abstractbarcode.cpp
     code39barcode.cpp
     code93barcode.cpp
@@ -23,7 +22,7 @@ PUBLIC
    Qt5::Gui
 PRIVATE
    Dmtx::Dmtx
-   ${QRENCODE_LIBRARIES} 
+   QRencode::QRencode
 )
 
 set_target_properties(KF5Prison PROPERTIES

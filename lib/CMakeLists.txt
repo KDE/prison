@@ -16,6 +16,7 @@ generate_export_header(KF5Prison BASE_NAME Prison)
 add_library(KF5::Prison ALIAS KF5Prison)
 
 target_include_directories(KF5Prison INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/prison/>")
+target_include_directories(KF5Prison PUBLIC "$<BUILD_INTERFACE:${prison_SOURCE_DIR}>")
 
 target_link_libraries(KF5Prison
 PUBLIC

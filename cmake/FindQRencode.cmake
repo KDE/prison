@@ -25,7 +25,7 @@
 # ``QRencode::QRencode``
 #     The QRencode library.
 #
-# Imported target since 5.25.0
+# Imported target since 5.27.0
 #
 #=============================================================================
 # Copyright (C) 2010 Sune Vuorela <sune@debian.org>

@@ -53,23 +53,23 @@ class BarcodeExampleWidget : public QWidget {
      * Reimplementation
      * @return minimumSizeHint for this widget
      */
-    virtual QSize minimumSizeHint() const;
+    virtual QSize minimumSizeHint() const Q_DECL_OVERRIDE;
   protected:
     /**
      * paintEvent
      * @param event QPaintEvent
      */
-    virtual void paintEvent(QPaintEvent* event );
+    virtual void paintEvent(QPaintEvent* event ) Q_DECL_OVERRIDE;
     /**
      * resizeEvent
      * @param event QResizeEvent
      */
-    virtual void resizeEvent(QResizeEvent* event );
+    virtual void resizeEvent(QResizeEvent* event ) Q_DECL_OVERRIDE;
     /**
      * enables drag from the barcodewidget
      * @param event QMouseEvent
      */
-    virtual void mousePressEvent(QMouseEvent* event);
+    virtual void mousePressEvent(QMouseEvent* event) Q_DECL_OVERRIDE;
   private:
     Prison::AbstractBarcode* m_barcode;
 };

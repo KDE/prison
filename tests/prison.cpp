@@ -28,8 +28,8 @@
 
 #include <QLineEdit>
 #include <QPushButton>
-#include "lib/prison.h"
-#include "lib/abstractbarcode.h"
+#include "src/lib/prison.h"
+#include "src/lib/abstractbarcode.h"
 #include <QHBoxLayout>
 #include <QSplitter>
 #include <QDebug>

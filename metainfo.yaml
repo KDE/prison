@@ -1,0 +1,16 @@
+maintainer: svuorela
+description: Barcode abstraction layer providing uniform access to generation of barcodes
+tier: 1
+type: solution
+platforms:
+    - name: Linux
+portingAid: false
+deprecated: false
+release: false
+libraries:
+ - qmake: Prison
+   cmake: "KF5::Prison"
+
+public_lib: true
+group: Frameworks
+subgroup: Tier 1

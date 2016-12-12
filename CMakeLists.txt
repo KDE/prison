@@ -28,7 +28,7 @@ if (Qt5_POSITION_INDEPENDENT_CODE)
   set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 endif()
 
-set(KF5_VERSION "5.28.0") # handled by release scripts
+set(KF5_VERSION "5.30.0") # handled by release scripts
 ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX PRISON
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/prison_version.h"
                         PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5PrisonConfigVersion.cmake"

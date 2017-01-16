@@ -42,7 +42,7 @@ class BarcodeExampleWidget : public QWidget {
      * @param barcode The barcode generator for this widget. Takes ownership over the barcode generator
      * @param parent the parent in QWidget hierachy
      */
-    BarcodeExampleWidget(Prison::AbstractBarcode* barcode, QWidget* parent=0);
+    BarcodeExampleWidget(Prison::AbstractBarcode* barcode, QWidget* parent=nullptr);
     virtual ~BarcodeExampleWidget();
     /**
      * sets the data shown to data, and triggers a repaint and resize if needed

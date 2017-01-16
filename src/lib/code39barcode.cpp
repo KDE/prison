@@ -96,7 +96,7 @@ class Code39Barcode::Private {
 @endcond
 */
 
-Code39Barcode::Code39Barcode() : AbstractBarcode(), d(0){
+Code39Barcode::Code39Barcode() : AbstractBarcode(), d(nullptr){
 }
 
 Code39Barcode::~Code39Barcode() {

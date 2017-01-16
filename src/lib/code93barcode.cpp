@@ -250,7 +250,7 @@ class Code93Barcode::Private {
 @endcond
 */
 
-Code93Barcode::Code93Barcode() : AbstractBarcode(), d(0){
+Code93Barcode::Code93Barcode() : AbstractBarcode(), d(nullptr){
 }
 
 Code93Barcode::~Code93Barcode() {

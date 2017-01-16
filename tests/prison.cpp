@@ -128,7 +128,7 @@ main_window::main_window() {
     m_93color = new BarcodeExampleWidget(c93colorcode, this);
   }
 
-  m_nullw = new BarcodeExampleWidget(0,this);
+  m_nullw = new BarcodeExampleWidget(nullptr,this);
 
   QSplitter* splitter = new QSplitter(Qt::Vertical);
   splitter->addWidget(m_dmw);

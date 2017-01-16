@@ -39,7 +39,7 @@ class QRCodeBarcode::Private {
 @endcond
 */
 
-QRCodeBarcode::QRCodeBarcode() : AbstractBarcode(), d(0){
+QRCodeBarcode::QRCodeBarcode() : AbstractBarcode(), d(nullptr){
   
 }
 

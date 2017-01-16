@@ -39,7 +39,7 @@ class DataMatrixBarcode::Private {
  * @endcond
  */
 
-DataMatrixBarcode::DataMatrixBarcode() : d(0) {
+DataMatrixBarcode::DataMatrixBarcode() : d(nullptr) {
 
 }
 

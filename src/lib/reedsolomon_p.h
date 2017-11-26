@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2010-2016 Sune Vuorela <sune@vuorela.dk>
+    Copyright (c) 2017 Volker Krause <vkrause@kde.org>
 
     Permission is hereby granted, free of charge, to any person
     obtaining a copy of this software and associated documentation
@@ -24,30 +24,48 @@
 
 */
 
-#include "prison.h"
-#include "aztecbarcode.h"
-#include "datamatrixbarcode.h"
-#include "qrcodebarcode.h"
-#include "code39barcode.h"
-#include "code93barcode.h"
+#ifndef PRISON_REEDSOLOMON_P_H
+#define PRISON_REEDSOLOMON_P_H
 
-Prison::AbstractBarcode *Prison::createBarcode(BarcodeType type)
+#include <memory>
+
+namespace Prison {
+
+class BitVector;
+
+/** Reed Solomon checksum generator. */
+class ReedSolomon
 {
-    switch(type)
-    {
-        case Prison::Null:
-            return nullptr;
-        case Prison::QRCode:
-            return new QRCodeBarcode;
-        case Prison::DataMatrix:
-            return new DataMatrixBarcode;
-        case Prison::Aztec:
-            return new AztecBarcode;
-        case Prison::Code39:
-            return new Code39Barcode;
-        case Prison::Code93:
-            return new Code93Barcode;
-    }
-    return nullptr;
+public:
+    enum GF {
+        GF16 = 0x13,
+        GF64 = 0x43,
+        GF256 = 0x12d,
+        GF1024 = 0x409,
+        GF4096 = 0x1069
+    };
+
+    /** Initialize a Reed Solomon encoder with the Galois Field
+     *  described by the bit pattern of @p polynom, for generating
+     *  @p symbolCount error correction symbols.
+     */
+    explicit ReedSolomon(int polynom, int symbolCount);
+    ReedSolomon(const ReedSolomon&) = delete;
+    ~ReedSolomon();
+
+    /** Encode the content of @p input and return the resulting
+     *  code words.
+     */
+    BitVector encode(const BitVector &input) const;
+
+private:
+    std::unique_ptr<int[]> m_logTable;
+    std::unique_ptr<int[]> m_antiLogTable;
+    std::unique_ptr<int[]> m_polynom;
+    int m_symCount = 0;
+    int m_symSize = 0;
+};
 
 }
+
+#endif // PRISON_REEDSOLOMON_P_H

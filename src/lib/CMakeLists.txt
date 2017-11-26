@@ -2,13 +2,17 @@ include(CMakePackageConfigHelpers)
 
 set(prison_SRCS
     abstractbarcode.cpp
+    aztecbarcode.cpp
+    bitvector.cpp
     code39barcode.cpp
     code93barcode.cpp
     datamatrixbarcode.cpp
     qrcodebarcode.cpp
     prison.cpp
+    reedsolomon.cpp
 )
 
+ecm_qt_declare_logging_category(prison_SRCS HEADER prison_debug.h IDENTIFIER Prison::Log CATEGORY_NAME kf5.prison)
 add_library(KF5Prison ${prison_SRCS})
 
 generate_export_header(KF5Prison BASE_NAME Prison)

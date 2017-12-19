@@ -46,7 +46,7 @@ class PRISON_EXPORT QRCodeBarcode : public Prison::AbstractBarcode {
      * @return QImage containing a QRCode, trying to approximate the requested sizes
      * @param size The requested size of the barcode, approximate. if the barcode generator can't get the data to fit in there, it might be a null QImage
      */
-    virtual QImage paintImage(const QSizeF& size) Q_DECL_OVERRIDE;
+    QImage paintImage(const QSizeF& size) override;
   private:
     class Private;
     Private *d;

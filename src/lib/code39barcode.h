@@ -46,7 +46,7 @@ class Code39Barcode : public Prison::AbstractBarcode {
         * @return QImage containing a barcode, trying to approximate the requested sizes, or a null QImage if it can't be painted within requested size
         * @param size
         */
-        virtual QImage paintImage(const QSizeF& size ) Q_DECL_OVERRIDE;
+        QImage paintImage(const QSizeF& size ) override;
     private:
         class Private;
         Private *d;

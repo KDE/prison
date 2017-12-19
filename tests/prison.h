@@ -13,16 +13,16 @@ class main_window : public QWidget {
   public Q_SLOTS:
     void data_changed();
   private:
-    QLineEdit* m_lineedit;
-    BarcodeExampleWidget* m_dmw;
-    BarcodeExampleWidget* m_qrw;
-    BarcodeExampleWidget* m_39w;
-    BarcodeExampleWidget* m_93w;
-    BarcodeExampleWidget* m_dmcolor;
-    BarcodeExampleWidget* m_qrcolor;
-    BarcodeExampleWidget* m_39color;
-    BarcodeExampleWidget* m_93color;
-    BarcodeExampleWidget* m_nullw;
+    QLineEdit* m_lineedit = nullptr;
+    BarcodeExampleWidget* m_dmw = nullptr;
+    BarcodeExampleWidget* m_qrw = nullptr;
+    BarcodeExampleWidget* m_39w = nullptr;
+    BarcodeExampleWidget* m_93w = nullptr;
+    BarcodeExampleWidget* m_dmcolor = nullptr;
+    BarcodeExampleWidget* m_qrcolor = nullptr;
+    BarcodeExampleWidget* m_39color = nullptr;
+    BarcodeExampleWidget* m_93color = nullptr;
+    BarcodeExampleWidget* m_nullw = nullptr;
     
 
 };

@@ -47,7 +47,7 @@ class DataMatrixBarcode : public Prison::AbstractBarcode {
         * This is the function doing the actual work in generating the barcode
         * @return QImage containing a DataMatrix, trying to approximate the requested sizes
         */
-        virtual QImage paintImage(const QSizeF& size) Q_DECL_OVERRIDE;
+        QImage paintImage(const QSizeF& size) override;
     private:
         class Private;
         Private *d;

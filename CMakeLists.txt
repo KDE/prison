@@ -86,4 +86,7 @@ install(FILES
   COMPONENT Devel
 )
 
+# contains list of debug categories, for kdebugsettings
+install(FILES prison.categories DESTINATION ${KDE_INSTALL_CONFDIR})
+
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)

@@ -54,7 +54,7 @@
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #=============================================================================
 
-find_library(QRencode_LIBRARIES NAMES qrencode)
+find_library(QRencode_LIBRARIES NAMES qrencode qrencoded)
 
 find_path(QRencode_INCLUDE_DIRS qrencode.h)
 

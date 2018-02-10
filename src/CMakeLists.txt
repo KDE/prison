@@ -1,2 +1,5 @@
 add_subdirectory(lib)
 add_subdirectory(tools)
+if(TARGET Qt5::Quick)
+    add_subdirectory(quick)
+endif()

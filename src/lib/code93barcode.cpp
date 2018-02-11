@@ -291,6 +291,7 @@ QImage Code93Barcode::paintImage(const QSizeF& size) {
 
   // try to fill the requested size
   const int barWidth = int(size.width() / barcode.size());
+  setMinimumSize(QSize(barcode.size(), 10));
   if(barWidth < 1 ) { // can't go below 1 pixel
       return QImage();
   }

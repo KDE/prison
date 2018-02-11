@@ -142,6 +142,7 @@ QImage Code39Barcode::paintImage(const QSizeF& size) {
   // then maximize narrow bar width
   int smallWidth = (w - largeWidth*wide) / narrow;
   // if the requested size was too small return a null image
+  setMinimumSize(QSize(2* wide + narrow, 10));
   if(largeWidth<2) {
       return QImage();
   }

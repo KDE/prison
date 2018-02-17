@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2010-2016 Sune Vuorela <sune@vuorela.dk>
+    Copyright (c) 2018 Volker Krause <vkrause@kde.org>
 
     Permission is hereby granted, free of charge, to any person
     obtaining a copy of this software and associated documentation
@@ -21,38 +21,11 @@
     WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
     OTHER DEALINGS IN THE SOFTWARE.
-
 */
 
-#include <config-prison.h>
-#include "prison.h"
-#include "aztecbarcode.h"
-#include "datamatrixbarcode.h"
-#include "qrcodebarcode.h"
-#include "code39barcode.h"
-#include "code93barcode.h"
+#ifndef PRISON_CONFIG_H
+#define PRISON_CONFIG_H
 
-Prison::AbstractBarcode *Prison::createBarcode(BarcodeType type)
-{
-    switch(type)
-    {
-        case Prison::Null:
-            return nullptr;
-        case Prison::QRCode:
-            return new QRCodeBarcode;
-        case Prison::DataMatrix:
-#ifdef HAVE_DMTX
-            return new DataMatrixBarcode;
-#else
-            return nullptr;
+#cmakedefine HAVE_DMTX
+
 #endif
-        case Prison::Aztec:
-            return new AztecBarcode;
-        case Prison::Code39:
-            return new Code39Barcode;
-        case Prison::Code93:
-            return new Code93Barcode;
-    }
-    return nullptr;
-
-}

@@ -1,4 +1,8 @@
 include(CMakePackageConfigHelpers)
+if(TARGET Dmtx::Dmtx)
+    set(HAVE_DMTX 1)
+endif()
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-prison.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-prison.h)
 
 set(prison_SRCS
     abstractbarcode.cpp
@@ -6,11 +10,13 @@ set(prison_SRCS
     bitvector.cpp
     code39barcode.cpp
     code93barcode.cpp
-    datamatrixbarcode.cpp
     qrcodebarcode.cpp
     prison.cpp
     reedsolomon.cpp
 )
+if(TARGET Dmtx::Dmtx)
+    list(APPEND prison_SRCS datamatrixbarcode.cpp)
+endif()
 
 ecm_qt_declare_logging_category(prison_SRCS HEADER prison_debug.h IDENTIFIER Prison::Log CATEGORY_NAME kf5.prison)
 add_library(KF5Prison ${prison_SRCS})
@@ -26,9 +32,11 @@ target_link_libraries(KF5Prison
 PUBLIC
    Qt5::Gui
 PRIVATE
-   Dmtx::Dmtx
    QRencode::QRencode
 )
+if(TARGET Dmtx::Dmtx)
+    target_link_libraries(KF5Prison PRIVATE Dmtx::Dmtx)
+endif()
 
 set_target_properties(KF5Prison PROPERTIES
     VERSION ${PRISON_VERSION_STRING}

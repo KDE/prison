@@ -31,7 +31,7 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG OPTIONAL_COMPONENTS Quick)
 find_package(QRencode)
 set_package_properties(QRencode PROPERTIES TYPE REQUIRED)
 find_package(Dmtx)
-set_package_properties(Dmtx PROPERTIES TYPE REQUIRED)
+set_package_properties(Dmtx PROPERTIES TYPE RECOMMENDED)
 
 if (Qt5_POSITION_INDEPENDENT_CODE)
   set(CMAKE_POSITION_INDEPENDENT_CODE ON)

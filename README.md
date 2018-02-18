@@ -23,7 +23,7 @@ Prison isn't as such designed for the latter, it will probably work, but
 patches implementing barcode support for such barcodes will not be accepted.
 An example is [EZCode](https://en.wikipedia.org/wiki/EZcode).
 
-Prison is currently using [libdmtx](http://libdmtx.sourceforge.net/) for generation of
+Prison is currently using [libdmtx](https://github.com/dmtx/libdmtx) for generation of
 [DataMatrix](https://en.wikipedia.org/wiki/Datamatrix) barcodes and
 [libqrencode](https://fukuchi.org/works/qrencode/) for generation
 of [QRCode](https://en.wikipedia.org/wiki/QR_Code) barcodes.

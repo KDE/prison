@@ -76,6 +76,6 @@ mark_as_advanced(QRencode_LIBRARIES QRencode_INCLUDE_DIRS)
 
 include(FeatureSummary)
 set_package_properties(QRencode PROPERTIES
-  URL "http://megaui.net/fukuchi/works/qrencode/index.en.html/"
+  URL "https://fukuchi.org/works/qrencode/"
   DESCRIPTION "The QRencode library"
 )

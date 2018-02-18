@@ -76,7 +76,7 @@ mark_as_advanced(Dmtx_INCLUDE_DIRS Dmtx_LIBRARIES)
 
 include(FeatureSummary)
 set_package_properties(Dmtx PROPERTIES
-  URL "http://libdmtx.sourceforge.net/"
+  URL "https://github.com/dmtx/libdmtx"
   DESCRIPTION "The Datamatrix library"
 )
 

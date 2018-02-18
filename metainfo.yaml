@@ -5,6 +5,7 @@ type: solution
 platforms:
     - name: Linux
     - name: FreeBSD
+    - name: Android
 portingAid: false
 deprecated: false
 release: true

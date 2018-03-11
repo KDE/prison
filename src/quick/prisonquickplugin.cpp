@@ -28,7 +28,7 @@
 
 #include <prison/prison.h>
 
-#include <QtQml/QQmlExtensionPlugin>
+#include <QQmlExtensionPlugin>
 
 class PrisonQuickPlugin : public QQmlExtensionPlugin
 {

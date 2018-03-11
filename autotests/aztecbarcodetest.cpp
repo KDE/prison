@@ -29,7 +29,7 @@
 
 #include <QImage>
 #include <QObject>
-#include <QtTest/qtest.h>
+#include <qtest.h>
 
 Q_DECLARE_METATYPE(Prison::BitVector)
 

@@ -39,7 +39,7 @@ class Code39Barcode : public Prison::AbstractBarcode {
         * creates a Code 39 generator
         */
         Code39Barcode();
-        virtual ~Code39Barcode();
+        ~Code39Barcode() override;
     protected:
         /**
         * This function generates the barcode

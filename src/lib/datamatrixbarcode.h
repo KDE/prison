@@ -41,7 +41,7 @@ class DataMatrixBarcode : public Prison::AbstractBarcode {
         * creates a datamatrixbarcode generator
         */
         DataMatrixBarcode();
-        virtual ~DataMatrixBarcode();
+        ~DataMatrixBarcode() override;
     protected:
         /**
         * This is the function doing the actual work in generating the barcode

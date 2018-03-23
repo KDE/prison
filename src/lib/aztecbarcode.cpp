@@ -171,8 +171,6 @@ QImage AztecBarcode::paintImage(const QSizeF& size)
         paintFullModeMessage(&img, modeMsg);
         return cropAndScaleFull(&img, layerCount, std::max(size.width(), size.height()));
     }
-
-    return {};
 }
 
 // code points and encoding modes for each of the first 127 ASCII characters, the rest is encoded in Binary mode

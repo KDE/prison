@@ -40,7 +40,7 @@ class AztecBarcode : public AbstractBarcode
 {
 public:
     AztecBarcode();
-    ~AztecBarcode();
+    ~AztecBarcode() override;
 
 protected:
     QImage paintImage(const QSizeF& size) override;

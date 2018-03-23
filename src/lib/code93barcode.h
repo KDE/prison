@@ -39,7 +39,7 @@ class Code93Barcode : public Prison::AbstractBarcode {
      * creates a Code 93 generator
      */
     Code93Barcode();
-    virtual ~Code93Barcode();
+    ~Code93Barcode() override;
     /**
      * This function generates the barcode
      * @return QImage containing a barcode, trying to approximate the requested sizes

@@ -40,7 +40,7 @@ class PRISON_EXPORT QRCodeBarcode : public Prison::AbstractBarcode {
      * creates a QRCode generator
      */
     QRCodeBarcode();
-    virtual ~QRCodeBarcode();
+    ~QRCodeBarcode() override;
     /**
      * This is the function doing the actual work in generating the barcode
      * @return QImage containing a QRCode, trying to approximate the requested sizes

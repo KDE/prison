@@ -258,7 +258,7 @@ Code93Barcode::~Code93Barcode() {
 }
 
 QImage Code93Barcode::paintImage(const QSizeF& size) {
-  if(size.height() == 0) {
+  if(size.height() == 0.0) {
     return QImage();
   }
   QList<bool> barcode;

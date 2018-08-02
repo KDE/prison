@@ -373,7 +373,7 @@ static const aztec_code_t aztec_latch_codes[MODE_COUNT - 1][MODE_COUNT] = {
     { { 0, NoMode }, { 0, NoMode }, { 0, NoMode }, { 0, NoMode }, { 0, NoMode }, { 0, NoMode }, { 0, NoMode } },
     { { 0, NoMode }, { 0, NoMode }, { 28, Lower }, { 29, Mixed }, { 29, Mixed }, { 30, Digit }, { 31, Binary } },
     { { 0, NoMode }, { 30, Digit }, { 0, NoMode }, { 29, Mixed }, { 29, Mixed }, { 30, Digit }, { 31, Binary } },
-    { { 0, NoMode }, { 30, Digit }, { 28, Lower }, { 0, NoMode }, { 30, Punct }, { 28, Lower }, { 31, Binary } },
+    { { 0, NoMode }, { 29, Upper }, { 28, Lower }, { 0, NoMode }, { 30, Punct }, { 28, Lower }, { 31, Binary } },
     { { 0, NoMode }, { 31, Upper }, { 31, Upper }, { 31, Upper }, { 0, NoMode }, { 31, Upper }, { 31, Upper } },
     { { 0, NoMode }, { 14, Upper }, { 14, Upper }, { 14, Upper }, { 14, Upper }, { 0, NoMode }, { 14, Upper } }
 };

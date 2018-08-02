@@ -96,6 +96,9 @@ private Q_SLOTS:
         v.clear();
         v.appendMSB(30, 5); v.appendMSB(13, 4); v.appendMSB(7, 4);
         QTest::newRow("digit ambigious punct latch") << QByteArray(".5") << v;
+        v.clear();
+        v.appendMSB(29, 5); v.appendMSB(30, 5); v.appendMSB(25, 5); v.appendMSB(26,5); v.appendMSB(31, 5); v.appendMSB(29, 5); v.appendMSB(20, 5); v.appendMSB(29, 5); v.appendMSB(2, 5);
+        QTest::newRow("punct/mixed/upper sequence") << QByteArray(">?@A") << v;
     }
 
     void testAztecEncode()

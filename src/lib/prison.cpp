@@ -31,6 +31,7 @@
 #include "qrcodebarcode.h"
 #include "code39barcode.h"
 #include "code93barcode.h"
+#include "code128barcode.h"
 
 Prison::AbstractBarcode *Prison::createBarcode(BarcodeType type)
 {
@@ -52,6 +53,8 @@ Prison::AbstractBarcode *Prison::createBarcode(BarcodeType type)
             return new Code39Barcode;
         case Prison::Code93:
             return new Code93Barcode;
+        case Prison::Code128:
+            return new Code128Barcode;
     }
     return nullptr;
 

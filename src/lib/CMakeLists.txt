@@ -10,6 +10,7 @@ set(prison_SRCS
     bitvector.cpp
     code39barcode.cpp
     code93barcode.cpp
+    code128barcode.cpp
     qrcodebarcode.cpp
     prison.cpp
     reedsolomon.cpp

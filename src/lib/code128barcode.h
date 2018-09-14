@@ -24,38 +24,34 @@
 
 */
 
-import QtQuick 2.0
-import QtQuick.Controls 2.0
-import QtQuick.Layouts 1.0
-import org.kde.prison 1.0 as Prison
-Rectangle {
-    width: 640
-    height: 320
-    color: "lightsteelblue"
-    ColumnLayout {
-        anchors.fill: parent
+#ifndef PRISON_CODE128BARCODE_H
+#define PRISON_CODE128BARCODE_H
 
-        RowLayout {
-            Layout.fillWidth: true
-            TextField {
-                id: contentEdit
-                Layout.fillWidth: true
-                text: "KF5::Prison - The KDE barcode generation framework."
-            }
-            ComboBox {
-                id: typeCombobox
-                model: [ "Null", "QRCode", "DataMatrix", "Aztec", "Code39", "Code93", "Code128" ]
-                currentIndex: 3
-            }
-        }
+#include "abstractbarcode.h"
 
-        Prison.Barcode {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            content: contentEdit.text
-            barcodeType: typeCombobox.currentIndex
-//             foregroundColor: "red"
-//             backgroundColor: "green"
-        }
-    }
+class Code128BarcodeTest;
+
+namespace Prison {
+
+class BitVector;
+
+/** Code 128 barcode
+ *  @see https://en.wikipedia.org/wiki/Code_128
+ */
+class Code128Barcode : public AbstractBarcode
+{
+public:
+    Code128Barcode();
+    ~Code128Barcode() override;
+
+protected:
+    QImage paintImage(const QSizeF& size) override;
+
+private:
+    friend class ::Code128BarcodeTest;
+    BitVector encode(const QByteArray &data) const;
+};
+
 }
+
+#endif // PRISON_CODE128BARCODE_H

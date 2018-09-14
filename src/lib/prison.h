@@ -42,12 +42,14 @@ namespace Prison {
         QRCode = 1,
         /** DataMatrix 2d barcode */
         DataMatrix = 2,
-        /** Aztec 2d barcode (currently unsupported)*/
+        /** Aztec 2d barcode */
         Aztec,
         /** Code39 barcode */
         Code39,
         /** Code93 barcode */
-        Code93
+        Code93,
+        /** Code 128 barcode */
+        Code128
 
     };
     /**

@@ -28,10 +28,10 @@
 #include "bitvector_p.h"
 #include "prison_debug.h"
 
-using namespace Prison;
-
 #include <QImage>
 #include <QPainter>
+
+using namespace Prison;
 
 enum {
     SymbolSize = 11,
@@ -79,7 +79,7 @@ QImage Code128Barcode::paintImage(const QSizeF& size)
     QPainter p(&img);
     for (int i = 0; i < bits.size(); ++i) {
         if (bits.at(i))
-            p.fillRect((QuietZone + i) * moduleSize, 0, moduleSize, img.height(), foregroundColor());
+            p.fillRect(QRectF((QuietZone + i) * moduleSize, 0, moduleSize, img.height()), foregroundColor());
     }
 
     return img;

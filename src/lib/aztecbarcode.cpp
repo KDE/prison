@@ -162,14 +162,14 @@ QImage AztecBarcode::paintImage(const QSizeF& size)
         paintCompactGrid(&img);
         paintCompactData(&img, encodedData, layerCount);
         paintCompactModeMessage(&img, modeMsg);
-        return cropAndScaleCompact(&img, layerCount, std::max(size.width(), size.height()));
+        return cropAndScaleCompact(&img, layerCount, std::min(size.width(), size.height()));
     } else {
         QImage img(FullMaxSize, FullMaxSize, QImage::Format_RGB32);
         img.fill(backgroundColor());
         paintFullGrid(&img);
         paintFullData(&img, encodedData, layerCount);
         paintFullModeMessage(&img, modeMsg);
-        return cropAndScaleFull(&img, layerCount, std::max(size.width(), size.height()));
+        return cropAndScaleFull(&img, layerCount, std::min(size.width(), size.height()));
     }
 }
 

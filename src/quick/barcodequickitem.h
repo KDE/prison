@@ -53,7 +53,8 @@ public:
         DataMatrix = Prison::DataMatrix,
         Aztec = Prison::Aztec,
         Code39 = Prison::Code39,
-        Code93 = Prison::Code93
+        Code93 = Prison::Code93,
+        Code128 = Prison::Code128
     };
     Q_ENUM(BarcodeType)
     explicit BarcodeQuickItem(QQuickItem *parent = nullptr);

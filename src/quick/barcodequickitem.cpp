@@ -104,15 +104,11 @@ void BarcodeQuickItem::paint(QPainter* painter)
 
     const auto w_max = std::max(implicitWidth(), width());
     const auto h_max = std::max(implicitHeight(), height());
-    const auto scale = std::min(w_max / implicitWidth(), h_max / implicitHeight());
-    const auto w = scale * implicitWidth();
-    const auto h = scale * implicitHeight();
-    const auto x = (width() - w) / 2;
-    const auto y = (height() - h) / 2;
-
-    const auto img = m_barcode->toImage(m_barcode->minimumSize());
+    const auto img = m_barcode->toImage(QSizeF(w_max, h_max));
+    const auto x = (w_max - img.width()) / 2;
+    const auto y = (h_max - img.height()) / 2;
     painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
-    painter->drawImage(QRectF(x, y, w, h), img, img.rect());
+    painter->drawImage(QRectF(x, y, img.width(), img.height()), img, img.rect());
 }
 
 void BarcodeQuickItem::componentComplete()

@@ -236,7 +236,7 @@ class Code93Barcode::Private {
       return ret; // return an empty list for a non-ascii character code
     }
     // calculate a checksum
-    static int checksum(QList<int> codes, int wrap) {
+    static int checksum(const QList<int> &codes, int wrap) {
       int check = 0;
       for(int i = 0 ; i < codes.size() ; i++) {
         // weight goes from 1 to wrap, right-to-left, then repeats

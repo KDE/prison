@@ -145,6 +145,6 @@ main_window::main_window() {
   mainlay->addWidget(splitter);
   setLayout(mainlay);
 
-  m_lineedit->setText(QLatin1String("AOEUIAOEUIAOEUI"));
+  m_lineedit->setText(QStringLiteral("AOEUIAOEUIAOEUI"));
   data_changed();
 }

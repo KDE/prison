@@ -43,6 +43,7 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX PRISON
                         SOVERSION 5
 )
 add_definitions(-DQT_NO_FOREACH)
+add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050d00)
 add_subdirectory(src)
 if(BUILD_TESTING)
     find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Test Widgets)

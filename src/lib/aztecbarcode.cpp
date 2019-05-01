@@ -576,9 +576,24 @@ BitVector AztecBarcode::bitStuffAndPad(const BitVector& input, int codeWordSize)
         res.appendBit(input.at(i++));
     }
 
-    // pad to nearest code word boundary
+    // check if we are code word aligned already
+    const auto trailingBits = res.size() % codeWordSize;
+    if (!trailingBits) { // nothing to pad
+        return res;
+    }
+
+    // pad with ones to nearest code word boundary
+    // last bit has to be zero if we'd otherwise would have all ones though
+    bool allOnes = true;
+    for (int i = res.size() - trailingBits; i < res.size(); ++i) {
+        allOnes &= res.at(i);
+    }
     while (res.size() % codeWordSize) {
-        res.appendBit(true);
+        if ((res.size() % codeWordSize) == (codeWordSize - 1)) {
+            res.appendBit(allOnes ? false : true);
+        } else {
+            res.appendBit(true);
+        }
     }
 
     return res;

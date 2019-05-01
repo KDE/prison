@@ -123,8 +123,11 @@ private Q_SLOTS:
 
         BitVector in, out;
         QTest::newRow("emtpy") << in << out << 4;
-        in.appendMSB(0x3, 2); out.appendMSB(0xf, 4);
+        in.appendMSB(0x2, 2); out.appendMSB(0xB, 4);
         QTest::newRow("pad only") << in << out << 4;
+        in.clear(); out.clear();
+        in.appendMSB(0x3, 2); out.appendMSB(0xE, 4);
+        QTest::newRow("pad only inverted") << in << out << 4;
         in.clear(); out.clear();
         in.appendMSB(0xe0, 8); out.appendMSB(0xe13, 12);
         QTest::newRow("stuff and pad") << in << out << 4;

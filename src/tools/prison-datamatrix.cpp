@@ -89,7 +89,7 @@ int main(int argc, char* argv[]) {
 
   
   
-  QString data = arguments.join(QLatin1String(" "));
+  QString data = arguments.join(QLatin1Char(' '));
   if(data.size()==0) {
     QTextStream in(stdin);
     data = in.readAll();

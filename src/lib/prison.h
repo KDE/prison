@@ -29,6 +29,11 @@
 #include "prison_export.h"
 #include "abstractbarcode.h"
 
+/**
+ * @namespace Prison
+ *
+ * Provides classes and methods for generating barcodes.
+ */
 namespace Prison {
     class AbstractBarcode;
     /**

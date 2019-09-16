@@ -12,6 +12,7 @@ release: true
 libraries:
  - qmake: Prison
    cmake: "KF5::Prison"
+cmakename: KF5Prison
 
 public_lib: true
 group: Frameworks

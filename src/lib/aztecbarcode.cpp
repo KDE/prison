@@ -341,7 +341,6 @@ static const struct {
     { ',',   ' ', { 4, Punct } }, // , SP
     { ':',   ' ', { 5, Punct } }  // : SP
 };
-static const int aztec_code_double_symbols_count = sizeof(aztec_code_double_symbols) / sizeof(aztec_code_double_symbols[0]);
 
 static const int aztec_code_size[] = { 0, 5, 5, 5, 5, 4, 8 };
 Q_STATIC_ASSERT(sizeof(aztec_code_size) / sizeof(int) == MODE_COUNT);
@@ -482,8 +481,7 @@ BitVector AztecBarcode::aztecEncode(const QByteArray &data) const
         if (i < data.size() - 1) {
             const uint8_t c2 = data.at(i + 1);
             bool found = false;
-            for (int j = 0; j < aztec_code_double_symbols_count; ++j) {
-                const auto dblCode = aztec_code_double_symbols[j];
+            for (const auto &dblCode : aztec_code_double_symbols) {
                 if (dblCode.c1 != c1 || dblCode.c2 != c2) {
                     continue;
                 }

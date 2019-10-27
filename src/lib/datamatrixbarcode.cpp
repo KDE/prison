@@ -80,12 +80,12 @@ QImage DataMatrixBarcode::paintImage(const QSizeF& size) {
     if(enc->image->width>0) {
       int size = enc->image->width*enc->image->height*4;
       uchar* img = new uchar[size];
-      QByteArray background;
+      QByteArray background(4,'\0');
       background[3] = qAlpha(backgroundColor().rgba());
       background[2] = qRed(backgroundColor().rgba());
       background[1] = qGreen(backgroundColor().rgba());
       background[0] = qBlue(backgroundColor().rgba());
-      QByteArray foreground = new char[4];
+      QByteArray foreground(4,'\0');
       foreground[3] = qAlpha(foregroundColor().rgba());
       foreground[2] = qRed(foregroundColor().rgba());
       foreground[1] = qGreen(foregroundColor().rgba());

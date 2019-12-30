@@ -36,7 +36,8 @@
 
 void error(const QString& error, const QString& errormessage) {
   QTextStream str(stdout);
-  str << error << ": " << errormessage << endl;
+  str << error << ": " << errormessage << '\n';
+  str.flush();
   exit(0);
 }
 

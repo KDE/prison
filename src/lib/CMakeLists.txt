@@ -61,6 +61,14 @@ ecm_generate_headers(Prison_CamelCase_HEADERS
     REQUIRED_HEADERS Prison_HEADERS
 )
 
+# KF6: install to a path having both include visibility layer & namespace dir prefix:
+# CamelCase includes to ${KDE_INSTALL_INCLUDEDIR_KF5}/Prison/Prison
+# normal headers to ${KDE_INSTALL_INCLUDEDIR_KF5}/Prison/prison
+# The generated cmake config files currently points behind the namespace dir prefix, by
+# target_include_directories(KF5Prison INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/prison>")
+# which should though point to before the namespace dir prefix level.
+# Includes using <prison/*> only work currently due to the actual include base ${KDE_INSTALL_INCLUDEDIR_KF5}
+# also being set, via KF5_INSTALL_TARGETS_DEFAULT_ARGS.
 install(FILES
     ${Prison_CamelCase_HEADERS}
     DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/prison COMPONENT Devel)
@@ -96,6 +104,8 @@ if(BUILD_QCH)
     )
 endif()
 
-ecm_generate_pri_file(BASE_NAME Prison LIB_NAME KF5Prison DEPS "gui" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF5}/prison)
+# INCLUDE_INSTALL_DIR has to be without prison/ subdir
+# as the generated CamelCase headers have the prison/ path in the forward include
+ecm_generate_pri_file(BASE_NAME Prison LIB_NAME KF5Prison DEPS "gui" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF5})
 install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
 

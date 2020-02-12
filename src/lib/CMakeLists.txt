@@ -19,7 +19,13 @@ if(TARGET Dmtx::Dmtx)
     list(APPEND prison_SRCS datamatrixbarcode.cpp)
 endif()
 
-ecm_qt_declare_logging_category(prison_SRCS HEADER prison_debug.h IDENTIFIER Prison::Log CATEGORY_NAME kf5.prison)
+ecm_qt_declare_logging_category(prison_SRCS
+    HEADER prison_debug.h
+    IDENTIFIER Prison::Log
+    CATEGORY_NAME kf5.prison
+    DESCRIPTION "Prison (lib)"
+    EXPORT PRISON
+)
 add_library(KF5Prison ${prison_SRCS})
 
 generate_export_header(KF5Prison BASE_NAME Prison)

@@ -9,22 +9,19 @@
 #include <QColor>
 
 using namespace Prison;
-/**
-@cond PRIVATE
-*/
-class Code39Barcode::Private {
-  public:
-    static QList<bool> barSequence(const char* str) {
-      Q_ASSERT(strlen(str)==9); // this is a internal helper tool, only called with fixed strings in here, all 9 chars long
-      QList<bool> ret;
-      for(int i = 0 ; i < 9 ; i++) {
+
+static QList<bool> barSequence(const char* str) {
+    Q_ASSERT(strlen(str)==9); // this is a internal helper tool, only called with fixed strings in here, all 9 chars long
+    QList<bool> ret;
+    for(int i = 0 ; i < 9 ; i++) {
         ret.append(str[i] == '1');
         Q_ASSERT(str[i] == '0' || str[i] == '1');
-      }
-      return ret;
     }
-    static QList<bool> sequenceForChar(ushort c) {
-      switch(QChar::toUpper(c)) {
+    return ret;
+}
+
+static QList<bool> sequenceForChar(ushort c) {
+    switch(QChar::toUpper(c)) {
         case '0': return barSequence("000110100");
         case '1': return barSequence("100100001");
         case '2': return barSequence("001100001");
@@ -69,19 +66,11 @@ class Code39Barcode::Private {
         case '+': return barSequence("010001010");
         case '%': return barSequence("000101010");
         default: return QList<bool>(); // unknown character
-      }
     }
-};
-/**
-@endcond
-*/
-
-Code39Barcode::Code39Barcode() : AbstractBarcode(), d(nullptr){
 }
 
-Code39Barcode::~Code39Barcode() {
-  delete d;
-}
+Code39Barcode::Code39Barcode() = default;
+Code39Barcode::~Code39Barcode() = default;
 
 QImage Code39Barcode::paintImage(const QSizeF& size) {
   if(size.height() == 0.0) return QImage();
@@ -89,13 +78,13 @@ QImage Code39Barcode::paintImage(const QSizeF& size) {
   // convert text into sequences of wide/narrow bars
   {
     // the guard sequence that goes on each end
-    const QList<bool> endSequence = Private::barSequence("010010100");
+    const QList<bool> endSequence = barSequence("010010100");
     barcode += endSequence;
     barcode += false;
     // translate the string
     const QString str = data();
     for(int i = 0 ; i < str.size(); i++) {
-      QList<bool> b = Private::sequenceForChar(str.at(i).unicode());
+      QList<bool> b = sequenceForChar(str.at(i).unicode());
       if(!b.empty()) {
         barcode += b;
         barcode += false; // add a narrow space between each character

@@ -27,9 +27,6 @@ class Code39Barcode : public Prison::AbstractBarcode {
         * @param size
         */
         QImage paintImage(const QSizeF& size ) override;
-    private:
-        class Private;
-        Private *d;
 };
 } // namespace
 

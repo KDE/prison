@@ -26,9 +26,6 @@ class Code93Barcode : public Prison::AbstractBarcode {
      * @param size The requested size of the barcode, approximate. if the barcode generator can't generate it, it can return a null QImage
      */
     QImage paintImage(const QSizeF& size) override;
-  private:
-    class Private;
-    Private *d;
 };
 } // namespace
 

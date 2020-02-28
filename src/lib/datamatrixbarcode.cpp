@@ -9,24 +9,8 @@
 #include <QColor>
 using namespace Prison;
 
-/**
- * @cond PRIVATE
- */
-class DataMatrixBarcode::Private {
-  public:
-};
-/**
- * @endcond
- */
-
-DataMatrixBarcode::DataMatrixBarcode() : d(nullptr) {
-
-}
-
-DataMatrixBarcode::~DataMatrixBarcode() {
-  delete d;
-}
-
+DataMatrixBarcode::DataMatrixBarcode() = default;
+DataMatrixBarcode::~DataMatrixBarcode() = default;
 
 QImage DataMatrixBarcode::paintImage(const QSizeF& size) {
   const int width = qRound(qMin(size.width(),size.height()));

@@ -9,25 +9,9 @@
 #include <QColor>
 
 using namespace Prison;
-/**
-@cond PRIVATE
-*/
-class QRCodeBarcode::Private {
-  public:
-};
-/**
-@endcond
-*/
 
-QRCodeBarcode::QRCodeBarcode() : AbstractBarcode(), d(nullptr){
-
-}
-
-QRCodeBarcode::~QRCodeBarcode() {
-  delete d;
-}
-
-
+QRCodeBarcode::QRCodeBarcode() = default;
+QRCodeBarcode::~QRCodeBarcode() = default;
 
 QImage QRCodeBarcode::paintImage(const QSizeF& size) {
   const int width = qRound(qMin(size.width(),size.height()));

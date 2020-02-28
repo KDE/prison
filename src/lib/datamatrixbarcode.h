@@ -28,9 +28,6 @@ class DataMatrixBarcode : public Prison::AbstractBarcode {
         * @return QImage containing a DataMatrix, trying to approximate the requested sizes
         */
         QImage paintImage(const QSizeF& size) override;
-    private:
-        class Private;
-        Private *d;
 };
 }
 

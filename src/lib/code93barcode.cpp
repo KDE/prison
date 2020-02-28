@@ -9,23 +9,20 @@
 #include <QColor>
 
 using namespace Prison;
-/**
-@cond PRIVATE
-*/
-class Code93Barcode::Private {
-  public:
-    static QList<bool> barSequence(const char* str) {
-      Q_ASSERT(strlen(str)==9); // this is a internal helper tool, only called with fixed strings in here, all 9 chars long
-      QList<bool> ret;
-      for(int i = 0 ; i < 9 ; i++) {
+
+static QList<bool> barSequence(const char* str) {
+    Q_ASSERT(strlen(str)==9); // this is a internal helper tool, only called with fixed strings in here, all 9 chars long
+    QList<bool> ret;
+    for(int i = 0 ; i < 9 ; i++) {
         ret.append(str[i] == '1');
         Q_ASSERT(str[i] == '0' || str[i] == '1');
-      }
-      return ret;
     }
-    // returns a list of 9 bar colors, where `true' means foreground and `false' means background color
-    static QList<bool> sequenceForID(int id) {
-      switch(id) {
+    return ret;
+}
+
+// returns a list of 9 bar colors, where `true' means foreground and `false' means background color
+static QList<bool> sequenceForID(int id) {
+    switch(id) {
         case 0: return barSequence("100010100"); // 0-9
         case 1: return barSequence("101001000");
         case 2: return barSequence("101000100");
@@ -74,16 +71,17 @@ class Code93Barcode::Private {
         case 45: return barSequence("111010110"); // (/)
         case 46: return barSequence("100110010"); // (+)
         case 47: return barSequence("101011110"); // stop sequence
-        default:
-          // unknown ID... shouldn't happen
-          qWarning("Code93Barcode::sequenceForID called with unknown ID");
-          return QList<bool>();
-      }
+    default:
+        // unknown ID... shouldn't happen
+        qWarning("Code93Barcode::sequenceForID called with unknown ID");
+        return QList<bool>();
     }
-    // returns the list of IDs that represent a character
-    static QList<int> codesForChar(uint c) {
-      QList<int> ret;
-      switch(c) {
+}
+
+// returns the list of IDs that represent a character
+static QList<int> codesForChar(uint c) {
+    QList<int> ret;
+    switch(c) {
         case 0: ret += 44; ret += 30; break;
         case 1: ret += 43; ret += 10; break;
         case 2: ret += 43; ret += 11; break;
@@ -212,30 +210,23 @@ class Code93Barcode::Private {
         case 125: ret += 44; ret += 27; break;
         case 126: ret += 44; ret += 28; break;
         case 127: ret += 44; ret += 29; break;
-      }
-      return ret; // return an empty list for a non-ascii character code
     }
-    // calculate a checksum
-    static int checksum(const QList<int> &codes, int wrap) {
-      int check = 0;
-      for(int i = 0 ; i < codes.size() ; i++) {
+    return ret; // return an empty list for a non-ascii character code
+}
+
+// calculate a checksum
+static int checksum(const QList<int> &codes, int wrap) {
+    int check = 0;
+    for(int i = 0 ; i < codes.size() ; i++) {
         // weight goes from 1 to wrap, right-to-left, then repeats
         const int weight = (codes.size() - i - 1) % wrap + 1;
         check += codes.at(i) * weight;
-      }
-      return check % 47;
     }
-};
-/**
-@endcond
-*/
-
-Code93Barcode::Code93Barcode() : AbstractBarcode(), d(nullptr){
+    return check % 47;
 }
 
-Code93Barcode::~Code93Barcode() {
-  delete d;
-}
+Code93Barcode::Code93Barcode() = default;
+Code93Barcode::~Code93Barcode() = default;
 
 QImage Code93Barcode::paintImage(const QSizeF& size) {
   if(size.height() == 0.0) {
@@ -248,20 +239,20 @@ QImage Code93Barcode::paintImage(const QSizeF& size) {
     QList<int> codes;
     const QString str = data();
     for(int i = 0 ; i < str.size() ; i++) {
-      codes += Private::codesForChar(str.at(i).unicode());
+      codes += codesForChar(str.at(i).unicode());
     }
 
     // calculate checksums
-    codes.append(Private::checksum(codes, 20)); // "C" checksum
-    codes.append(Private::checksum(codes, 15)); // "K" checksum: includes previous checksum
+    codes.append(checksum(codes, 20)); // "C" checksum
+    codes.append(checksum(codes, 15)); // "K" checksum: includes previous checksum
 
     // now generate the barcode
     // the guard sequence that goes on each end
-    const QList<bool> endSequence = Private::sequenceForID(47);
+    const QList<bool> endSequence = sequenceForID(47);
     barcode += endSequence;
     // translate codes into bars
     for(int i = 0 ; i < codes.size() ; i++) {
-      barcode += Private::sequenceForID(codes.at(i));
+      barcode += sequenceForID(codes.at(i));
     }
     // ending guard
     barcode += endSequence;

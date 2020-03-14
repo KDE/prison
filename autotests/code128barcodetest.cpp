@@ -7,6 +7,8 @@
 #include "../src/lib/code128barcode.h"
 #include "../src/lib/bitvector_p.h"
 
+#include <prison.h>
+
 #include <QImage>
 #include <QObject>
 #include <qtest.h>
@@ -90,6 +92,13 @@ private Q_SLOTS:
             qDebug() << "Expected:" << output;
         }
         QCOMPARE(v, output);
+    }
+
+    void testDimension()
+    {
+        std::unique_ptr<Prison::AbstractBarcode> barcode(Prison::createBarcode(Prison::Code128));
+        QVERIFY(barcode);
+        QCOMPARE(barcode->dimensions(), Prison::AbstractBarcode::OneDimension);
     }
 };
 

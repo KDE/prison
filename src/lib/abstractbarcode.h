@@ -29,10 +29,15 @@ namespace Prison {
    */
 class PRISON_EXPORT AbstractBarcode {
   public:
+#if PRISON_ENABLE_DEPRECATED_SINCE(5, 69)
     /**
      * creates a barcode generator without any data
+     * @deprecated since 5.69 Use Prison::createBarcode instead.
      */
+    PRISON_DEPRECATED_VERSION(5, 69, "Use Prison::createBarcode()")
     AbstractBarcode();
+#endif
+
     virtual ~AbstractBarcode();
     /**
      * @return the QString encoded in this barcode.
@@ -80,7 +85,25 @@ class PRISON_EXPORT AbstractBarcode {
      */
     void setBackgroundColor(const QColor& backgroundcolor);
 
+    /** Dimensions of the barcode.
+     *  @since 5.69
+     */
+    enum Dimensions : uint8_t {
+        NoDimensions, ///< Null barcode.
+        OneDimension, ///< One-dimensional barcode.
+        TwoDimensions ///< 2D matrix code.
+    };
+
+    /** Returns the amount of dimensions of the barcode.
+     *  @since 5.69
+     */
+    Dimensions dimensions() const;
+
   protected:
+    ///@cond internal
+    explicit AbstractBarcode(Dimensions dim);
+    ///@endcond
+
     /**
      * Sets the minimum size for this barcode.
      * Some barcodes have minimum sizes for when they are readable and such

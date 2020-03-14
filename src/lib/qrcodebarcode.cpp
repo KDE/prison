@@ -10,7 +10,7 @@
 
 using namespace Prison;
 
-QRCodeBarcode::QRCodeBarcode() = default;
+QRCodeBarcode::QRCodeBarcode() : AbstractBarcode(AbstractBarcode::TwoDimensions) {}
 QRCodeBarcode::~QRCodeBarcode() = default;
 
 QImage QRCodeBarcode::paintImage(const QSizeF& size) {

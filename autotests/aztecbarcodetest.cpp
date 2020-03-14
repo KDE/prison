@@ -7,9 +7,13 @@
 #include "../src/lib/aztecbarcode.h"
 #include "../src/lib/bitvector_p.h"
 
+#include <prison.h>
+
 #include <QImage>
 #include <QObject>
 #include <qtest.h>
+
+#include <memory>
 
 Q_DECLARE_METATYPE(Prison::BitVector)
 
@@ -371,6 +375,13 @@ private Q_SLOTS:
         QImage ref(QStringLiteral(":/encoding/") + refName);
         ref = ref.convertToFormat(img.format());
         QCOMPARE(img, ref);
+    }
+
+    void testDimension()
+    {
+        std::unique_ptr<Prison::AbstractBarcode> barcode(Prison::createBarcode(Prison::Aztec));
+        QVERIFY(barcode);
+        QCOMPARE(barcode->dimensions(), Prison::AbstractBarcode::TwoDimensions);
     }
 };
 

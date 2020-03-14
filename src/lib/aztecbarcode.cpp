@@ -33,7 +33,7 @@ enum {
     CompactLayerCount = 4
 };
 
-AztecBarcode::AztecBarcode() = default;
+AztecBarcode::AztecBarcode() : AbstractBarcode(AbstractBarcode::TwoDimensions) {}
 AztecBarcode::~AztecBarcode() = default;
 
 // encoding properties depending on layer count

@@ -69,7 +69,7 @@ static QList<bool> sequenceForChar(ushort c) {
     }
 }
 
-Code39Barcode::Code39Barcode() = default;
+Code39Barcode::Code39Barcode() : AbstractBarcode(AbstractBarcode::OneDimension) {}
 Code39Barcode::~Code39Barcode() = default;
 
 QImage Code39Barcode::paintImage(const QSizeF& size) {

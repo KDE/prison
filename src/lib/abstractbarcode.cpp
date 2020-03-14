@@ -21,6 +21,7 @@ class AbstractBarcode::Private {
     QColor m_foreground;
     QColor m_background;
     QSizeF m_minimum_size;
+    AbstractBarcode::Dimensions m_dimension = AbstractBarcode::NoDimensions;
     AbstractBarcode* q;
     bool sizeTooSmall(const QSizeF& size) {
         if(m_minimum_size.width() > size.width()) {
@@ -36,8 +37,16 @@ class AbstractBarcode::Private {
  * @endcond
  */
 
+#if PRISON_BUILD_DEPRECATED_SINCE(5, 69)
 AbstractBarcode::AbstractBarcode() : d(new AbstractBarcode::Private(this)) {
 
+}
+#endif
+
+AbstractBarcode::AbstractBarcode(AbstractBarcode::Dimensions dim) :
+    d(new AbstractBarcode::Private(this))
+{
+    d->m_dimension = dim;
 }
 
 QString AbstractBarcode::data() const {
@@ -96,6 +105,11 @@ void AbstractBarcode::setForegroundColor(const QColor& foregroundcolor) {
         d->m_foreground=foregroundcolor;
         d->m_cache=QImage();
     }
+}
+
+AbstractBarcode::Dimensions AbstractBarcode::dimensions() const
+{
+    return d->m_dimension;
 }
 
 AbstractBarcode::~AbstractBarcode() {

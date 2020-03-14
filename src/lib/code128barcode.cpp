@@ -38,7 +38,7 @@ enum CodeSetOp : uint8_t {
     LatchC = 99
 };
 
-Code128Barcode::Code128Barcode() = default;
+Code128Barcode::Code128Barcode() : AbstractBarcode(AbstractBarcode::OneDimension) {}
 Code128Barcode::~Code128Barcode() = default;
 
 QImage Code128Barcode::paintImage(const QSizeF& size)

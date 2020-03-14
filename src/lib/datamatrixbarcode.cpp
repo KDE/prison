@@ -9,7 +9,7 @@
 #include <QColor>
 using namespace Prison;
 
-DataMatrixBarcode::DataMatrixBarcode() = default;
+DataMatrixBarcode::DataMatrixBarcode() : AbstractBarcode(AbstractBarcode::TwoDimensions) {}
 DataMatrixBarcode::~DataMatrixBarcode() = default;
 
 QImage DataMatrixBarcode::paintImage(const QSizeF& size) {

@@ -25,6 +25,7 @@ class BarcodeQuickItem : public QQuickPaintedItem
     Q_PROPERTY(BarcodeType barcodeType READ barcodeType WRITE setBarcodeType NOTIFY barcodeTypeChanged)
     Q_PROPERTY(QColor foregroundColor READ foregroundColor WRITE setForegroundColor NOTIFY foregroundColorChanged)
     Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
+    Q_PROPERTY(Dimensions dimensions READ dimensions NOTIFY dimensionsChanged)
 
 public:
     enum BarcodeType {
@@ -51,6 +52,14 @@ public:
     QColor backgroundColor() const;
     void setBackgroundColor(const QColor &color);
 
+    enum Dimensions {
+        NoDimensions,
+        OneDimension,
+        TwoDimensions
+    };
+    Q_ENUM(Dimensions);
+    Dimensions dimensions() const;
+
     void paint(QPainter *painter) override;
     void componentComplete() override;
 
@@ -59,6 +68,7 @@ Q_SIGNALS:
     void barcodeTypeChanged();
     void foregroundColorChanged();
     void backgroundColorChanged();
+    void dimensionsChanged();
 
 private:
     void updateBarcode();

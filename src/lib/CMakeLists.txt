@@ -28,8 +28,14 @@ ecm_qt_declare_logging_category(prison_SRCS
 )
 add_library(KF5Prison ${prison_SRCS})
 
-generate_export_header(KF5Prison BASE_NAME Prison)
-
+ecm_generate_export_header(KF5Prison
+    BASE_NAME Prison
+    GROUP_BASE_NAME KF
+    VERSION ${KF5_VERSION}
+    DEPRECATED_BASE_VERSION 0
+    DEPRECATION_VERSIONS 5.69
+    EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
+)
 add_library(KF5::Prison ALIAS KF5Prison)
 
 target_include_directories(KF5Prison INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/prison/>")

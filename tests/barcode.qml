@@ -30,12 +30,22 @@ Rectangle {
         }
 
         Prison.Barcode {
+            id: barcode
             Layout.fillWidth: true
             Layout.fillHeight: true
             content: contentEdit.text
             barcodeType: typeCombobox.currentIndex
 //             foregroundColor: "red"
 //             backgroundColor: "green"
+        }
+
+        RowLayout {
+            Label {
+                text: "1D: " + (barcode.dimensions == Prison.Barcode.OneDimension)
+            }
+            Label {
+                text: "2D: " + (barcode.dimensions == 2)
+            }
         }
     }
 }

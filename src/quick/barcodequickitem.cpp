@@ -77,6 +77,11 @@ void BarcodeQuickItem::setBackgroundColor(const QColor &color)
     updateBarcode();
 }
 
+BarcodeQuickItem::Dimensions Prison::BarcodeQuickItem::dimensions() const
+{
+    return m_barcode ? static_cast<BarcodeQuickItem::Dimensions>(m_barcode->dimensions()) : NoDimensions;
+}
+
 void BarcodeQuickItem::paint(QPainter* painter)
 {
     if (!m_barcode)
@@ -105,6 +110,7 @@ void BarcodeQuickItem::updateBarcode()
     if (m_type == Prison::Null || m_content.isEmpty()) {
         m_barcode.reset();
         update();
+        emit dimensionsChanged();
         return;
     }
 
@@ -120,4 +126,5 @@ void BarcodeQuickItem::updateBarcode()
     }
 
     update();
+    emit dimensionsChanged();
 }

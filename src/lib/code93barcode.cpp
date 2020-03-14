@@ -225,7 +225,7 @@ static int checksum(const QList<int> &codes, int wrap) {
     return check % 47;
 }
 
-Code93Barcode::Code93Barcode() = default;
+Code93Barcode::Code93Barcode() : AbstractBarcode(AbstractBarcode::OneDimension) {}
 Code93Barcode::~Code93Barcode() = default;
 
 QImage Code93Barcode::paintImage(const QSizeF& size) {

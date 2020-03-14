@@ -63,7 +63,6 @@ QImage QRCodeBarcode::paintImage(const QSizeF& size) {
   }
 
   const auto result = QImage(img, code->width+2*margin, code->width+2*margin, QImage::Format_ARGB32).copy(); // deep copy as we are going to delete img
-  setMinimumSize(QSizeF(result.width(), result.height()));
   delete[] img;
   QRcode_free(code);
   return result;

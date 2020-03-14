@@ -259,7 +259,6 @@ QImage Code93Barcode::paintImage(const QSizeF& size) {
   }
 
   const int barWidth = 1;
-  setMinimumSize(QSize(barcode.size(), 1));
 
   // build one line of the result image
   QVector<QRgb> line;

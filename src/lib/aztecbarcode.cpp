@@ -684,7 +684,6 @@ QImage AztecBarcode::cropAndScaleFull(QImage *img, int layerCount)
 {
     const auto offset = aztecFullLayerOffset[layerCount - 1];
     const auto minSize = FullMaxSize - 2 * offset;
-    setMinimumSize(QSizeF(minSize, minSize));
 
     QImage out(minSize, minSize, img->format());
     QPainter p(&out);
@@ -773,7 +772,6 @@ QImage AztecBarcode::cropAndScaleCompact(QImage *img, int layerCount)
 {
     const auto offset = aztecCompactLayerOffset[layerCount - 1];
     const auto minSize = CompactMaxSize - 2 * offset;
-    setMinimumSize(QSizeF(minSize, minSize));
 
     QImage out(minSize, minSize, img->format());
     QPainter p(&out);

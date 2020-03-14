@@ -33,7 +33,6 @@ QImage DataMatrixBarcode::paintImage(const QSizeF& size)
   }
   Q_ASSERT(enc->image->width == enc->image->height);
 
-  setMinimumSize(QSizeF(enc->image->width,enc->image->height));
   QImage ret;
 
   if(foregroundColor()==Qt::black && backgroundColor() == Qt::white) {

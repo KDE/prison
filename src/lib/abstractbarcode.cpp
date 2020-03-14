@@ -21,17 +21,12 @@ class AbstractBarcode::Private {
     QImage m_cache;
     QColor m_foreground = Qt::black;
     QColor m_background = Qt::white;
-    QSizeF m_minimum_size;
     AbstractBarcode::Dimensions m_dimension = AbstractBarcode::NoDimensions;
     AbstractBarcode* q;
 
-    bool sizeTooSmall(const QSizeF& size) const {
-        if(m_minimum_size.width() > size.width()) {
-            return true;
-        } else if(m_minimum_size.height() > size.height()) {
-            return true;
-        }
-        return false;
+    bool sizeTooSmall(const QSizeF& size) const
+    {
+        return m_cache.width() > size.width() || m_cache.height() > size.height();
     }
 
     void recompute()
@@ -72,13 +67,13 @@ QImage AbstractBarcode::toImage(const QSizeF& size)
     }
 
     // scale to the requested size, using only full integer factors to keep the code readable
-    int scaleX = std::max<int>(1, size.width() / d->m_minimum_size.width());
-    int scaleY = std::max<int>(1, size.height() / d->m_minimum_size.height());
+    int scaleX = std::max<int>(1, size.width() / d->m_cache.width());
+    int scaleY = std::max<int>(1, size.height() / d->m_cache.height());
     if (dimensions() == TwoDimensions) {
         scaleX = scaleY = std::min(scaleX, scaleY);
     }
 
-    QImage out(d->m_minimum_size.width() * scaleX, d->m_minimum_size.height() * scaleY, d->m_cache.format());
+    QImage out(d->m_cache.width() * scaleX, d->m_cache.height() * scaleY, d->m_cache.format());
     QPainter p(&out);
     p.setRenderHint(QPainter::SmoothPixmapTransform, false);
     p.drawImage(out.rect(), d->m_cache, d->m_cache.rect());
@@ -88,7 +83,6 @@ QImage AbstractBarcode::toImage(const QSizeF& size)
 void AbstractBarcode::setData(const QString& data) {
   d->m_data=data;
   d->m_cache=QImage();
-  d->m_minimum_size = QSize();
 }
 
 QSizeF AbstractBarcode::minimumSize() const
@@ -97,24 +91,24 @@ QSizeF AbstractBarcode::minimumSize() const
 
     // ### backward compatibility: this is applying minimum size behavior that the specific
     // implementations were doing prior to 5.69. This is eventually to be dropped.
-    if (!d->m_minimum_size.isValid()) {
+    if (d->m_cache.isNull()) {
         return {};
     }
     switch (d->m_dimension) {
         case NoDimensions:
             return {};
         case OneDimension:
-            return QSizeF(d->m_minimum_size.width(), std::max(d->m_minimum_size.height(), 10.0));
+            return QSizeF(d->m_cache.width(), std::max(d->m_cache.height(), 10));
         case TwoDimensions:
-            return d->m_minimum_size * 4;
+            return d->m_cache.size() * 4;
     }
 
-    return d->m_minimum_size;
+    return d->m_cache.size();
 }
 
 void AbstractBarcode::setMinimumSize(const QSizeF& minimumSize)
 {
-    d->m_minimum_size = minimumSize;
+    Q_UNUSED(minimumSize);
 }
 
 const QColor& AbstractBarcode::backgroundColor() const {

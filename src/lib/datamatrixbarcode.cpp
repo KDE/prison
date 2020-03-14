@@ -12,16 +12,17 @@ using namespace Prison;
 DataMatrixBarcode::DataMatrixBarcode() : AbstractBarcode(AbstractBarcode::TwoDimensions) {}
 DataMatrixBarcode::~DataMatrixBarcode() = default;
 
-QImage DataMatrixBarcode::paintImage(const QSizeF& size) {
-  const int width = qRound(qMin(size.width(),size.height()));
-  if(data().size()==0 || width == 0 || data().size() > 1200) {
+QImage DataMatrixBarcode::paintImage(const QSizeF& size)
+{
+  Q_UNUSED(size);
+  if (data().size() > 1200) {
     return QImage();
   }
 
   DmtxEncode * enc = dmtxEncodeCreate();
   dmtxEncodeSetProp( enc, DmtxPropPixelPacking, DmtxPack32bppRGBX );
-  dmtxEncodeSetProp( enc, DmtxPropWidth, width );
-  dmtxEncodeSetProp( enc, DmtxPropHeight, width );
+  dmtxEncodeSetProp( enc, DmtxPropModuleSize, 1);
+  dmtxEncodeSetProp( enc, DmtxPropMarginSize, 2);
 
   QByteArray trimmedData(data().trimmed().toUtf8());
   DmtxPassFail result =  dmtxEncodeDataMatrix(enc, trimmedData.length(),
@@ -71,9 +72,6 @@ QImage DataMatrixBarcode::paintImage(const QSizeF& size) {
       ret=tmp.copy();
       delete[] img;
     }
-  }
-  if(!ret.isNull() && ret.width() < width) {
-    ret = ret.scaled(width,width);
   }
   dmtxEncodeDestroy(&enc);
   return ret;

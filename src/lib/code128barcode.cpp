@@ -43,23 +43,19 @@ Code128Barcode::~Code128Barcode() = default;
 
 QImage Code128Barcode::paintImage(const QSizeF& size)
 {
-    if (size.height() < 1)
-        return {};
+    Q_UNUSED(size);
 
     const auto bits = encode(data().toLatin1());
     const auto width = bits.size() + 2 * QuietZone;
-    setMinimumSize(QSizeF(width, 10));
+    setMinimumSize(QSizeF(width, 1));
 
-    const auto moduleSize = size.width() / width;
-    if (moduleSize < 1) // too small for this
-        return {};
-
-    QImage img(moduleSize * width, size.height(), QImage::Format_ARGB32);
+    QImage img(width, 1, QImage::Format_ARGB32);
     img.fill(backgroundColor());
     QPainter p(&img);
     for (int i = 0; i < bits.size(); ++i) {
-        if (bits.at(i))
-            p.fillRect(QRectF((QuietZone + i) * moduleSize, 0, moduleSize, img.height()), foregroundColor());
+        if (bits.at(i)) {
+            img.setPixel(QuietZone + i, 0, foregroundColor().rgb());
+        }
     }
 
     return img;

@@ -55,14 +55,12 @@ class PRISON_EXPORT AbstractBarcode {
      * Creates a image with a barcode on
      * @return QImage with a barcode on, trying to match the requested \param size
      *
-     * The image function is cached and painted on demand.
-     *
-     * if one of the dimensions of @param size is smaller than the matching dimension in \ref minimumSize,
+     * If one of the dimensions of @param size is smaller than the matching dimension in \ref minimumSize,
      * a null QImage will be returned
      */
     QImage toImage(const QSizeF& size) ;
     /**
-     * Note! minimalSize() doesn't work as expected if this is not painting on something.
+     * The minimal size of this barcode.
      * @return the minimal size for this barcode.
      */
     QSizeF minimumSize() const;
@@ -112,9 +110,10 @@ class PRISON_EXPORT AbstractBarcode {
     void setMinimumSize(const QSizeF& minimumSize);
     /**
      * Doing the actual painting of the image
-     * @param size requested size of the miage
+     * @param size unused - will be removed in KF6
      * @return image with barcode, or null image
      */
+    // TODO KF6: remove the size argument
     virtual QImage paintImage(const QSizeF& size) = 0;
   private:
    class Private;

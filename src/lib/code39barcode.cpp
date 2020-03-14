@@ -72,8 +72,9 @@ static QList<bool> sequenceForChar(ushort c) {
 Code39Barcode::Code39Barcode() : AbstractBarcode(AbstractBarcode::OneDimension) {}
 Code39Barcode::~Code39Barcode() = default;
 
-QImage Code39Barcode::paintImage(const QSizeF& size) {
-  if(size.height() == 0.0) return QImage();
+QImage Code39Barcode::paintImage(const QSizeF& size)
+{
+  Q_UNUSED(size);
   QList<bool> barcode;
   // convert text into sequences of wide/narrow bars
   {
@@ -103,21 +104,14 @@ QImage Code39Barcode::paintImage(const QSizeF& size) {
      *) wide * largeWidth + narrow * smallWidth <= size.width()
         - the barcode has to fit within the given size
    */
-  const int w = size.width();
   const int wide = barcode.count(true);
   const int narrow = barcode.count(false);
-  // maximize wide bar width
-  int largeWidth = 2*w / (2*wide + narrow);
-  // then maximize narrow bar width
-  int smallWidth = (w - largeWidth*wide) / narrow;
+  // wide bar width
+  const int largeWidth = 2;
+  // narrow bar width
+  const int smallWidth = 1;
   // if the requested size was too small return a null image
-  setMinimumSize(QSize(2* wide + narrow, 10));
-  if(largeWidth<2) {
-      return QImage();
-  }
-  if(smallWidth<1) {
-        return QImage();
-  }
+  setMinimumSize(QSize(2* wide + narrow, 1));
   Q_ASSERT(largeWidth > smallWidth);
 
   // one line of the result image
@@ -132,11 +126,8 @@ QImage Code39Barcode::paintImage(const QSizeF& size) {
   }
 
   // build the complete barcode
-  QImage ret(line.size(), size.height(), QImage::Format_ARGB32);
-  // just repeat the line to make the image
-  for(int y = 0 ; y < ret.height() ; y++) {
-    memcpy(ret.scanLine(y), line.data(), line.size() * sizeof(QRgb));
-  }
+  QImage ret(line.size(), 1, QImage::Format_ARGB32);
+  memcpy(ret.scanLine(0), line.data(), line.size() * sizeof(QRgb));
   return ret;
 }
 

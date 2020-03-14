@@ -100,6 +100,17 @@ private Q_SLOTS:
         QVERIFY(barcode);
         QCOMPARE(barcode->dimensions(), Prison::AbstractBarcode::OneDimension);
     }
+
+    void testSize()
+    {
+        std::unique_ptr<Prison::AbstractBarcode> barcode(Prison::createBarcode(Prison::Code128));
+        QVERIFY(barcode);
+        QVERIFY(!barcode->minimumSize().isValid());
+        barcode->setData(QStringLiteral("UNIT TEST"));
+        QCOMPARE(barcode->minimumSize(), QSize(154, 10));
+        QCOMPARE(barcode->toImage(barcode->minimumSize()).size(), QSize(154, 10));
+        QCOMPARE(barcode->toImage({1, 1}).isNull(), true);
+    }
 };
 
 QTEST_APPLESS_MAIN(Code128BarcodeTest)

@@ -229,9 +229,7 @@ Code93Barcode::Code93Barcode() : AbstractBarcode(AbstractBarcode::OneDimension) 
 Code93Barcode::~Code93Barcode() = default;
 
 QImage Code93Barcode::paintImage(const QSizeF& size) {
-  if(size.height() == 0.0) {
-    return QImage();
-  }
+  Q_UNUSED(size);
   QList<bool> barcode;
   // convert text into sequences of fg/bg bars
   {
@@ -260,12 +258,8 @@ QImage Code93Barcode::paintImage(const QSizeF& size) {
     barcode += true;
   }
 
-  // try to fill the requested size
-  const int barWidth = int(size.width() / barcode.size());
-  setMinimumSize(QSize(barcode.size(), 10));
-  if(barWidth < 1 ) { // can't go below 1 pixel
-      return QImage();
-  }
+  const int barWidth = 1;
+  setMinimumSize(QSize(barcode.size(), 1));
 
   // build one line of the result image
   QVector<QRgb> line;
@@ -278,10 +272,7 @@ QImage Code93Barcode::paintImage(const QSizeF& size) {
   }
 
   // build the complete barcode
-  QImage ret(line.size(), size.height(), QImage::Format_ARGB32);
-  // just repeat the line to make the image
-  for(int y = 0 ; y < ret.height() ; y++) {
-    memcpy(ret.scanLine(y), line.data(), line.size() * sizeof(QRgb));
-  }
+  QImage ret(line.size(), 1, QImage::Format_ARGB32);
+  memcpy(ret.scanLine(0), line.data(), line.size() * sizeof(QRgb));
   return ret;
 }

@@ -14,10 +14,7 @@ QRCodeBarcode::QRCodeBarcode() : AbstractBarcode(AbstractBarcode::TwoDimensions)
 QRCodeBarcode::~QRCodeBarcode() = default;
 
 QImage QRCodeBarcode::paintImage(const QSizeF& size) {
-  const int width = qRound(qMin(size.width(),size.height()));
-  if(data().size()==0 || width==0) {
-    return QImage();
-  }
+  Q_UNUSED(size);
   const QByteArray trimmedData(data().trimmed().toUtf8());
   QRcode* code = QRcode_encodeString8bit(trimmedData.constData(), 0, QR_ECLEVEL_Q);
   if(!code) {
@@ -64,10 +61,10 @@ QImage QRCodeBarcode::paintImage(const QSizeF& size) {
       }
     }
   }
-  QImage tmp(img,code->width+2*margin,code->width+2*margin,QImage::Format_ARGB32);
-  setMinimumSize(QSizeF(tmp.width()*4,tmp.height()*4));
-  QImage ret = tmp.convertToFormat(QImage::Format_ARGB32).scaled(qMax(tmp.width()*4,width),qMax(tmp.height()*4,width)); //4 is determined by trial and error.
+
+  const auto result = QImage(img, code->width+2*margin, code->width+2*margin, QImage::Format_ARGB32).copy(); // deep copy as we are going to delete img
+  setMinimumSize(QSizeF(result.width(), result.height()));
   delete[] img;
   QRcode_free(code);
-  return ret;
+  return result;
 }

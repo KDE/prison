@@ -369,7 +369,7 @@ private Q_SLOTS:
 
         AztecBarcode code;
         code.setData(input);
-        const auto img = code.paintImage({200, 200});
+        const auto img = code.paintImage({});
         img.save(refName);
 
         QImage ref(QStringLiteral(":/encoding/") + refName);
@@ -382,6 +382,17 @@ private Q_SLOTS:
         std::unique_ptr<Prison::AbstractBarcode> barcode(Prison::createBarcode(Prison::Aztec));
         QVERIFY(barcode);
         QCOMPARE(barcode->dimensions(), Prison::AbstractBarcode::TwoDimensions);
+    }
+
+    void testSize()
+    {
+        std::unique_ptr<Prison::AbstractBarcode> barcode(Prison::createBarcode(Prison::Aztec));
+        QVERIFY(barcode);
+        QVERIFY(!barcode->minimumSize().isValid());
+        barcode->setData(QStringLiteral("UNIT TEST"));
+        QCOMPARE(barcode->minimumSize(), QSize(60, 60));
+        QCOMPARE(barcode->toImage(barcode->minimumSize()).size(), QSize(60, 60));
+        QCOMPARE(barcode->toImage({1, 1}).isNull(), true);
     }
 };
 

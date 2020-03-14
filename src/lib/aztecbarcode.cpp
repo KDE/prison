@@ -63,6 +63,7 @@ static int aztecFullDataBits(int layer)
 
 QImage AztecBarcode::paintImage(const QSizeF& size)
 {
+    Q_UNUSED(size);
     const auto inputData = aztecEncode(data().toLatin1());
 
     int layerCount = 0;
@@ -142,14 +143,14 @@ QImage AztecBarcode::paintImage(const QSizeF& size)
         paintCompactGrid(&img);
         paintCompactData(&img, encodedData, layerCount);
         paintCompactModeMessage(&img, modeMsg);
-        return cropAndScaleCompact(&img, layerCount, std::min(size.width(), size.height()));
+        return cropAndScaleCompact(&img, layerCount);
     } else {
         QImage img(FullMaxSize, FullMaxSize, QImage::Format_RGB32);
         img.fill(backgroundColor());
         paintFullGrid(&img);
         paintFullData(&img, encodedData, layerCount);
         paintFullModeMessage(&img, modeMsg);
-        return cropAndScaleFull(&img, layerCount, std::min(size.width(), size.height()));
+        return cropAndScaleFull(&img, layerCount);
     }
 }
 
@@ -679,14 +680,13 @@ void AztecBarcode::paintFullModeMessage(QImage *img, const BitVector &modeData) 
     }
 }
 
-QImage AztecBarcode::cropAndScaleFull(QImage *img, int layerCount, int size)
+QImage AztecBarcode::cropAndScaleFull(QImage *img, int layerCount)
 {
     const auto offset = aztecFullLayerOffset[layerCount - 1];
     const auto minSize = FullMaxSize - 2 * offset;
-    setMinimumSize(QSizeF(minSize, minSize) * 4); // *4 taken from what QR does
-    const int scale = std::max(1, size / minSize);
+    setMinimumSize(QSizeF(minSize, minSize));
 
-    QImage out(minSize * scale, minSize * scale, img->format());
+    QImage out(minSize, minSize, img->format());
     QPainter p(&out);
     p.setRenderHint(QPainter::SmoothPixmapTransform, false);
     const auto srcRect = img->rect().adjusted(offset, offset, -offset, -offset);
@@ -769,14 +769,13 @@ void AztecBarcode::paintCompactModeMessage(QImage *img, const BitVector &modeDat
     }
 }
 
-QImage AztecBarcode::cropAndScaleCompact(QImage *img, int layerCount, int size)
+QImage AztecBarcode::cropAndScaleCompact(QImage *img, int layerCount)
 {
     const auto offset = aztecCompactLayerOffset[layerCount - 1];
     const auto minSize = CompactMaxSize - 2 * offset;
-    setMinimumSize(QSizeF(minSize, minSize) * 4); // *4 taken from what QR does
-    const int scale = std::max(1, size / minSize);
+    setMinimumSize(QSizeF(minSize, minSize));
 
-    QImage out(minSize * scale, minSize * scale, img->format());
+    QImage out(minSize, minSize, img->format());
     QPainter p(&out);
     p.setRenderHint(QPainter::SmoothPixmapTransform, false);
     const auto srcRect = img->rect().adjusted(offset, offset, -offset, -offset);

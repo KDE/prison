@@ -34,12 +34,12 @@ private:
     void paintFullGrid(QImage *img) const;
     void paintFullData(QImage *img, const BitVector &data, int layerCount) const;
     void paintFullModeMessage(QImage *img, const BitVector &modeData) const;
-    QImage cropAndScaleFull(QImage *img, int layerCount, int size);
+    QImage cropAndScaleFull(QImage *img, int layerCount);
 
     void paintCompactGrid(QImage *img) const;
     void paintCompactData(QImage *img, const BitVector &data, int layerCount) const;
     void paintCompactModeMessage(QImage *img, const BitVector &modeData) const;
-    QImage cropAndScaleCompact(QImage *img, int layerCount, int size);
+    QImage cropAndScaleCompact(QImage *img, int layerCount);
 };
 
 }

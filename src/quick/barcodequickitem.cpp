@@ -9,7 +9,9 @@
 #include <prison/prison.h>
 
 #include <QDebug>
+#include <QGuiApplication>
 #include <QPainter>
+#include <QScreen>
 
 using namespace Prison;
 
@@ -120,9 +122,8 @@ void BarcodeQuickItem::updateBarcode()
         m_barcode->setData(m_content);
         m_barcode->setForegroundColor(m_fgColor);
         m_barcode->setBackgroundColor(m_bgColor);
-        // minimumSize() is only providing valid results after the first call to toImage()...
-        m_barcode->toImage(m_barcode->minimumSize());
-        setImplicitSize(m_barcode->minimumSize().width(), m_barcode->minimumSize().height());
+        const auto size = m_barcode->preferredSize(QGuiApplication::primaryScreen()->devicePixelRatio());
+        setImplicitSize(size.width(), size.height());
     }
 
     update();

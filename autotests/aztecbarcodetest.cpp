@@ -391,6 +391,9 @@ private Q_SLOTS:
         QVERIFY(!barcode->minimumSize().isValid());
         barcode->setData(QStringLiteral("UNIT TEST"));
         QCOMPARE(barcode->minimumSize(), QSize(60, 60));
+        QCOMPARE(barcode->trueMinimumSize(), QSize(15, 15));
+        QCOMPARE(barcode->preferredSize(1), QSize(60, 60));
+        QCOMPARE(barcode->preferredSize(2), QSize(30, 30));
         QCOMPARE(barcode->toImage(barcode->minimumSize()).size(), QSize(60, 60));
         QCOMPARE(barcode->toImage({1, 1}).isNull(), true);
     }

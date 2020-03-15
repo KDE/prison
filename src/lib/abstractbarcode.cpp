@@ -106,6 +106,26 @@ QSizeF AbstractBarcode::minimumSize() const
     return d->m_cache.size();
 }
 
+QSizeF AbstractBarcode::trueMinimumSize() const
+{
+    d->recompute();
+    return d->m_cache.size();
+}
+
+QSizeF AbstractBarcode::preferredSize(qreal devicePixelRatio) const
+{
+    d->recompute();
+    switch (d->m_dimension) {
+        case NoDimensions:
+            return {};
+        case OneDimension:
+            return QSizeF(d->m_cache.width() * (devicePixelRatio < 2 ? 2 : 1), std::max(d->m_cache.height(), 50));
+        case TwoDimensions:
+            return d->m_cache.size() * (devicePixelRatio < 2 ? 4 : 2);
+    }
+    return {};
+}
+
 void AbstractBarcode::setMinimumSize(const QSizeF& minimumSize)
 {
     Q_UNUSED(minimumSize);

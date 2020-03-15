@@ -61,9 +61,34 @@ class PRISON_EXPORT AbstractBarcode {
     QImage toImage(const QSizeF& size) ;
     /**
      * The minimal size of this barcode.
+     * @note This isn't the absolute minimum, but closer to the result of preferredSize(1).
      * @return the minimal size for this barcode.
+     * @deprecated since 5.69 Prefer preferredSize() or trueMinimumSize().
      */
     QSizeF minimumSize() const;
+
+    /**
+     * The minimal amount of pixels needed to represent this barcode without loss of information.
+     * That is, the size of the barcode image if each line or dot is just one pixel wide.
+     * On normal screens that is not enough for barcode scanners to reliably detect the barcode
+     * though.
+     * @see preferredSize
+     * @since 5.69
+     */
+    QSizeF trueMinimumSize() const; // TODO KF6: rename to minimumSize
+
+    /**
+     * The recommended size for this barcode when shown on a screen.
+     * This is typically significantly larger than trueMinimumSize() so that
+     * barcode scanners tend to reliably detect the code. As this depends
+     * on the physical resolution of the output, you have to pass the device
+     * pixel ration of the output screen here.
+     * @param devicePixelRatio The device pixel ratio of the screen this is shown on.
+     * @see trueMinimumSize
+     * @since 5.69
+     */
+    QSizeF preferredSize(qreal devicePixelRatio) const;
+
     /**
      * @return the foreground color (by default black) to be used for the barcode.
      */

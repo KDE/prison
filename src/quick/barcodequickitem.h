@@ -26,6 +26,16 @@ class BarcodeQuickItem : public QQuickPaintedItem
     Q_PROPERTY(QColor foregroundColor READ foregroundColor WRITE setForegroundColor NOTIFY foregroundColorChanged)
     Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
     Q_PROPERTY(Dimensions dimensions READ dimensions NOTIFY dimensionsChanged)
+    /**
+     * @see Prison::AbstractBarcode::trueMinimumSize()
+     * @since 5.69
+     */
+    Q_PROPERTY(qreal minimumHeight READ minimumHeight NOTIFY implicitHeightChanged)
+    /**
+     * @see Prison::AbstractBarcode::trueMinimumSize()
+     * @since 5.69
+     */
+    Q_PROPERTY(qreal minimumWidth READ minimumWidth NOTIFY implicitWidthChanged)
 
 public:
     enum BarcodeType {
@@ -62,6 +72,9 @@ public:
 
     void paint(QPainter *painter) override;
     void componentComplete() override;
+
+    qreal minimumHeight() const;
+    qreal minimumWidth() const;
 
 Q_SIGNALS:
     void contentChanged();

@@ -104,6 +104,16 @@ void BarcodeQuickItem::componentComplete()
     updateBarcode();
 }
 
+qreal BarcodeQuickItem::minimumHeight() const
+{
+    return m_barcode ? m_barcode->trueMinimumSize().height() : 0.0;
+}
+
+qreal BarcodeQuickItem::minimumWidth() const
+{
+    return m_barcode ? m_barcode->trueMinimumSize().width() : 0.0;
+}
+
 void BarcodeQuickItem::updateBarcode()
 {
     if (!isComponentComplete())

@@ -46,6 +46,9 @@ Rectangle {
             Label {
                 text: "2D: " + (barcode.dimensions == 2)
             }
+            Label {
+                text: "Min size: " + barcode.minimumWidth + "x" + barcode.minimumHeight
+            }
         }
     }
 }

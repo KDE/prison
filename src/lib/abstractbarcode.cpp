@@ -126,10 +126,12 @@ QSizeF AbstractBarcode::preferredSize(qreal devicePixelRatio) const
     return {};
 }
 
+#if PRISON_BUILD_DEPRECATED_SINCE(5, 69)
 void AbstractBarcode::setMinimumSize(const QSizeF& minimumSize)
 {
     Q_UNUSED(minimumSize);
 }
+#endif
 
 const QColor& AbstractBarcode::backgroundColor() const {
     return d->m_background;

@@ -6,6 +6,8 @@
 
 #include "barcodeexamplewidget.h"
 #include "src/lib/abstractbarcode.h"
+#include <QGuiApplication>
+#include <QScreen>
 #include <QResizeEvent>
 #include <QPainter>
 #include <QMimeData>
@@ -72,7 +74,7 @@ void BarcodeExampleWidget::mousePressEvent(QMouseEvent* event) {
 QSize BarcodeExampleWidget::minimumSizeHint() const
 {
   if(m_barcode) {
-    return m_barcode->minimumSize().toSize();
+    return m_barcode->preferredSize(QGuiApplication::primaryScreen()->devicePixelRatio()).toSize();
   } else {
     return QWidget::minimumSizeHint();
   }

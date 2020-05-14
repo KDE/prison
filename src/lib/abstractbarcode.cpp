@@ -85,6 +85,7 @@ void AbstractBarcode::setData(const QString& data) {
   d->m_cache=QImage();
 }
 
+#if PRISON_BUILD_DEPRECATED_SINCE(5, 72)
 QSizeF AbstractBarcode::minimumSize() const
 {
     d->recompute();
@@ -105,6 +106,7 @@ QSizeF AbstractBarcode::minimumSize() const
 
     return d->m_cache.size();
 }
+#endif
 
 QSizeF AbstractBarcode::trueMinimumSize() const
 {

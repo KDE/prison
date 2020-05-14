@@ -105,13 +105,20 @@ private Q_SLOTS:
     {
         std::unique_ptr<Prison::AbstractBarcode> barcode(Prison::createBarcode(Prison::Code128));
         QVERIFY(barcode);
+#if PRISON_BUILD_DEPRECATED_SINCE(5, 72)
         QVERIFY(!barcode->minimumSize().isValid());
+#endif
         barcode->setData(QStringLiteral("UNIT TEST"));
+#if PRISON_BUILD_DEPRECATED_SINCE(5, 72)
         QCOMPARE(barcode->minimumSize(), QSize(154, 10));
+#endif
         QCOMPARE(barcode->trueMinimumSize(), QSize(154, 1));
         QCOMPARE(barcode->preferredSize(1), QSize(308, 50));
         QCOMPARE(barcode->preferredSize(2), QSize(154, 50));
+#if PRISON_BUILD_DEPRECATED_SINCE(5, 72)
         QCOMPARE(barcode->toImage(barcode->minimumSize()).size(), QSize(154, 10));
+#endif
+        QCOMPARE(barcode->toImage(barcode->preferredSize(1)).size(), QSize(308, 50));
         QCOMPARE(barcode->toImage({1, 1}).isNull(), true);
     }
 };

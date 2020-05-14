@@ -59,13 +59,17 @@ class PRISON_EXPORT AbstractBarcode {
      * a null QImage will be returned
      */
     QImage toImage(const QSizeF& size) ;
+
+#if PRISON_ENABLE_DEPRECATED_SINCE(5, 72)
     /**
      * The minimal size of this barcode.
      * @note This isn't the absolute minimum, but closer to the result of preferredSize(1).
      * @return the minimal size for this barcode.
-     * @deprecated since 5.69 Prefer preferredSize() or trueMinimumSize().
+     * @deprecated Since 5.69, use preferredSize() or trueMinimumSize().
      */
+    PRISON_DEPRECATED_VERSION_BELATED(5, 72, 5, 69, "Use preferredSize() or trueMinimumSize()")
     QSizeF minimumSize() const;
+#endif
 
     /**
      * The minimal amount of pixels needed to represent this barcode without loss of information.

@@ -9,7 +9,7 @@
 
 #include <QDebug>
 #include <QObject>
-#include <qtest.h>
+#include <QTest>
 
 Q_DECLARE_METATYPE(Prison::BitVector)
 

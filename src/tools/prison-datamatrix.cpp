@@ -7,7 +7,7 @@
 #include <QCoreApplication>
 #include "prison.h"
 #include "abstractbarcode.h"
-#include <qstringlist.h>
+#include <QStringList>
 #include <QImageWriter>
 #include <QDebug>
 

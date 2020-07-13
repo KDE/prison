@@ -22,7 +22,8 @@ endif()
 ecm_qt_declare_logging_category(prison_SRCS
     HEADER prison_debug.h
     IDENTIFIER Prison::Log
-    CATEGORY_NAME kf5.prison
+    CATEGORY_NAME kf.prison
+    OLD_CATEGORY_NAMES kf5.prison
     DESCRIPTION "Prison (lib)"
     EXPORT PRISON
 )

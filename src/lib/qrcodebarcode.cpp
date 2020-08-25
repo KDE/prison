@@ -25,11 +25,13 @@ QImage QRCodeBarcode::paintImage(const QSizeF& size) {
   uchar* img = new uchar[4 *sizeof(char*)*(2*margin + code->width)*(2*margin* + code->width)];
   uchar* p = img;
   QByteArray background;
+  background.resize(4);
   background[3] = qAlpha(backgroundColor().rgba());
   background[2] = qRed(backgroundColor().rgba());
   background[1] = qGreen(backgroundColor().rgba());
   background[0] = qBlue(backgroundColor().rgba());
   QByteArray foreground;
+  foreground.resize(4);
   foreground[3] = qAlpha(foregroundColor().rgba());
   foreground[2] = qRed(foregroundColor().rgba());
   foreground[1] = qGreen(foregroundColor().rgba());

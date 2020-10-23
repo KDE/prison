@@ -7,7 +7,6 @@
 #include "abstractbarcode.h"
 
 #include <QDebug>
-#include <QImage>
 #include <QPainter>
 #include <QColor>
 

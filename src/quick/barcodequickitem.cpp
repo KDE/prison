@@ -6,7 +6,6 @@
 
 #include "barcodequickitem.h"
 
-#include <prison/prison.h>
 
 #include <QDebug>
 #include <QGuiApplication>

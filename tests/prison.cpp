@@ -37,7 +37,7 @@ main_window::main_window() {
   lay->addWidget(m_lineedit);
   lay->addWidget(but);
 
-  QVBoxLayout* mainlay = new QVBoxLayout();
+  QVBoxLayout* mainlay = new QVBoxLayout(this);
 
   {
     Prison::AbstractBarcode* barcode = Prison::createBarcode(Prison::DataMatrix);
@@ -123,7 +123,6 @@ main_window::main_window() {
 
   mainlay->addLayout(lay);
   mainlay->addWidget(splitter);
-  setLayout(mainlay);
 
   m_lineedit->setText(QStringLiteral("AOEUIAOEUIAOEUI"));
   data_changed();

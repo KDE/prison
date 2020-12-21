@@ -5,66 +5,57 @@
 */
 
 #include "code39barcode.h"
+#include "barcodeutil.h"
 #include <QChar>
 #include <QColor>
 
 using namespace Prison;
 
-static QList<bool> barSequence(const char* str) {
-    Q_ASSERT(strlen(str)==9); // this is a internal helper tool, only called with fixed strings in here, all 9 chars long
-    QList<bool> ret;
-    for(int i = 0 ; i < 9 ; i++) {
-        ret.append(str[i] == '1');
-        Q_ASSERT(str[i] == '0' || str[i] == '1');
-    }
-    return ret;
-}
-
 static QList<bool> sequenceForChar(ushort c) {
     switch(QChar::toUpper(c)) {
-        case '0': return barSequence("000110100");
-        case '1': return barSequence("100100001");
-        case '2': return barSequence("001100001");
-        case '3': return barSequence("101100000");
-        case '4': return barSequence("000110001");
-        case '5': return barSequence("100110000");
-        case '6': return barSequence("001110000");
-        case '7': return barSequence("000100101");
-        case '8': return barSequence("100100100");
-        case '9': return barSequence("001100100");
-        case 'A': return barSequence("100001001");
-        case 'B': return barSequence("001001001");
-        case 'C': return barSequence("101001000");
-        case 'D': return barSequence("000011001");
-        case 'E': return barSequence("100011000");
-        case 'F': return barSequence("001011000");
-        case 'G': return barSequence("000001101");
-        case 'H': return barSequence("100001100");
-        case 'I': return barSequence("001001100");
-        case 'J': return barSequence("000011100");
-        case 'K': return barSequence("100000011");
-        case 'L': return barSequence("001000011");
-        case 'M': return barSequence("101000010");
-        case 'N': return barSequence("000010011");
-        case 'O': return barSequence("100010010");
-        case 'P': return barSequence("001010010");
-        case 'Q': return barSequence("000000111");
-        case 'R': return barSequence("100000110");
-        case 'S': return barSequence("001000110");
-        case 'T': return barSequence("000010110");
-        case 'U': return barSequence("110000001");
-        case 'V': return barSequence("011000001");
-        case 'W': return barSequence("111000000");
-        case 'X': return barSequence("010010001");
-        case 'Y': return barSequence("110010000");
-        case 'Z': return barSequence("011010000");
-        case '-': return barSequence("010000101");
-        case '.': return barSequence("110000100");
-        case ' ': return barSequence("011000100");
-        case '$': return barSequence("010101000");
-        case '/': return barSequence("010100010");
-        case '+': return barSequence("010001010");
-        case '%': return barSequence("000101010");
+        case '0': return BarCodeUtil::barSequence("000110100");
+        case '1': return BarCodeUtil::barSequence("100100001");
+        case '2': return BarCodeUtil::barSequence("001100001");
+        case '3': return BarCodeUtil::barSequence("101100000");
+        case '4': return BarCodeUtil::barSequence("000110001");
+        case '5': return BarCodeUtil::barSequence("100110000");
+        case '6': return BarCodeUtil::barSequence("001110000");
+        case '7': return BarCodeUtil::barSequence("000100101");
+        case '8': return BarCodeUtil::barSequence("100100100");
+        case '9': return BarCodeUtil::barSequence("001100100");
+        case 'A': return BarCodeUtil::barSequence("100001001");
+        case 'B': return BarCodeUtil::barSequence("001001001");
+        case 'C': return BarCodeUtil::barSequence("101001000");
+        case 'D': return BarCodeUtil::barSequence("000011001");
+        case 'E': return BarCodeUtil::barSequence("100011000");
+        case 'F': return BarCodeUtil::barSequence("001011000");
+        case 'G': return BarCodeUtil::barSequence("000001101");
+        case 'H': return BarCodeUtil::barSequence("100001100");
+        case 'I': return BarCodeUtil::barSequence("001001100");
+        case 'J': return BarCodeUtil::barSequence("000011100");
+        case 'K': return BarCodeUtil::barSequence("100000011");
+        case 'L': return BarCodeUtil::barSequence("001000011");
+        case 'M': return BarCodeUtil::barSequence("101000010");
+        case 'N': return BarCodeUtil::barSequence("000010011");
+        case 'O': return BarCodeUtil::barSequence("100010010");
+        case 'P': return BarCodeUtil::barSequence("001010010");
+        case 'Q': return BarCodeUtil::barSequence("000000111");
+        case 'R': return BarCodeUtil::barSequence("100000110");
+        case 'S': return BarCodeUtil::barSequence("001000110");
+        case 'T': return BarCodeUtil::barSequence("000010110");
+        case 'U': return BarCodeUtil::barSequence("110000001");
+        case 'V': return BarCodeUtil::barSequence("011000001");
+        case 'W': return BarCodeUtil::barSequence("111000000");
+        case 'X': return BarCodeUtil::barSequence("010010001");
+        case 'Y': return BarCodeUtil::barSequence("110010000");
+        case 'Z': return BarCodeUtil::barSequence("011010000");
+        case '-': return BarCodeUtil::barSequence("010000101");
+        case '.': return BarCodeUtil::barSequence("110000100");
+        case ' ': return BarCodeUtil::barSequence("011000100");
+        case '$': return BarCodeUtil::barSequence("010101000");
+        case '/': return BarCodeUtil::barSequence("010100010");
+        case '+': return BarCodeUtil::barSequence("010001010");
+        case '%': return BarCodeUtil::barSequence("000101010");
         default: return QList<bool>(); // unknown character
     }
 }
@@ -79,7 +70,7 @@ QImage Code39Barcode::paintImage(const QSizeF& size)
   // convert text into sequences of wide/narrow bars
   {
     // the guard sequence that goes on each end
-    const QList<bool> endSequence = barSequence("010010100");
+    const QList<bool> endSequence = BarCodeUtil::barSequence("010010100");
     barcode += endSequence;
     barcode += false;
     // translate the string

@@ -5,72 +5,63 @@
 */
 
 #include "code93barcode.h"
+#include "barcodeutil.h"
 #include <QChar>
 #include <QColor>
 
 using namespace Prison;
 
-static QList<bool> barSequence(const char* str) {
-    Q_ASSERT(strlen(str)==9); // this is a internal helper tool, only called with fixed strings in here, all 9 chars long
-    QList<bool> ret;
-    for(int i = 0 ; i < 9 ; i++) {
-        ret.append(str[i] == '1');
-        Q_ASSERT(str[i] == '0' || str[i] == '1');
-    }
-    return ret;
-}
-
 // returns a list of 9 bar colors, where `true' means foreground and `false' means background color
 static QList<bool> sequenceForID(int id) {
     switch(id) {
-        case 0: return barSequence("100010100"); // 0-9
-        case 1: return barSequence("101001000");
-        case 2: return barSequence("101000100");
-        case 3: return barSequence("101000010");
-        case 4: return barSequence("100101000");
-        case 5: return barSequence("100100100");
-        case 6: return barSequence("100100010");
-        case 7: return barSequence("101010000");
-        case 8: return barSequence("100010010");
-        case 9: return barSequence("100001010");
-        case 10: return barSequence("110101000"); // A-Z
-        case 11: return barSequence("110100100");
-        case 12: return barSequence("110100010");
-        case 13: return barSequence("110010100");
-        case 14: return barSequence("110010010");
-        case 15: return barSequence("110001010");
-        case 16: return barSequence("101101000");
-        case 17: return barSequence("101100100");
-        case 18: return barSequence("101100010");
-        case 19: return barSequence("100110100");
-        case 20: return barSequence("100011010");
-        case 21: return barSequence("101011000");
-        case 22: return barSequence("101001100");
-        case 23: return barSequence("101000110");
-        case 24: return barSequence("100101100");
-        case 25: return barSequence("100010110");
-        case 26: return barSequence("110110100");
-        case 27: return barSequence("110110010");
-        case 28: return barSequence("110101100");
-        case 29: return barSequence("110100110");
-        case 30: return barSequence("110010110");
-        case 31: return barSequence("110011010");
-        case 32: return barSequence("101101100");
-        case 33: return barSequence("101100110");
-        case 34: return barSequence("100110110");
-        case 35: return barSequence("100111010");
-        case 36: return barSequence("100101110"); // -
-        case 37: return barSequence("111010100"); // .
-        case 38: return barSequence("111010010"); // space
-        case 39: return barSequence("111001010"); // $
-        case 40: return barSequence("101101110"); // /
-        case 41: return barSequence("101110110"); // +
-        case 42: return barSequence("110101110"); // $
-        case 43: return barSequence("100100110"); // ($)
-        case 44: return barSequence("111011010"); // (%)
-        case 45: return barSequence("111010110"); // (/)
-        case 46: return barSequence("100110010"); // (+)
-        case 47: return barSequence("101011110"); // stop sequence
+        case 0: return BarCodeUtil::barSequence("100010100"); // 0-9
+        case 1: return BarCodeUtil::barSequence("101001000");
+        case 2: return BarCodeUtil::barSequence("101000100");
+        case 3: return BarCodeUtil::barSequence("101000010");
+        case 4: return BarCodeUtil::barSequence("100101000");
+        case 5: return BarCodeUtil::barSequence("100100100");
+        case 6: return BarCodeUtil::barSequence("100100010");
+        case 7: return BarCodeUtil::barSequence("101010000");
+        case 8: return BarCodeUtil::barSequence("100010010");
+        case 9: return BarCodeUtil::barSequence("100001010");
+        case 10: return BarCodeUtil::barSequence("110101000"); // A-Z
+        case 11: return BarCodeUtil::barSequence("110100100");
+        case 12: return BarCodeUtil::barSequence("110100010");
+        case 13: return BarCodeUtil::barSequence("110010100");
+        case 14: return BarCodeUtil::barSequence("110010010");
+        case 15: return BarCodeUtil::barSequence("110001010");
+        case 16: return BarCodeUtil::barSequence("101101000");
+        case 17: return BarCodeUtil::barSequence("101100100");
+        case 18: return BarCodeUtil::barSequence("101100010");
+        case 19: return BarCodeUtil::barSequence("100110100");
+        case 20: return BarCodeUtil::barSequence("100011010");
+        case 21: return BarCodeUtil::barSequence("101011000");
+        case 22: return BarCodeUtil::barSequence("101001100");
+        case 23: return BarCodeUtil::barSequence("101000110");
+        case 24: return BarCodeUtil::barSequence("100101100");
+        case 25: return BarCodeUtil::barSequence("100010110");
+        case 26: return BarCodeUtil::barSequence("110110100");
+        case 27: return BarCodeUtil::barSequence("110110010");
+        case 28: return BarCodeUtil::barSequence("110101100");
+        case 29: return BarCodeUtil::barSequence("110100110");
+        case 30: return BarCodeUtil::barSequence("110010110");
+        case 31: return BarCodeUtil::barSequence("110011010");
+        case 32: return BarCodeUtil::barSequence("101101100");
+        case 33: return BarCodeUtil::barSequence("101100110");
+        case 34: return BarCodeUtil::barSequence("100110110");
+        case 35: return BarCodeUtil::barSequence("100111010");
+        case 36: return BarCodeUtil::barSequence("100101110"); // -
+        case 37: return BarCodeUtil::barSequence("111010100"); // .
+        case 38: return BarCodeUtil::barSequence("111010010"); // space
+        case 39: return BarCodeUtil::barSequence("111001010"); // $
+        case 40: return BarCodeUtil::barSequence("101101110"); // /
+        case 41: return BarCodeUtil::barSequence("101110110"); // +
+        case 42: return BarCodeUtil::barSequence("110101110"); // $
+        case 43: return BarCodeUtil::barSequence("100100110"); // ($)
+        case 44: return BarCodeUtil::barSequence("111011010"); // (%)
+        case 45: return BarCodeUtil::barSequence("111010110"); // (/)
+        case 46: return BarCodeUtil::barSequence("100110010"); // (+)
+        case 47: return BarCodeUtil::barSequence("101011110"); // stop sequence
     default:
         // unknown ID... shouldn't happen
         qWarning("Code93Barcode::sequenceForID called with unknown ID");

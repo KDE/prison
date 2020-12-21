@@ -14,6 +14,7 @@ set(prison_SRCS
     qrcodebarcode.cpp
     prison.cpp
     reedsolomon.cpp
+    barcodeutil.cpp
 )
 if(TARGET Dmtx::Dmtx)
     list(APPEND prison_SRCS datamatrixbarcode.cpp)

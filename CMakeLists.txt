@@ -56,7 +56,7 @@ if(BUILD_TESTING)
     add_subdirectory(tests)
 endif()
 
-set(CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/KF5Prison")
+set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5Prison")
 
 if (BUILD_QCH)
     ecm_install_qch_export(

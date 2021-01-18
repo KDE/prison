@@ -31,7 +31,7 @@ void BarcodeQuickItem::setContent(const QString& content)
     if (m_content == content)
         return;
     m_content = content;
-    emit contentChanged();
+    Q_EMIT contentChanged();
     updateBarcode();
 }
 
@@ -45,7 +45,7 @@ void BarcodeQuickItem::setBarcodeType(BarcodeQuickItem::BarcodeType type)
     if (m_type == static_cast<Prison::BarcodeType>(type))
         return;
     m_type = static_cast<Prison::BarcodeType>(type);
-    emit barcodeTypeChanged();
+    Q_EMIT barcodeTypeChanged();
     m_barcode.reset();
     updateBarcode();
 }
@@ -60,7 +60,7 @@ void BarcodeQuickItem::setForegroundColor(const QColor &color)
     if (m_fgColor == color)
         return;
     m_fgColor = color;
-    emit foregroundColorChanged();
+    Q_EMIT foregroundColorChanged();
     updateBarcode();
 }
 
@@ -74,7 +74,7 @@ void BarcodeQuickItem::setBackgroundColor(const QColor &color)
     if (m_bgColor == color)
         return;
     m_bgColor = color;
-    emit backgroundColorChanged();
+    Q_EMIT backgroundColorChanged();
     updateBarcode();
 }
 
@@ -121,7 +121,7 @@ void BarcodeQuickItem::updateBarcode()
     if (m_type == Prison::Null || m_content.isEmpty()) {
         m_barcode.reset();
         update();
-        emit dimensionsChanged();
+        Q_EMIT dimensionsChanged();
         return;
     }
 
@@ -136,5 +136,5 @@ void BarcodeQuickItem::updateBarcode()
     }
 
     update();
-    emit dimensionsChanged();
+    Q_EMIT dimensionsChanged();
 }

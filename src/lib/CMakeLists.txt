@@ -33,7 +33,7 @@ add_library(KF5Prison ${prison_SRCS})
 ecm_generate_export_header(KF5Prison
     BASE_NAME Prison
     GROUP_BASE_NAME KF
-    VERSION ${KF5_VERSION}
+    VERSION ${KF_VERSION}
     DEPRECATED_BASE_VERSION 0
     DEPRECATION_VERSIONS 5.69 5.72
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
@@ -93,7 +93,7 @@ if(BUILD_QCH)
         KF5Prison_QCH
         NAME Prison
         BASE_NAME KF5Prison
-        VERSION ${KF5_VERSION}
+        VERSION ${KF_VERSION}
         ORG_DOMAIN org.kde
         SOURCES # using only public headers, to cover only public API
             ${Prison_HEADERS}

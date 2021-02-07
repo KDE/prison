@@ -14,7 +14,7 @@ using namespace Prison;
 /**
  * @cond private
  */
-class AbstractBarcode::Private {
+class Prison::AbstractBarcodePrivate {
   public:
     QString m_data;
     QImage m_cache;
@@ -35,20 +35,20 @@ class AbstractBarcode::Private {
         }
     }
 
-    Private(AbstractBarcode* barcode) : q(barcode) { }
+    explicit AbstractBarcodePrivate(AbstractBarcode* barcode) : q(barcode) { }
 };
 /**
  * @endcond
  */
 
 #if PRISON_BUILD_DEPRECATED_SINCE(5, 69)
-AbstractBarcode::AbstractBarcode() : d(new AbstractBarcode::Private(this)) {
+AbstractBarcode::AbstractBarcode() : d(new AbstractBarcodePrivate(this)) {
 
 }
 #endif
 
 AbstractBarcode::AbstractBarcode(AbstractBarcode::Dimensions dim) :
-    d(new AbstractBarcode::Private(this))
+    d(new AbstractBarcodePrivate(this))
 {
     d->m_dimension = dim;
 }

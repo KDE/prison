@@ -152,12 +152,11 @@ class PRISON_EXPORT AbstractBarcode {
     // TODO KF6: remove the size argument
     virtual QImage paintImage(const QSizeF& size) = 0;
   private:
-   class Private;
+    friend class AbstractBarcodePrivate;
    /**
     * d-pointer
     */
-    std::unique_ptr<Private> const d;
-
+    std::unique_ptr<class AbstractBarcodePrivate> const d;
 };
 } //namespace
 

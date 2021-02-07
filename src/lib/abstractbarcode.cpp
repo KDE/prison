@@ -161,6 +161,4 @@ AbstractBarcode::Dimensions AbstractBarcode::dimensions() const
     return d->m_dimension;
 }
 
-AbstractBarcode::~AbstractBarcode() {
-    delete d;
-}
+AbstractBarcode::~AbstractBarcode() = default;

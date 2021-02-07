@@ -12,6 +12,8 @@
 
 #include "prison_export.h"
 
+#include <memory>
+
 class QColor;
 class QPainter;
 
@@ -154,7 +156,7 @@ class PRISON_EXPORT AbstractBarcode {
    /**
     * d-pointer
     */
-   Private* d;
+    std::unique_ptr<Private> const d;
 
 };
 } //namespace

@@ -4,8 +4,8 @@
     SPDX-License-Identifier: MIT
 */
 
-#include "reedsolomon_p.h"
 #include "bitvector_p.h"
+#include "reedsolomon_p.h"
 
 #include <QDebug>
 
@@ -31,7 +31,7 @@ ReedSolomon::ReedSolomon(int polynom, int symbolCount)
     // calculate the log/alog tables
     const auto logmod = (1 << m_symSize) - 1;
     m_logTable.reset(new int[logmod + 1]);
-    m_antiLogTable.reset(new int [logmod]);
+    m_antiLogTable.reset(new int[logmod]);
 
     for (int p = 1, v = 0; v < logmod; v++) {
         m_antiLogTable[v] = p;
@@ -59,7 +59,7 @@ ReedSolomon::ReedSolomon(int polynom, int symbolCount)
 
 ReedSolomon::~ReedSolomon() = default;
 
-BitVector ReedSolomon::encode(const BitVector& input) const
+BitVector ReedSolomon::encode(const BitVector &input) const
 {
     std::unique_ptr<int[]> result(new int[m_symCount]);
     for (int i = 0; i < m_symCount; ++i) {

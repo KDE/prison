@@ -21,7 +21,7 @@ using namespace Prison;
 
 class AztecBarcodeTest : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 private Q_SLOTS:
     void testAztecEncode_data()
     {
@@ -30,58 +30,127 @@ private Q_SLOTS:
 
         QTest::newRow("empty") << QByteArray() << BitVector();
         BitVector v;
-        v.appendMSB(12, 5); v.appendMSB(5, 5); v.appendMSB(6, 5);
+        v.appendMSB(12, 5);
+        v.appendMSB(5, 5);
+        v.appendMSB(6, 5);
         QTest::newRow("all uppper") << QByteArray("KDE") << v;
         v.clear();
-        v.appendMSB(28, 5); v.appendMSB(12, 5); v.appendMSB(5, 5); v.appendMSB(6, 5);
+        v.appendMSB(28, 5);
+        v.appendMSB(12, 5);
+        v.appendMSB(5, 5);
+        v.appendMSB(6, 5);
         QTest::newRow("all lower") << QByteArray("kde") << v;
         v.clear();
-        v.appendMSB(12, 5); v.appendMSB(28, 5); v.appendMSB(5, 5); v.appendMSB(6, 5);
+        v.appendMSB(12, 5);
+        v.appendMSB(28, 5);
+        v.appendMSB(5, 5);
+        v.appendMSB(6, 5);
         QTest::newRow("upper -> lower latch") << QByteArray("Kde") << v;
         v.clear();
-        v.appendMSB(28, 5); v.appendMSB(2, 5); v.appendMSB(29, 5); v.appendMSB(30, 5); v.appendMSB(16, 5); v.appendMSB(16, 5);
+        v.appendMSB(28, 5);
+        v.appendMSB(2, 5);
+        v.appendMSB(29, 5);
+        v.appendMSB(30, 5);
+        v.appendMSB(16, 5);
+        v.appendMSB(16, 5);
         QTest::newRow("lower -> punct latch") << QByteArray("a++") << v;
         v.clear();
-        v.appendMSB(30, 5); v.appendMSB(6, 4); v.appendMSB(4, 4);
+        v.appendMSB(30, 5);
+        v.appendMSB(6, 4);
+        v.appendMSB(4, 4);
         QTest::newRow("digit") << QByteArray("42") << v;
         v.clear();
-        v.appendMSB(29, 5); v.appendMSB(30, 5); v.appendMSB(25, 5); v.appendMSB(24, 5); v.appendMSB(31, 5); v.appendMSB(30, 5); v.appendMSB(11, 4); v.appendMSB(2, 4);
+        v.appendMSB(29, 5);
+        v.appendMSB(30, 5);
+        v.appendMSB(25, 5);
+        v.appendMSB(24, 5);
+        v.appendMSB(31, 5);
+        v.appendMSB(30, 5);
+        v.appendMSB(11, 4);
+        v.appendMSB(2, 4);
         QTest::newRow("punct -> digit latch") << QByteArray(">=90") << v;
         v.clear();
-        v.appendMSB(30, 5); v.appendMSB(10, 4); v.appendMSB(3, 4); v.appendMSB(14, 4); v.appendMSB(29, 5); v.appendMSB(30, 5); v.appendMSB(13, 5); v.appendMSB(14, 5);
+        v.appendMSB(30, 5);
+        v.appendMSB(10, 4);
+        v.appendMSB(3, 4);
+        v.appendMSB(14, 4);
+        v.appendMSB(29, 5);
+        v.appendMSB(30, 5);
+        v.appendMSB(13, 5);
+        v.appendMSB(14, 5);
         QTest::newRow("digit -> punct latch") << QByteArray("81()") << v;
         v.clear();
-        v.appendMSB(29, 5); v.appendMSB(11, 5); v.appendMSB(8, 5);
+        v.appendMSB(29, 5);
+        v.appendMSB(11, 5);
+        v.appendMSB(8, 5);
         QTest::newRow("mixed") << QByteArray("\n\a") << v;
         v.clear();
-        v.appendMSB(29, 5); v.appendMSB(30, 5); v.appendMSB(2, 5); v.appendMSB(2, 5);
+        v.appendMSB(29, 5);
+        v.appendMSB(30, 5);
+        v.appendMSB(2, 5);
+        v.appendMSB(2, 5);
         QTest::newRow("CR LF") << QByteArray("\r\n\r\n") << v;
         v.clear();
-        v.appendMSB(31, 5); v.appendMSB(2, 5); v.appendMSB(128, 8); v.appendMSB(129, 8);
+        v.appendMSB(31, 5);
+        v.appendMSB(2, 5);
+        v.appendMSB(128, 8);
+        v.appendMSB(129, 8);
         QTest::newRow("binary") << QByteArray("\x80\x81") << v;
         v.clear();
-        v.appendMSB(31, 5); v.appendMSB(2, 5); v.appendMSB(255, 8); v.appendMSB(254, 8); v.appendMSB(28, 5); v.appendMSB(3, 5);
-        QTest::newRow("binary/lower") << QByteArray("\xff\xfe" "b") << v;
+        v.appendMSB(31, 5);
+        v.appendMSB(2, 5);
+        v.appendMSB(255, 8);
+        v.appendMSB(254, 8);
+        v.appendMSB(28, 5);
+        v.appendMSB(3, 5);
+        QTest::newRow("binary/lower") << QByteArray(
+            "\xff\xfe"
+            "b") << v;
         v.clear();
-        v.appendMSB(12, 5); v.appendMSB(0, 5); v.appendMSB(6, 5);
+        v.appendMSB(12, 5);
+        v.appendMSB(0, 5);
+        v.appendMSB(6, 5);
         QTest::newRow("upper -> punct shift") << QByteArray("K!") << v;
         v.clear();
-        v.appendMSB(30, 5); v.appendMSB(9, 4); v.appendMSB(4, 4); v.appendMSB(15, 4); v.appendMSB(6, 5); v.appendMSB(5, 4);
+        v.appendMSB(30, 5);
+        v.appendMSB(9, 4);
+        v.appendMSB(4, 4);
+        v.appendMSB(15, 4);
+        v.appendMSB(6, 5);
+        v.appendMSB(5, 4);
         QTest::newRow("digit -> upper shift") << QByteArray("72E3") << v;
         v.clear();
-        v.appendMSB(25, 5); v.appendMSB(1, 5); v.appendMSB(26, 5);
+        v.appendMSB(25, 5);
+        v.appendMSB(1, 5);
+        v.appendMSB(26, 5);
         QTest::newRow("upper space") << QByteArray("X Y") << v;
         v.clear();
-        v.appendMSB(20, 5); v.appendMSB(0, 5); v.appendMSB(4, 5); v.appendMSB(23, 5);
+        v.appendMSB(20, 5);
+        v.appendMSB(0, 5);
+        v.appendMSB(4, 5);
+        v.appendMSB(23, 5);
         QTest::newRow("upper punct double char shift") << QByteArray("S, V") << v;
         v.clear();
-        v.appendMSB(17, 5); v.appendMSB(0, 5); v.appendMSB(17, 5); v.appendMSB(18, 5);
+        v.appendMSB(17, 5);
+        v.appendMSB(0, 5);
+        v.appendMSB(17, 5);
+        v.appendMSB(18, 5);
         QTest::newRow("upper ambigious punct shift") << QByteArray("P,Q") << v;
         v.clear();
-        v.appendMSB(30, 5); v.appendMSB(13, 4); v.appendMSB(7, 4);
+        v.appendMSB(30, 5);
+        v.appendMSB(13, 4);
+        v.appendMSB(7, 4);
         QTest::newRow("digit ambigious punct latch") << QByteArray(".5") << v;
         v.clear();
-        v.appendMSB(29, 5); v.appendMSB(30, 5); v.appendMSB(25, 5); v.appendMSB(26,5); v.appendMSB(31, 5); v.appendMSB(29, 5); v.appendMSB(20, 5); v.appendMSB(29, 5); v.appendMSB(2, 5);
+        v.appendMSB(29, 5);
+        v.appendMSB(30, 5);
+        v.appendMSB(25, 5);
+        v.appendMSB(26, 5);
+        v.appendMSB(31, 5);
+        v.appendMSB(29, 5);
+        v.appendMSB(20, 5);
+        v.appendMSB(29, 5);
+        v.appendMSB(2, 5);
         QTest::newRow("punct/mixed/upper sequence") << QByteArray(">?@A") << v;
     }
 
@@ -107,16 +176,23 @@ private Q_SLOTS:
 
         BitVector in, out;
         QTest::newRow("emtpy") << in << out << 4;
-        in.appendMSB(0x2, 2); out.appendMSB(0xB, 4);
+        in.appendMSB(0x2, 2);
+        out.appendMSB(0xB, 4);
         QTest::newRow("pad only") << in << out << 4;
-        in.clear(); out.clear();
-        in.appendMSB(0x3, 2); out.appendMSB(0xE, 4);
+        in.clear();
+        out.clear();
+        in.appendMSB(0x3, 2);
+        out.appendMSB(0xE, 4);
         QTest::newRow("pad only inverted") << in << out << 4;
-        in.clear(); out.clear();
-        in.appendMSB(0xe0, 8); out.appendMSB(0xe13, 12);
+        in.clear();
+        out.clear();
+        in.appendMSB(0xe0, 8);
+        out.appendMSB(0xe13, 12);
         QTest::newRow("stuff and pad") << in << out << 4;
-        in.clear(); out.clear();
-        in.appendMSB(0, 6); out.appendMSB(0x11, 8);
+        in.clear();
+        out.clear();
+        in.appendMSB(0, 6);
+        out.appendMSB(0x11, 8);
         QTest::newRow("stuff only") << in << out << 4;
     }
 
@@ -126,7 +202,7 @@ private Q_SLOTS:
         QFETCH(BitVector, output);
         QFETCH(int, codeWordSize);
         AztecBarcode code;
-        const auto res= code.bitStuffAndPad(input, codeWordSize);
+        const auto res = code.bitStuffAndPad(input, codeWordSize);
         QCOMPARE(res.size(), output.size());
         if (res != output) {
             qDebug() << "Actual  :" << res;
@@ -340,7 +416,8 @@ private Q_SLOTS:
         QTest::newRow("short compact") << QStringLiteral("KF5::Prison") << "aztec-complete-compact1.png";
         QTest::newRow("compact 3 layer") << QStringLiteral("M1KRAUSE/VOLKER       ABCDEFG TXLRIXBT 0212 309Y014E0063 100") << "aztec-complete-compact3.png";
         QTest::newRow("long compact") << QStringLiteral("KF5::Prison - the barcode generation library of KDE Frameworks 5!") << "aztec-complete-compact4.png";
-        QTest::newRow("short full") << QStringLiteral("KF5::Prison - the MIT licensed free software barcode generation library of KDE Frameworks 5!") << "aztec-complete-full5.png";
+        QTest::newRow("short full") << QStringLiteral("KF5::Prison - the MIT licensed free software barcode generation library of KDE Frameworks 5!")
+                                    << "aztec-complete-full5.png";
         QTest::newRow("long full") << QString::fromLatin1(
             "Permission is hereby granted, free of charge, to any person\n"
             "obtaining a copy of this software and associated documentation\n"
@@ -359,7 +436,8 @@ private Q_SLOTS:
             "HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,\n"
             "WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING\n"
             "FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR\n"
-            "OTHER DEALINGS IN THE SOFTWARE.") << "aztec-complete-big.png";
+            "OTHER DEALINGS IN THE SOFTWARE.")
+                                   << "aztec-complete-big.png";
     }
 
     void testCodeGen()

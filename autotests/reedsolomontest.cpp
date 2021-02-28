@@ -17,7 +17,7 @@ using namespace Prison;
 
 class ReedSolomonTest : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 private Q_SLOTS:
     void rsTest_data()
     {
@@ -30,9 +30,12 @@ private Q_SLOTS:
         out.appendMSB(0, 20);
         QTest::newRow("empty") << (int)ReedSolomon::GF16 << 5 << in << out;
 
-        in.clear(); out.clear();
+        in.clear();
+        out.clear();
         in.appendMSB(0x5c, 8);
-        out.appendMSB(7, 6); out.appendMSB(5, 7); out.appendMSB(0x4d, 7);
+        out.appendMSB(7, 6);
+        out.appendMSB(5, 7);
+        out.appendMSB(0x4d, 7);
         QTest::newRow("GF16") << (int)ReedSolomon::GF16 << 5 << in << out;
     }
 

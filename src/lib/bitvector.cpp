@@ -98,12 +98,12 @@ bool BitVector::operator==(const BitVector &other) const
     return m_size == other.m_size && m_data == other.m_data;
 }
 
-bool BitVector::operator!=(const Prison::BitVector& other) const
+bool BitVector::operator!=(const Prison::BitVector &other) const
 {
     return m_size != other.m_size || m_data != other.m_data;
 }
 
-QDebug operator<<(QDebug dbg, const Prison::BitVector& v)
+QDebug operator<<(QDebug dbg, const Prison::BitVector &v)
 {
     dbg << v.m_data.toHex();
     return dbg;

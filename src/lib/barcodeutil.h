@@ -7,10 +7,11 @@
 #ifndef BARCODEUTIL_H
 #define BARCODEUTIL_H
 #include <QList>
-namespace Prison {
+namespace Prison
+{
 namespace BarCodeUtil
 {
-QList<bool> barSequence(const char* str);
+QList<bool> barSequence(const char *str);
 }
 }
 

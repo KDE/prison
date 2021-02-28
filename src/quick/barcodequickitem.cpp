@@ -6,7 +6,6 @@
 
 #include "barcodequickitem.h"
 
-
 #include <QDebug>
 #include <QGuiApplication>
 #include <QPainter>
@@ -26,7 +25,7 @@ QString BarcodeQuickItem::content() const
     return m_content;
 }
 
-void BarcodeQuickItem::setContent(const QString& content)
+void BarcodeQuickItem::setContent(const QString &content)
 {
     if (m_content == content)
         return;
@@ -83,7 +82,7 @@ BarcodeQuickItem::Dimensions Prison::BarcodeQuickItem::dimensions() const
     return m_barcode ? static_cast<BarcodeQuickItem::Dimensions>(m_barcode->dimensions()) : NoDimensions;
 }
 
-void BarcodeQuickItem::paint(QPainter* painter)
+void BarcodeQuickItem::paint(QPainter *painter)
 {
     if (!m_barcode)
         return;

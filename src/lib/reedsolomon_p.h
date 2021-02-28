@@ -9,8 +9,8 @@
 
 #include <memory>
 
-namespace Prison {
-
+namespace Prison
+{
 class BitVector;
 
 /** Reed Solomon checksum generator. */
@@ -30,7 +30,7 @@ public:
      *  @p symbolCount error correction symbols.
      */
     explicit ReedSolomon(int polynom, int symbolCount);
-    ReedSolomon(const ReedSolomon&) = delete;
+    ReedSolomon(const ReedSolomon &) = delete;
     ~ReedSolomon();
 
     /** Encode the content of @p input and return the resulting

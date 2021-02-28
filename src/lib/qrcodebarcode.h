@@ -9,13 +9,15 @@
 
 #include "abstractbarcode.h"
 
-namespace Prison {
-  /**
-   * QRCode Barcode generator ; uses libqrencode to do the actual encoding
-   * of the barcode.
-   */
-class QRCodeBarcode : public Prison::AbstractBarcode {
-  public:
+namespace Prison
+{
+/**
+ * QRCode Barcode generator ; uses libqrencode to do the actual encoding
+ * of the barcode.
+ */
+class QRCodeBarcode : public Prison::AbstractBarcode
+{
+public:
     /**
      * creates a QRCode generator
      */
@@ -26,7 +28,7 @@ class QRCodeBarcode : public Prison::AbstractBarcode {
      * @return QImage containing a QRCode, trying to approximate the requested sizes
      * @param size The requested size of the barcode, approximate. if the barcode generator can't get the data to fit in there, it might be a null QImage
      */
-    QImage paintImage(const QSizeF& size) override;
+    QImage paintImage(const QSizeF &size) override;
 };
 } // namespace
 

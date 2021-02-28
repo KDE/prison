@@ -38,10 +38,13 @@ enum CodeSetOp : uint8_t {
     LatchC = 99,
 };
 
-Code128Barcode::Code128Barcode() : AbstractBarcode(AbstractBarcode::OneDimension) {}
+Code128Barcode::Code128Barcode()
+    : AbstractBarcode(AbstractBarcode::OneDimension)
+{
+}
 Code128Barcode::~Code128Barcode() = default;
 
-QImage Code128Barcode::paintImage(const QSizeF& size)
+QImage Code128Barcode::paintImage(const QSizeF &size)
 {
     Q_UNUSED(size);
 
@@ -63,8 +66,7 @@ QImage Code128Barcode::paintImage(const QSizeF& size)
 // Code 128 symbol table
 // ### this is the perfect use-case for binary literals (as the binary pattern
 // corresponds to the line pattern), adjust this once KF5 moves to C++14
-static const uint16_t code128_symbols[] =
-{
+static const uint16_t code128_symbols[] = {
     1740, // 0b11011001100 // 0
     1644, // 0b11001101100
     1638, // 0b11001100110
@@ -173,31 +175,33 @@ static const uint16_t code128_symbols[] =
     1692, // 0b11010011100
     1594, // 0b11000111010
     1720, // 0b11010111000
-    6379  // 0b1100011101011
+    6379 // 0b1100011101011
 };
 
 static uint8_t symbolForCharacter(const QByteArray &data, int index, CodeSet set)
 {
     const auto c1 = data.at(index);
     switch (set) {
-        case CodeSetA:
-            return (c1 < ' ') ? c1 + 64 : c1 - ' ';
-        case CodeSetB:
-            return c1 - ' ';
-        case CodeSetC:
-        {
-            const auto c2 = data.at(index + 1);
-            return ((c1 - '0') * 10) + c2 - '0';
-        }
-        case CodeSetUnknown:
-            Q_UNREACHABLE();
+    case CodeSetA:
+        return (c1 < ' ') ? c1 + 64 : c1 - ' ';
+    case CodeSetB:
+        return c1 - ' ';
+    case CodeSetC: {
+        const auto c2 = data.at(index + 1);
+        return ((c1 - '0') * 10) + c2 - '0';
+    }
+    case CodeSetUnknown:
+        Q_UNREACHABLE();
     }
 
     Q_UNREACHABLE();
     return {};
 }
 
-struct CodeSetChange { CodeSet set; CodeSetOp symbol; };
+struct CodeSetChange {
+    CodeSet set;
+    CodeSetOp symbol;
+};
 
 static bool isInCodeSetA(char c)
 {
@@ -219,7 +223,7 @@ static CodeSetChange opForData(const QByteArray &data, int index, CodeSet curren
             break;
     }
     if (currentSet == CodeSetC && codeC >= 2) { // already in C
-        return { CodeSetC, None };
+        return {CodeSetC, None};
     }
     if (codeC >= 6 // that's always good enough
         || (index == 0 && codeC >= 4) // beginning of data
@@ -227,13 +231,13 @@ static CodeSetChange opForData(const QByteArray &data, int index, CodeSet curren
         || (codeC == data.size() && codeC == 2) // 2 ...
         || (codeC == data.size() && codeC == 4)) // ... or 4 as the entire data
     {
-        return currentSet == CodeSetUnknown ? CodeSetChange{ CodeSetC, StartC } : CodeSetChange{ CodeSetC, LatchC };
+        return currentSet == CodeSetUnknown ? CodeSetChange{CodeSetC, StartC} : CodeSetChange{CodeSetC, LatchC};
     }
 
     // if we are in Code A or Code B, check if we need to switch for the next char
     // this is a shortcut to prevent the below more extensive search from making this O(n²) in the common case
     if ((currentSet == CodeSetA && isInCodeSetA(data.at(index))) || (currentSet == CodeSetB && isInCodeSetB(data.at(index)))) {
-        return { currentSet, None };
+        return {currentSet, None};
     }
 
     // we need to switch to A or B, select which one, and select whether to use start, shift or latch
@@ -254,31 +258,31 @@ static CodeSetChange opForData(const QByteArray &data, int index, CodeSet curren
 
     // select how we want to switch to Code A or Code B, biased to B as that's the more useful one in general
     switch (currentSet) {
-        case CodeSetUnknown:
-            // if we are at the start, take whichever code will get us further, or the only one that works
-            if (nextA && nextB) {
-                return countA > countB ? CodeSetChange{ CodeSetA, StartA } : CodeSetChange{ CodeSetB, StartB };
-            }
-            return nextA ? CodeSetChange{ CodeSetA, StartA } : CodeSetChange{ CodeSetB, StartB };
-        case CodeSetC:
-            // same for Code C
-            if (nextA && nextB) {
-                return countA > countB ? CodeSetChange{ CodeSetA, LatchA } : CodeSetChange{ CodeSetB, LatchB };
-            }
-            return nextA ? CodeSetChange{ CodeSetA, LatchA } : CodeSetChange{ CodeSetB, LatchB };
-        case CodeSetA:
-            // switch or latch to B?
-            return CodeSetChange{ CodeSetB, countB >= countA ? LatchB : Shift };
-        case CodeSetB:
-            // switch or latch to A?
-            return CodeSetChange{ CodeSetA, countA > countB ? LatchA : Shift };
+    case CodeSetUnknown:
+        // if we are at the start, take whichever code will get us further, or the only one that works
+        if (nextA && nextB) {
+            return countA > countB ? CodeSetChange{CodeSetA, StartA} : CodeSetChange{CodeSetB, StartB};
+        }
+        return nextA ? CodeSetChange{CodeSetA, StartA} : CodeSetChange{CodeSetB, StartB};
+    case CodeSetC:
+        // same for Code C
+        if (nextA && nextB) {
+            return countA > countB ? CodeSetChange{CodeSetA, LatchA} : CodeSetChange{CodeSetB, LatchB};
+        }
+        return nextA ? CodeSetChange{CodeSetA, LatchA} : CodeSetChange{CodeSetB, LatchB};
+    case CodeSetA:
+        // switch or latch to B?
+        return CodeSetChange{CodeSetB, countB >= countA ? LatchB : Shift};
+    case CodeSetB:
+        // switch or latch to A?
+        return CodeSetChange{CodeSetA, countA > countB ? LatchA : Shift};
     }
 
     Q_UNREACHABLE();
-    return CodeSetChange{ currentSet, None };
+    return CodeSetChange{currentSet, None};
 }
 
-BitVector Code128Barcode::encode(const QByteArray& data) const
+BitVector Code128Barcode::encode(const QByteArray &data) const
 {
     BitVector v;
     if (data.isEmpty()) {

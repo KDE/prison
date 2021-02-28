@@ -11,8 +11,8 @@
 
 class Code128BarcodeTest;
 
-namespace Prison {
-
+namespace Prison
+{
 class BitVector;
 
 /** Code 128 barcode
@@ -25,7 +25,7 @@ public:
     ~Code128Barcode() override;
 
 protected:
-    QImage paintImage(const QSizeF& size) override;
+    QImage paintImage(const QSizeF &size) override;
 
 private:
     friend class ::Code128BarcodeTest;

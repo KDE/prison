@@ -9,20 +9,22 @@
 
 #include <QWidget>
 
-namespace Prison {
-    class AbstractBarcode;
+namespace Prison
+{
+class AbstractBarcode;
 }
 /**
  * QWidget with a barcode on
  */
-class BarcodeExampleWidget : public QWidget {
-  public:
+class BarcodeExampleWidget : public QWidget
+{
+public:
     /**
      * Creates a barcode widget with 'barcode' as barcode generator
      * @param barcode The barcode generator for this widget. Takes ownership over the barcode generator
      * @param parent the parent in QWidget hierachy
      */
-    BarcodeExampleWidget(Prison::AbstractBarcode* barcode, QWidget* parent=nullptr);
+    BarcodeExampleWidget(Prison::AbstractBarcode *barcode, QWidget *parent = nullptr);
     virtual ~BarcodeExampleWidget();
     /**
      * sets the data shown to data, and triggers a repaint and resize if needed
@@ -34,24 +36,26 @@ class BarcodeExampleWidget : public QWidget {
      * @return minimumSizeHint for this widget
      */
     QSize minimumSizeHint() const override;
-  protected:
+
+protected:
     /**
      * paintEvent
      * @param event QPaintEvent
      */
-    void paintEvent(QPaintEvent* event ) override;
+    void paintEvent(QPaintEvent *event) override;
     /**
      * resizeEvent
      * @param event QResizeEvent
      */
-    void resizeEvent(QResizeEvent* event ) override;
+    void resizeEvent(QResizeEvent *event) override;
     /**
      * enables drag from the barcodewidget
      * @param event QMouseEvent
      */
-    void mousePressEvent(QMouseEvent* event) override;
-  private:
-    Prison::AbstractBarcode* m_barcode;
+    void mousePressEvent(QMouseEvent *event) override;
+
+private:
+    Prison::AbstractBarcode *m_barcode;
 };
 
 #endif // PRISON_BARCODEWIDGET_H

@@ -10,24 +10,27 @@
 #include "abstractbarcode.h"
 #include "prison_export.h"
 
-namespace Prison {
+namespace Prison
+{
 /**
  * This is a Datamatrix barcode generator that uses libdmtx
  * for the actual generation of barcodes.
  */
-class DataMatrixBarcode : public Prison::AbstractBarcode {
-    public:
-        /**
-        * creates a datamatrixbarcode generator
-        */
-        DataMatrixBarcode();
-        ~DataMatrixBarcode() override;
-    protected:
-        /**
-        * This is the function doing the actual work in generating the barcode
-        * @return QImage containing a DataMatrix, trying to approximate the requested sizes
-        */
-        QImage paintImage(const QSizeF& size) override;
+class DataMatrixBarcode : public Prison::AbstractBarcode
+{
+public:
+    /**
+     * creates a datamatrixbarcode generator
+     */
+    DataMatrixBarcode();
+    ~DataMatrixBarcode() override;
+
+protected:
+    /**
+     * This is the function doing the actual work in generating the barcode
+     * @return QImage containing a DataMatrix, trying to approximate the requested sizes
+     */
+    QImage paintImage(const QSizeF &size) override;
 };
 }
 

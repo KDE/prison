@@ -9,12 +9,14 @@
 
 #include "abstractbarcode.h"
 
-namespace Prison {
-  /**
-   * Code 93 Barcode generator
-   */
-class Code93Barcode : public Prison::AbstractBarcode {
-  public:
+namespace Prison
+{
+/**
+ * Code 93 Barcode generator
+ */
+class Code93Barcode : public Prison::AbstractBarcode
+{
+public:
     /**
      * creates a Code 93 generator
      */
@@ -25,7 +27,7 @@ class Code93Barcode : public Prison::AbstractBarcode {
      * @return QImage containing a barcode, trying to approximate the requested sizes
      * @param size The requested size of the barcode, approximate. if the barcode generator can't generate it, it can return a null QImage
      */
-    QImage paintImage(const QSizeF& size) override;
+    QImage paintImage(const QSizeF &size) override;
 };
 } // namespace
 

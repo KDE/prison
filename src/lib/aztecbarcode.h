@@ -11,8 +11,8 @@
 
 class AztecBarcodeTest;
 
-namespace Prison {
-
+namespace Prison
+{
 class BitVector;
 
 /** Aztec code generator. */
@@ -23,7 +23,7 @@ public:
     ~AztecBarcode() override;
 
 protected:
-    QImage paintImage(const QSizeF& size) override;
+    QImage paintImage(const QSizeF &size) override;
 
 private:
     friend class ::AztecBarcodeTest;

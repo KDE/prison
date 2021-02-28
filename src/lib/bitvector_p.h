@@ -10,11 +10,14 @@
 #include <QByteArray>
 #include <QDebug>
 
-namespace Prison { class BitVector; }
+namespace Prison
+{
+class BitVector;
+}
 QDebug operator<<(QDebug dbg, const Prison::BitVector &v);
 
-namespace Prison {
-
+namespace Prison
+{
 /** Vector for working with a set of bits without byte alignment. */
 class BitVector
 {
@@ -22,7 +25,8 @@ public:
     BitVector();
     ~BitVector();
 
-    class iterator {
+    class iterator
+    {
     public:
         inline bool operator!=(const iterator &other)
         {
@@ -37,9 +41,10 @@ public:
             ++m_index;
             return *this;
         }
+
     private:
         friend class BitVector;
-        const BitVector* m_vector;
+        const BitVector *m_vector;
         int m_index;
     };
 
@@ -63,7 +68,7 @@ public:
     bool operator!=(const BitVector &other) const;
 
 private:
-    friend QDebug (::operator<<)(QDebug dbg, const Prison::BitVector &v);
+    friend QDebug(::operator<<)(QDebug dbg, const Prison::BitVector &v);
     QByteArray m_data;
     int m_size = 0;
 };

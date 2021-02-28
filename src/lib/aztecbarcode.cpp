@@ -6,8 +6,8 @@
 
 #include "aztecbarcode.h"
 #include "bitvector_p.h"
-#include "reedsolomon_p.h"
 #include "prison_debug.h"
+#include "reedsolomon_p.h"
 
 #include <QDebug>
 #include <QImage>
@@ -33,7 +33,10 @@ enum {
     CompactLayerCount = 4,
 };
 
-AztecBarcode::AztecBarcode() : AbstractBarcode(AbstractBarcode::TwoDimensions) {}
+AztecBarcode::AztecBarcode()
+    : AbstractBarcode(AbstractBarcode::TwoDimensions)
+{
+}
 AztecBarcode::~AztecBarcode() = default;
 
 // encoding properties depending on layer count
@@ -43,12 +46,10 @@ struct aztec_layer_property_t {
     uint16_t gf;
 };
 
-static const aztec_layer_property_t aztec_layer_properties[] = {
-    { 2,   6, ReedSolomon::GF64   },
-    { 8,   8, ReedSolomon::GF256  },
-    { 22, 10, ReedSolomon::GF1024 },
-    { 32, 12, ReedSolomon::GF4096 }
-};
+static const aztec_layer_property_t aztec_layer_properties[] = {{2, 6, ReedSolomon::GF64},
+                                                                {8, 8, ReedSolomon::GF256},
+                                                                {22, 10, ReedSolomon::GF1024},
+                                                                {32, 12, ReedSolomon::GF4096}};
 
 // amounts of bits in an Aztec code depending on layer count
 static int aztecCompactDataBits(int layer)
@@ -61,7 +62,7 @@ static int aztecFullDataBits(int layer)
     return (112 + 16 * layer) * layer;
 }
 
-QImage AztecBarcode::paintImage(const QSizeF& size)
+QImage AztecBarcode::paintImage(const QSizeF &size)
 {
     Q_UNUSED(size);
     const auto inputData = aztecEncode(data().toLatin1());
@@ -105,7 +106,7 @@ QImage AztecBarcode::paintImage(const QSizeF& size)
 
         availableBits = compactMode ? aztecCompactDataBits(layerCount) : aztecFullDataBits(layerCount);
         codewordCount = stuffedData.size() / (*propIt).codeWordSize;
-        const auto rsWordCount =  availableBits / (*propIt).codeWordSize - codewordCount;
+        const auto rsWordCount = availableBits / (*propIt).codeWordSize - codewordCount;
 
         // compute error correction
         ReedSolomon rs((*propIt).gf, rsWordCount);
@@ -181,134 +182,69 @@ struct aztec_code_t {
 };
 
 static const aztec_code_t aztec_code_table[] = {
-    {  0, Binary }, // 0
-    {  2, Mixed },
-    {  3, Mixed },
-    {  4, Mixed },
-    {  5, Mixed },
-    {  6, Mixed },
-    {  7, Mixed },
-    {  8, Mixed }, // 7 BEL \a
-    {  9, Mixed },
-    { 10, Mixed },
-    { 11, Mixed }, // 10 LF / ^J
-    { 12, Mixed },
-    { 13, Mixed },
-    { CarriageReturn, Special }, // 13 CR / ^M - but also 1 Punct
-    { 14, Binary },
-    { 15, Binary },
-    { 16, Binary },
-    { 17, Binary },
-    { 18, Binary },
-    { 19, Binary },
-    { 20, Binary }, // 20 ^T
-    { 21, Binary },
-    { 22, Binary },
-    { 23, Binary },
-    { 24, Binary },
-    { 25, Binary },
-    { 26, Binary },
-    { 15, Mixed }, // 27 ^[
-    { 16, Mixed },
-    { 17, Mixed },
-    { 18, Mixed }, // 30 ^^
-    { 19, Mixed },
-    { Space, Special }, // 32 SP
-    {  6, Punct },
-    {  7, Punct },
-    {  8, Punct }, // 35 #
-    {  9, Punct },
-    { 10, Punct },
-    { 11, Punct },
-    { 12, Punct },
-    { 13, Punct }, // 40 (
-    { 14, Punct },
-    { 15, Punct },
-    { 16, Punct }, // 43 +
-    { Comma, Special }, // 44 ,
-    { 18, Punct }, // 45 -
-    { Dot, Special }, // 46 .
-    { 20, Punct }, // 47 /
-    {  2, Digit }, // 48 0
-    {  3, Digit },
-    {  4, Digit },
-    {  5, Digit },
-    {  6, Digit },
-    {  7, Digit },
-    {  8, Digit },
-    {  9, Digit },
-    { 10, Digit },
-    { 11, Digit }, // 57 9
-    { 21, Punct }, // 58 :
-    { 22, Punct }, // 59 ;
-    { 23, Punct }, // 60 <
-    { 24, Punct },
-    { 25, Punct }, // 62 >
-    { 26, Punct }, // 63 ?
-    { 20, Mixed }, // 64 @
-    {  2, Upper }, // 65 A
-    {  3, Upper },
-    {  4, Upper },
-    {  5, Upper },
-    {  6, Upper },
-    {  7, Upper },
-    {  8, Upper },
-    {  9, Upper },
-    { 10, Upper },
-    { 11, Upper },
-    { 12, Upper },
-    { 13, Upper },
-    { 14, Upper },
-    { 15, Upper },
-    { 16, Upper },
-    { 17, Upper },
-    { 18, Upper },
-    { 19, Upper },
-    { 20, Upper },
-    { 21, Upper },
-    { 22, Upper },
-    { 23, Upper },
-    { 24, Upper },
-    { 25, Upper },
-    { 26, Upper },
-    { 27, Upper }, // 90 Z
-    { 27, Punct }, // 91 [
-    { 21, Mixed }, // 92 backslash
-    { 28, Punct }, // 93 ]
-    { 22, Mixed }, // 94 ^
-    { 23, Mixed }, // 95 _
-    { 24, Mixed }, // 96 `
-    {  2, Lower }, // 97 a
-    {  3, Lower },
-    {  4, Lower },
-    {  5, Lower },
-    {  6, Lower },
-    {  7, Lower },
-    {  8, Lower },
-    {  9, Lower },
-    { 10, Lower },
-    { 11, Lower },
-    { 12, Lower },
-    { 13, Lower },
-    { 14, Lower },
-    { 15, Lower },
-    { 16, Lower },
-    { 17, Lower },
-    { 18, Lower },
-    { 19, Lower },
-    { 20, Lower },
-    { 21, Lower },
-    { 22, Lower },
-    { 23, Lower },
-    { 24, Lower },
-    { 25, Lower },
-    { 26, Lower },
-    { 27, Lower }, // 122 z
-    { 29, Punct }, // 123 {
-    { 25, Mixed }, // 124 |
-    { 30, Punct }, // 125 }
-    { 26, Mixed }, // 126 ~
-    { 27, Mixed } // 127 DEL ^?
+    {0, Binary}, // 0
+    {2, Mixed},       {3, Mixed},       {4, Mixed},
+    {5, Mixed},       {6, Mixed},       {7, Mixed},
+    {8, Mixed}, // 7 BEL \a
+    {9, Mixed},       {10, Mixed},      {11, Mixed}, // 10 LF / ^J
+    {12, Mixed},      {13, Mixed},      {CarriageReturn, Special}, // 13 CR / ^M - but also 1 Punct
+    {14, Binary},     {15, Binary},     {16, Binary},
+    {17, Binary},     {18, Binary},     {19, Binary},
+    {20, Binary}, // 20 ^T
+    {21, Binary},     {22, Binary},     {23, Binary},
+    {24, Binary},     {25, Binary},     {26, Binary},
+    {15, Mixed}, // 27 ^[
+    {16, Mixed},      {17, Mixed},      {18, Mixed}, // 30 ^^
+    {19, Mixed},      {Space, Special}, // 32 SP
+    {6, Punct},       {7, Punct},       {8, Punct}, // 35 #
+    {9, Punct},       {10, Punct},      {11, Punct},
+    {12, Punct},      {13, Punct}, // 40 (
+    {14, Punct},      {15, Punct},      {16, Punct}, // 43 +
+    {Comma, Special}, // 44 ,
+    {18, Punct}, // 45 -
+    {Dot, Special}, // 46 .
+    {20, Punct}, // 47 /
+    {2, Digit}, // 48 0
+    {3, Digit},       {4, Digit},       {5, Digit},
+    {6, Digit},       {7, Digit},       {8, Digit},
+    {9, Digit},       {10, Digit},      {11, Digit}, // 57 9
+    {21, Punct}, // 58 :
+    {22, Punct}, // 59 ;
+    {23, Punct}, // 60 <
+    {24, Punct},      {25, Punct}, // 62 >
+    {26, Punct}, // 63 ?
+    {20, Mixed}, // 64 @
+    {2, Upper}, // 65 A
+    {3, Upper},       {4, Upper},       {5, Upper},
+    {6, Upper},       {7, Upper},       {8, Upper},
+    {9, Upper},       {10, Upper},      {11, Upper},
+    {12, Upper},      {13, Upper},      {14, Upper},
+    {15, Upper},      {16, Upper},      {17, Upper},
+    {18, Upper},      {19, Upper},      {20, Upper},
+    {21, Upper},      {22, Upper},      {23, Upper},
+    {24, Upper},      {25, Upper},      {26, Upper},
+    {27, Upper}, // 90 Z
+    {27, Punct}, // 91 [
+    {21, Mixed}, // 92 backslash
+    {28, Punct}, // 93 ]
+    {22, Mixed}, // 94 ^
+    {23, Mixed}, // 95 _
+    {24, Mixed}, // 96 `
+    {2, Lower}, // 97 a
+    {3, Lower},       {4, Lower},       {5, Lower},
+    {6, Lower},       {7, Lower},       {8, Lower},
+    {9, Lower},       {10, Lower},      {11, Lower},
+    {12, Lower},      {13, Lower},      {14, Lower},
+    {15, Lower},      {16, Lower},      {17, Lower},
+    {18, Lower},      {19, Lower},      {20, Lower},
+    {21, Lower},      {22, Lower},      {23, Lower},
+    {24, Lower},      {25, Lower},      {26, Lower},
+    {27, Lower}, // 122 z
+    {29, Punct}, // 123 {
+    {25, Mixed}, // 124 |
+    {30, Punct}, // 125 }
+    {26, Mixed}, // 126 ~
+    {27, Mixed} // 127 DEL ^?
 };
 Q_STATIC_ASSERT(sizeof(aztec_code_table) == 256);
 
@@ -317,46 +253,44 @@ static const struct {
     uint8_t c2;
     aztec_code_t sym;
 } aztec_code_double_symbols[] = {
-    { '\r', '\n', { 2, Punct } }, // CR LF
-    { '.',   ' ', { 3, Punct } }, // . SP
-    { ',',   ' ', { 4, Punct } }, // , SP
-    { ':',   ' ', { 5, Punct } }  // : SP
+    {'\r', '\n', {2, Punct}}, // CR LF
+    {'.', ' ', {3, Punct}}, // . SP
+    {',', ' ', {4, Punct}}, // , SP
+    {':', ' ', {5, Punct}} // : SP
 };
 
-static const int aztec_code_size[] = { 0, 5, 5, 5, 5, 4, 8 };
+static const int aztec_code_size[] = {0, 5, 5, 5, 5, 4, 8};
 Q_STATIC_ASSERT(sizeof(aztec_code_size) / sizeof(int) == MODE_COUNT);
 
 // codes for ambigious characters, ie. those that can be encoded in multiple modes
 static const aztec_code_t aztec_special_chars[SPECIAL_CHAR_COUNT][MODE_COUNT - 1] = {
     /*     NoMode         Upper           Lower         Mixed          Punct          Digit   */
-    { { 0, NoMode }, {  1, Upper }, {  1, Lower }, {  1, Mixed }, {  1, Upper }, {  1, Digit } }, /* SP */
-    { { 0, NoMode }, {  1, Punct }, {  1, Punct }, { 14, Mixed }, {  1, Punct }, {  1, Punct } }, /* CR */
-    { { 0, NoMode }, { 17, Punct }, { 17, Punct }, { 17, Punct }, { 17, Punct }, { 12, Digit } }, /* Comma */
-    { { 0, NoMode }, { 19, Punct }, { 19, Punct }, { 19, Punct }, { 19, Punct }, { 13, Digit } }, /* Dot */
+    {{0, NoMode}, {1, Upper}, {1, Lower}, {1, Mixed}, {1, Upper}, {1, Digit}}, /* SP */
+    {{0, NoMode}, {1, Punct}, {1, Punct}, {14, Mixed}, {1, Punct}, {1, Punct}}, /* CR */
+    {{0, NoMode}, {17, Punct}, {17, Punct}, {17, Punct}, {17, Punct}, {12, Digit}}, /* Comma */
+    {{0, NoMode}, {19, Punct}, {19, Punct}, {19, Punct}, {19, Punct}, {13, Digit}}, /* Dot */
 };
 
 // shift code table, source mode -> target mode
 // NoMode indicates shift is not available, use latch instead
 static const aztec_code_t aztec_shift_codes[MODE_COUNT - 1][MODE_COUNT - 1] = {
     /*     NoMode         Upper           Lower         Mixed          Punct          Digit   */
-    { { 0, NoMode }, { 0, NoMode }, { 0, NoMode }, { 0, NoMode }, { 0, NoMode }, { 0, NoMode } },
-    { { 0, NoMode }, { 0, NoMode }, { 0, NoMode }, { 0, NoMode }, {  0, Punct }, { 0, NoMode } },
-    { { 0, NoMode }, { 28, Upper }, { 0, NoMode }, { 0, NoMode }, {  0, Punct }, { 0, NoMode } },
-    { { 0, NoMode }, { 0, NoMode }, { 0, NoMode }, { 0, NoMode }, {  0, Punct }, { 0, NoMode } },
-    { { 0, NoMode }, { 0, NoMode }, { 0, NoMode }, { 0, NoMode }, { 0, NoMode }, { 0, NoMode } },
-    { { 0, NoMode }, { 15, Upper }, { 0, NoMode }, { 0, NoMode }, {  0, Punct }, { 0, NoMode } }
-};
+    {{0, NoMode}, {0, NoMode}, {0, NoMode}, {0, NoMode}, {0, NoMode}, {0, NoMode}},
+    {{0, NoMode}, {0, NoMode}, {0, NoMode}, {0, NoMode}, {0, Punct}, {0, NoMode}},
+    {{0, NoMode}, {28, Upper}, {0, NoMode}, {0, NoMode}, {0, Punct}, {0, NoMode}},
+    {{0, NoMode}, {0, NoMode}, {0, NoMode}, {0, NoMode}, {0, Punct}, {0, NoMode}},
+    {{0, NoMode}, {0, NoMode}, {0, NoMode}, {0, NoMode}, {0, NoMode}, {0, NoMode}},
+    {{0, NoMode}, {15, Upper}, {0, NoMode}, {0, NoMode}, {0, Punct}, {0, NoMode}}};
 
 // latch code table, source mode -> target mode
 static const aztec_code_t aztec_latch_codes[MODE_COUNT - 1][MODE_COUNT] = {
     /*     NoMode         Upper           Lower         Mixed          Punct          Digit          Binary */
-    { { 0, NoMode }, { 0, NoMode }, { 0, NoMode }, { 0, NoMode }, { 0, NoMode }, { 0, NoMode }, { 0, NoMode } },
-    { { 0, NoMode }, { 0, NoMode }, { 28, Lower }, { 29, Mixed }, { 29, Mixed }, { 30, Digit }, { 31, Binary } },
-    { { 0, NoMode }, { 30, Digit }, { 0, NoMode }, { 29, Mixed }, { 29, Mixed }, { 30, Digit }, { 31, Binary } },
-    { { 0, NoMode }, { 29, Upper }, { 28, Lower }, { 0, NoMode }, { 30, Punct }, { 28, Lower }, { 31, Binary } },
-    { { 0, NoMode }, { 31, Upper }, { 31, Upper }, { 31, Upper }, { 0, NoMode }, { 31, Upper }, { 31, Upper } },
-    { { 0, NoMode }, { 14, Upper }, { 14, Upper }, { 14, Upper }, { 14, Upper }, { 0, NoMode }, { 14, Upper } }
-};
+    {{0, NoMode}, {0, NoMode}, {0, NoMode}, {0, NoMode}, {0, NoMode}, {0, NoMode}, {0, NoMode}},
+    {{0, NoMode}, {0, NoMode}, {28, Lower}, {29, Mixed}, {29, Mixed}, {30, Digit}, {31, Binary}},
+    {{0, NoMode}, {30, Digit}, {0, NoMode}, {29, Mixed}, {29, Mixed}, {30, Digit}, {31, Binary}},
+    {{0, NoMode}, {29, Upper}, {28, Lower}, {0, NoMode}, {30, Punct}, {28, Lower}, {31, Binary}},
+    {{0, NoMode}, {31, Upper}, {31, Upper}, {31, Upper}, {0, NoMode}, {31, Upper}, {31, Upper}},
+    {{0, NoMode}, {14, Upper}, {14, Upper}, {14, Upper}, {14, Upper}, {0, NoMode}, {14, Upper}}};
 
 static Mode aztecCodeLatchTo(Mode currentMode, Mode targetMode, BitVector *v)
 {
@@ -372,7 +306,9 @@ static Mode aztecCodeLatchTo(Mode currentMode, Mode targetMode, BitVector *v)
 static void aztecEncodeBinary(std::vector<aztec_code_t>::iterator &it, const std::vector<aztec_code_t>::iterator &end, BitVector *v)
 {
     // determine length of the binary sequence
-    const auto binEndIt = std::find_if(it, end, [](aztec_code_t sym) { return sym.mode != Binary; });
+    const auto binEndIt = std::find_if(it, end, [](aztec_code_t sym) {
+        return sym.mode != Binary;
+    });
     const auto length = std::distance(it, binEndIt);
 
     // write length field
@@ -478,7 +414,7 @@ BitVector AztecBarcode::aztecEncode(const QByteArray &data) const
         // > 127 binary-only range
         if (c1 > 127) {
             codes.push_back({c1, Binary});
-        // encodable single ASCII character
+            // encodable single ASCII character
         } else {
             codes.push_back(aztec_code_table[c1]);
         }
@@ -532,14 +468,14 @@ BitVector AztecBarcode::aztecEncode(const QByteArray &data) const
     return result;
 }
 
-BitVector AztecBarcode::bitStuffAndPad(const BitVector& input, int codeWordSize) const
+BitVector AztecBarcode::bitStuffAndPad(const BitVector &input, int codeWordSize) const
 {
     BitVector res;
     res.reserve(input.size());
 
     // bit stuff codewords with leading codeWordSize 0/1 bits
     int i = 0;
-    while(i < input.size() - (codeWordSize - 1)) {
+    while (i < input.size() - (codeWordSize - 1)) {
         int v = input.valueAtMSB(i, codeWordSize - 1);
         res.appendMSB(v, codeWordSize - 1);
         i += codeWordSize - 1;
@@ -589,9 +525,9 @@ void AztecBarcode::paintFullGrid(QImage *img) const
     p.setPen(pen);
     for (int i = 0; i < img->width() / 2; i += FullGridInterval) {
         p.drawLine(-i, -FullRadius, -i, FullRadius);
-        p.drawLine( i, -FullRadius,  i, FullRadius);
+        p.drawLine(i, -FullRadius, i, FullRadius);
         p.drawLine(-FullRadius, -i, FullRadius, -i);
-        p.drawLine(-FullRadius,  i, FullRadius,  i);
+        p.drawLine(-FullRadius, i, FullRadius, i);
     }
 
     // bullseye background
@@ -614,11 +550,10 @@ void AztecBarcode::paintFullGrid(QImage *img) const
 }
 
 static const int aztecFullLayerOffset[] = {
-//   0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26 27 28 29 30 31
-    66, 64, 62, 60, 57, 55, 53, 51, 49, 47, 45, 42, 40, 38, 36, 34, 32, 30, 28, 25, 23, 21, 19, 17, 15, 13, 10, 8, 6, 4, 2, 0
-};
+    //   0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26 27 28 29 30 31
+    66, 64, 62, 60, 57, 55, 53, 51, 49, 47, 45, 42, 40, 38, 36, 34, 32, 30, 28, 25, 23, 21, 19, 17, 15, 13, 10, 8, 6, 4, 2, 0};
 
-void AztecBarcode::paintFullData(QImage* img, const BitVector &data, int layerCount) const
+void AztecBarcode::paintFullData(QImage *img, const BitVector &data, int layerCount) const
 {
     QPainter p(img);
     p.setPen(foregroundColor());
@@ -710,9 +645,7 @@ void AztecBarcode::paintCompactGrid(QImage *img) const
     p.drawPoint(5, 4);
 }
 
-static const int aztecCompactLayerOffset[] = {
-    6, 4, 2, 0
-};
+static const int aztecCompactLayerOffset[] = {6, 4, 2, 0};
 
 void AztecBarcode::paintCompactData(QImage *img, const BitVector &data, int layerCount) const
 {

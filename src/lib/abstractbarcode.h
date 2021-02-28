@@ -6,9 +6,9 @@
 
 #ifndef PRISON_ABSTRACTBARCODE_H
 #define PRISON_ABSTRACTBARCODE_H
-#include <QString>
-#include <QSizeF>
 #include <QImage>
+#include <QSizeF>
+#include <QString>
 
 #include "prison_export.h"
 
@@ -17,20 +17,22 @@
 class QColor;
 class QPainter;
 
-namespace Prison {
-  /**
-   * base class for barcode generators
-   * To add your own barcode generator, subclass this class
-   * and reimplement toImage(const QSizeF&) to do the actual
-   * work of generating the barcode.
-   *
-   * The barcode is cached in AbstractBarcode when painting and
-   * the size and the data doesn't change. Using the same AbstractBarcode
-   * to paint on several surfaces, if they aren't of the exact same size
-   * will break the caching
-   */
-class PRISON_EXPORT AbstractBarcode {
-  public:
+namespace Prison
+{
+/**
+ * base class for barcode generators
+ * To add your own barcode generator, subclass this class
+ * and reimplement toImage(const QSizeF&) to do the actual
+ * work of generating the barcode.
+ *
+ * The barcode is cached in AbstractBarcode when painting and
+ * the size and the data doesn't change. Using the same AbstractBarcode
+ * to paint on several surfaces, if they aren't of the exact same size
+ * will break the caching
+ */
+class PRISON_EXPORT AbstractBarcode
+{
+public:
 #if PRISON_ENABLE_DEPRECATED_SINCE(5, 69)
     /**
      * creates a barcode generator without any data
@@ -52,7 +54,7 @@ class PRISON_EXPORT AbstractBarcode {
      * should rather use their setData function, as they handle the relevant updates.
      * @param data QString containing the data
      */
-    void setData(const QString& data);
+    void setData(const QString &data);
     /**
      * Creates a image with a barcode on
      * @return QImage with a barcode on, trying to match the requested \param size
@@ -60,7 +62,7 @@ class PRISON_EXPORT AbstractBarcode {
      * If one of the dimensions of @param size is smaller than the matching dimension in \ref minimumSize,
      * a null QImage will be returned
      */
-    QImage toImage(const QSizeF& size) ;
+    QImage toImage(const QSizeF &size);
 
 #if PRISON_ENABLE_DEPRECATED_SINCE(5, 72)
     /**
@@ -98,21 +100,21 @@ class PRISON_EXPORT AbstractBarcode {
     /**
      * @return the foreground color (by default black) to be used for the barcode.
      */
-    const QColor& foregroundColor() const;
+    const QColor &foregroundColor() const;
     /**
      * @return the background color (by default white) to be used for the barcode.
      */
-    const QColor& backgroundColor() const;
+    const QColor &backgroundColor() const;
     /**
      * sets the foreground color
      * @param foregroundcolor - the new foreground color
      */
-    void setForegroundColor(const QColor& foregroundcolor);
+    void setForegroundColor(const QColor &foregroundcolor);
     /**
      * sets the background color
      * @param backgroundcolor - the new background color
      */
-    void setBackgroundColor(const QColor& backgroundcolor);
+    void setBackgroundColor(const QColor &backgroundcolor);
 
     /** Dimensions of the barcode.
      *  @since 5.69
@@ -128,7 +130,7 @@ class PRISON_EXPORT AbstractBarcode {
      */
     Dimensions dimensions() const;
 
-  protected:
+protected:
     ///@cond internal
     explicit AbstractBarcode(Dimensions dim);
     ///@endcond
@@ -141,7 +143,7 @@ class PRISON_EXPORT AbstractBarcode {
      * @deprecated since 5.69, function is a no-op, no need to call this anymore.
      */
     PRISON_DEPRECATED_VERSION(5, 69, "no need to call this anymore")
-    void setMinimumSize(const QSizeF& minimumSize);
+    void setMinimumSize(const QSizeF &minimumSize);
 #endif
 
     /**
@@ -150,14 +152,15 @@ class PRISON_EXPORT AbstractBarcode {
      * @return image with barcode, or null image
      */
     // TODO KF6: remove the size argument
-    virtual QImage paintImage(const QSizeF& size) = 0;
-  private:
+    virtual QImage paintImage(const QSizeF &size) = 0;
+
+private:
     friend class AbstractBarcodePrivate;
-   /**
-    * d-pointer
-    */
+    /**
+     * d-pointer
+     */
     std::unique_ptr<class AbstractBarcodePrivate> const d;
 };
-} //namespace
+} // namespace
 
 #endif // PRISON_ABSTRACTBARCODE_H

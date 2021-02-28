@@ -6,24 +6,25 @@
 
 #include "abstractbarcode.h"
 
+#include <QColor>
 #include <QDebug>
 #include <QPainter>
-#include <QColor>
 
 using namespace Prison;
 /**
  * @cond private
  */
-class Prison::AbstractBarcodePrivate {
-  public:
+class Prison::AbstractBarcodePrivate
+{
+public:
     QString m_data;
     QImage m_cache;
     QColor m_foreground = Qt::black;
     QColor m_background = Qt::white;
     AbstractBarcode::Dimensions m_dimension = AbstractBarcode::NoDimensions;
-    AbstractBarcode* q;
+    AbstractBarcode *q;
 
-    bool sizeTooSmall(const QSizeF& size) const
+    bool sizeTooSmall(const QSizeF &size) const
     {
         return m_cache.width() > size.width() || m_cache.height() > size.height();
     }
@@ -35,30 +36,34 @@ class Prison::AbstractBarcodePrivate {
         }
     }
 
-    explicit AbstractBarcodePrivate(AbstractBarcode* barcode) : q(barcode) { }
+    explicit AbstractBarcodePrivate(AbstractBarcode *barcode)
+        : q(barcode)
+    {
+    }
 };
 /**
  * @endcond
  */
 
 #if PRISON_BUILD_DEPRECATED_SINCE(5, 69)
-AbstractBarcode::AbstractBarcode() : d(new AbstractBarcodePrivate(this)) {
-
+AbstractBarcode::AbstractBarcode()
+    : d(new AbstractBarcodePrivate(this))
+{
 }
 #endif
 
-AbstractBarcode::AbstractBarcode(AbstractBarcode::Dimensions dim) :
-    d(new AbstractBarcodePrivate(this))
+AbstractBarcode::AbstractBarcode(AbstractBarcode::Dimensions dim)
+    : d(new AbstractBarcodePrivate(this))
 {
     d->m_dimension = dim;
 }
 
-QString AbstractBarcode::data() const {
-  return d->m_data;
+QString AbstractBarcode::data() const
+{
+    return d->m_data;
 }
 
-
-QImage AbstractBarcode::toImage(const QSizeF& size)
+QImage AbstractBarcode::toImage(const QSizeF &size)
 {
     d->recompute();
     if (d->m_cache.isNull() || d->sizeTooSmall(size)) {
@@ -79,9 +84,10 @@ QImage AbstractBarcode::toImage(const QSizeF& size)
     return out;
 }
 
-void AbstractBarcode::setData(const QString& data) {
-  d->m_data=data;
-  d->m_cache=QImage();
+void AbstractBarcode::setData(const QString &data)
+{
+    d->m_data = data;
+    d->m_cache = QImage();
 }
 
 #if PRISON_BUILD_DEPRECATED_SINCE(5, 72)
@@ -95,12 +101,12 @@ QSizeF AbstractBarcode::minimumSize() const
         return {};
     }
     switch (d->m_dimension) {
-        case NoDimensions:
-            return {};
-        case OneDimension:
-            return QSizeF(d->m_cache.width(), std::max(d->m_cache.height(), 10));
-        case TwoDimensions:
-            return d->m_cache.size() * 4;
+    case NoDimensions:
+        return {};
+    case OneDimension:
+        return QSizeF(d->m_cache.width(), std::max(d->m_cache.height(), 10));
+    case TwoDimensions:
+        return d->m_cache.size() * 4;
     }
 
     return d->m_cache.size();
@@ -117,42 +123,46 @@ QSizeF AbstractBarcode::preferredSize(qreal devicePixelRatio) const
 {
     d->recompute();
     switch (d->m_dimension) {
-        case NoDimensions:
-            return {};
-        case OneDimension:
-            return QSizeF(d->m_cache.width() * (devicePixelRatio < 2 ? 2 : 1), std::max(d->m_cache.height(), 50));
-        case TwoDimensions:
-            return d->m_cache.size() * (devicePixelRatio < 2 ? 4 : 2);
+    case NoDimensions:
+        return {};
+    case OneDimension:
+        return QSizeF(d->m_cache.width() * (devicePixelRatio < 2 ? 2 : 1), std::max(d->m_cache.height(), 50));
+    case TwoDimensions:
+        return d->m_cache.size() * (devicePixelRatio < 2 ? 4 : 2);
     }
     return {};
 }
 
 #if PRISON_BUILD_DEPRECATED_SINCE(5, 69)
-void AbstractBarcode::setMinimumSize(const QSizeF& minimumSize)
+void AbstractBarcode::setMinimumSize(const QSizeF &minimumSize)
 {
     Q_UNUSED(minimumSize);
 }
 #endif
 
-const QColor& AbstractBarcode::backgroundColor() const {
+const QColor &AbstractBarcode::backgroundColor() const
+{
     return d->m_background;
 }
 
-const QColor& AbstractBarcode::foregroundColor() const {
+const QColor &AbstractBarcode::foregroundColor() const
+{
     return d->m_foreground;
 }
 
-void AbstractBarcode::setBackgroundColor(const QColor& backgroundcolor) {
-  if(backgroundcolor!=backgroundColor()) {
-    d->m_background=backgroundcolor;
-    d->m_cache=QImage();
-  }
+void AbstractBarcode::setBackgroundColor(const QColor &backgroundcolor)
+{
+    if (backgroundcolor != backgroundColor()) {
+        d->m_background = backgroundcolor;
+        d->m_cache = QImage();
+    }
 }
 
-void AbstractBarcode::setForegroundColor(const QColor& foregroundcolor) {
-    if(foregroundcolor!=foregroundColor()) {
-        d->m_foreground=foregroundcolor;
-        d->m_cache=QImage();
+void AbstractBarcode::setForegroundColor(const QColor &foregroundcolor)
+{
+    if (foregroundcolor != foregroundColor()) {
+        d->m_foreground = foregroundcolor;
+        d->m_cache = QImage();
     }
 }
 

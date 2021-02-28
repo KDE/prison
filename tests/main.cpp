@@ -1,8 +1,7 @@
-#include <QApplication>
 #include "prison.h"
+#include <QApplication>
 
-
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
     main_window foo;

@@ -14,8 +14,8 @@
 
 #include <memory>
 
-namespace Prison {
-
+namespace Prison
+{
 class AbstractBarcode;
 
 class BarcodeQuickItem : public QQuickPaintedItem

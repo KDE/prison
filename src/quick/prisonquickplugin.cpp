@@ -18,11 +18,11 @@ class PrisonQuickPlugin : public QQmlExtensionPlugin
 public:
     PrisonQuickPlugin(QObject *parent = nullptr)
         : QQmlExtensionPlugin(parent)
-    {}
+    {
+    }
 
     void registerTypes(const char *uri) override;
 };
-
 
 void PrisonQuickPlugin::registerTypes(const char *uri)
 {

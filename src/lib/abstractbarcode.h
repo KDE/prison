@@ -120,7 +120,7 @@ class PRISON_EXPORT AbstractBarcode {
     enum Dimensions : uint8_t {
         NoDimensions, ///< Null barcode.
         OneDimension, ///< One-dimensional barcode.
-        TwoDimensions ///< 2D matrix code.
+        TwoDimensions, ///< 2D matrix code.
     };
 
     /** Returns the amount of dimensions of the barcode.

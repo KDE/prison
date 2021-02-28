@@ -30,7 +30,7 @@ enum {
     CompactMaxSize = 27,
     CompactRadius = 13,
     CompactModeMessageSize = 28,
-    CompactLayerCount = 4
+    CompactLayerCount = 4,
 };
 
 AztecBarcode::AztecBarcode() : AbstractBarcode(AbstractBarcode::TwoDimensions) {}
@@ -164,7 +164,7 @@ enum Mode {
     Digit,
     Binary,
     MODE_COUNT,
-    Special
+    Special,
 };
 
 enum SpecialChar {
@@ -172,7 +172,7 @@ enum SpecialChar {
     CarriageReturn,
     Comma,
     Dot,
-    SPECIAL_CHAR_COUNT
+    SPECIAL_CHAR_COUNT,
 };
 
 struct aztec_code_t {

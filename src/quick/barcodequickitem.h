@@ -45,7 +45,7 @@ public:
         Aztec = Prison::Aztec,
         Code39 = Prison::Code39,
         Code93 = Prison::Code93,
-        Code128 = Prison::Code128
+        Code128 = Prison::Code128,
     };
     Q_ENUM(BarcodeType)
     explicit BarcodeQuickItem(QQuickItem *parent = nullptr);
@@ -65,7 +65,7 @@ public:
     enum Dimensions {
         NoDimensions,
         OneDimension,
-        TwoDimensions
+        TwoDimensions,
     };
     Q_ENUM(Dimensions);
     Dimensions dimensions() const;

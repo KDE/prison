@@ -22,7 +22,7 @@ public:
         GF64 = 0x43,
         GF256 = 0x12d,
         GF1024 = 0x409,
-        GF4096 = 0x1069
+        GF4096 = 0x1069,
     };
 
     /** Initialize a Reed Solomon encoder with the Galois Field

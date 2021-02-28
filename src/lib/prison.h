@@ -34,7 +34,7 @@ namespace Prison {
         /** Code93 barcode */
         Code93,
         /** Code 128 barcode */
-        Code128
+        Code128,
 
     };
     /**

@@ -24,7 +24,7 @@ enum CodeSet : uint8_t {
     CodeSetA = 0,
     CodeSetB = 1,
     CodeSetC = 2,
-    CodeSetUnknown = 3
+    CodeSetUnknown = 3,
 };
 
 enum CodeSetOp : uint8_t {
@@ -35,7 +35,7 @@ enum CodeSetOp : uint8_t {
     Shift = 98,
     LatchA = 101,
     LatchB = 100,
-    LatchC = 99
+    LatchC = 99,
 };
 
 Code128Barcode::Code128Barcode() : AbstractBarcode(AbstractBarcode::OneDimension) {}

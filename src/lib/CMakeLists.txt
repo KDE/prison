@@ -54,7 +54,7 @@ if(TARGET Dmtx::Dmtx)
 endif()
 
 set_target_properties(KF5Prison PROPERTIES
-    VERSION ${PRISON_VERSION_STRING}
+    VERSION ${PRISON_VERSION}
     SOVERSION ${PRISON_SOVERSION}
     EXPORT_NAME Prison
 )

@@ -7,8 +7,10 @@
 #include "prison.h"
 
 #include "barcodeexamplewidget.h"
-#include "src/lib/abstractbarcode.h"
-#include "src/lib/prison.h"
+// Prison
+#include <prison/abstractbarcode.h>
+#include <prison/prison.h>
+// Qt
 #include <QDebug>
 #include <QHBoxLayout>
 #include <QLineEdit>

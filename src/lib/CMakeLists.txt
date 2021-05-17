@@ -4,7 +4,10 @@ if(TARGET Dmtx::Dmtx)
 endif()
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-prison.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-prison.h)
 
-set(prison_SRCS
+add_library(KF5Prison SHARED)
+add_library(KF5::Prison ALIAS KF5Prison)
+
+target_sources(KF5Prison PRIVATE
     abstractbarcode.cpp
     aztecbarcode.cpp
     bitvector.cpp
@@ -17,10 +20,10 @@ set(prison_SRCS
     barcodeutil.cpp
 )
 if(TARGET Dmtx::Dmtx)
-    list(APPEND prison_SRCS datamatrixbarcode.cpp)
+    target_sources(KF5Prison PRIVATE datamatrixbarcode.cpp)
 endif()
 
-ecm_qt_declare_logging_category(prison_SRCS
+ecm_qt_declare_logging_category(KF5Prison
     HEADER prison_debug.h
     IDENTIFIER Prison::Log
     CATEGORY_NAME kf.prison
@@ -28,7 +31,6 @@ ecm_qt_declare_logging_category(prison_SRCS
     DESCRIPTION "Prison (lib)"
     EXPORT PRISON
 )
-add_library(KF5Prison ${prison_SRCS})
 
 ecm_generate_export_header(KF5Prison
     BASE_NAME Prison
@@ -38,7 +40,6 @@ ecm_generate_export_header(KF5Prison
     DEPRECATION_VERSIONS 5.69 5.72
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
-add_library(KF5::Prison ALIAS KF5Prison)
 
 target_include_directories(KF5Prison INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/prison/>")
 

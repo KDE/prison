@@ -15,7 +15,6 @@
 #include <memory>
 
 class QColor;
-class QPainter;
 
 namespace Prison
 {

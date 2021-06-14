@@ -6,7 +6,6 @@
 
 #include "barcodequickitem.h"
 
-#include <QDebug>
 #include <QGuiApplication>
 #include <QPainter>
 #include <QScreen>

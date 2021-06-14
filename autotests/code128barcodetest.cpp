@@ -9,7 +9,6 @@
 
 #include <prison.h>
 
-#include <QImage>
 #include <QObject>
 #include <QTest>
 

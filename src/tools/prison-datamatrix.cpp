@@ -8,7 +8,6 @@
 #include "prison.h"
 
 #include <QCoreApplication>
-#include <QDebug>
 #include <QImageWriter>
 #include <QStringList>
 

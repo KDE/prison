@@ -5,7 +5,6 @@
 */
 
 #include "datamatrixbarcode.h"
-#include <QColor>
 #include <dmtx.h>
 using namespace Prison;
 

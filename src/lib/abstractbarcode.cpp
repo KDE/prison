@@ -7,7 +7,6 @@
 #include "abstractbarcode.h"
 
 #include <QColor>
-#include <QDebug>
 #include <QPainter>
 
 using namespace Prison;

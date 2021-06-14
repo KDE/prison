@@ -9,7 +9,6 @@
 #include "prison_debug.h"
 #include "reedsolomon_p.h"
 
-#include <QDebug>
 #include <QImage>
 #include <QPainter>
 

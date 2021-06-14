@@ -7,7 +7,6 @@
 #include "bitvector_p.h"
 #include "reedsolomon_p.h"
 
-#include <QDebug>
 
 #include <memory>
 

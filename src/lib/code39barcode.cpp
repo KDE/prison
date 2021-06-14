@@ -7,7 +7,6 @@
 #include "code39barcode.h"
 #include "barcodeutil.h"
 #include <QChar>
-#include <QColor>
 
 using namespace Prison;
 

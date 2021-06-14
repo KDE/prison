@@ -5,7 +5,6 @@
 */
 
 #include "qrcodebarcode.h"
-#include <QColor>
 #include <qrencode.h>
 
 using namespace Prison;

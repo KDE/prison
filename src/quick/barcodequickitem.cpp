@@ -86,8 +86,8 @@ void BarcodeQuickItem::paint(QPainter *painter)
     if (!m_barcode)
         return;
 
-    const auto w_max = std::max(implicitWidth(), width());
-    const auto h_max = std::max(implicitHeight(), height());
+    const auto w_max = std::max(minimumWidth(), width());
+    const auto h_max = std::max(minimumHeight(), height());
     const auto img = m_barcode->toImage(QSizeF(w_max, h_max));
     const auto x = (w_max - img.width()) / 2;
     const auto y = (h_max - img.height()) / 2;

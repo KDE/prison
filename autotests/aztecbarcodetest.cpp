@@ -135,12 +135,12 @@ private Q_SLOTS:
         v.appendMSB(0, 5);
         v.appendMSB(17, 5);
         v.appendMSB(18, 5);
-        QTest::newRow("upper ambigious punct shift") << QByteArray("P,Q") << v;
+        QTest::newRow("upper ambiguous punct shift") << QByteArray("P,Q") << v;
         v.clear();
         v.appendMSB(30, 5);
         v.appendMSB(13, 4);
         v.appendMSB(7, 4);
-        QTest::newRow("digit ambigious punct latch") << QByteArray(".5") << v;
+        QTest::newRow("digit ambiguous punct latch") << QByteArray(".5") << v;
         v.clear();
         v.appendMSB(29, 5);
         v.appendMSB(30, 5);
@@ -175,7 +175,7 @@ private Q_SLOTS:
         QTest::addColumn<int>("codeWordSize");
 
         BitVector in, out;
-        QTest::newRow("emtpy") << in << out << 4;
+        QTest::newRow("empty") << in << out << 4;
         in.appendMSB(0x2, 2);
         out.appendMSB(0xB, 4);
         QTest::newRow("pad only") << in << out << 4;

@@ -22,7 +22,7 @@ public:
     /**
      * Creates a barcode widget with 'barcode' as barcode generator
      * @param barcode The barcode generator for this widget. Takes ownership over the barcode generator
-     * @param parent the parent in QWidget hierachy
+     * @param parent the parent in QWidget hierarchy
      */
     BarcodeExampleWidget(Prison::AbstractBarcode *barcode, QWidget *parent = nullptr);
     virtual ~BarcodeExampleWidget();

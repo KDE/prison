@@ -69,7 +69,7 @@ QImage AztecBarcode::paintImage(const QSizeF &size)
     int layerCount = 0;
     int codewordCount = 0;
     int availableBits = 0;
-    int stuffSize = 0; // extra bits added during bit stuffing, which might make us overun the available size
+    int stuffSize = 0; // extra bits added during bit stuffing, which might make us overrun the available size
     bool compactMode = false;
     BitVector encodedData;
 
@@ -261,7 +261,7 @@ static const struct {
 static const int aztec_code_size[] = {0, 5, 5, 5, 5, 4, 8};
 Q_STATIC_ASSERT(sizeof(aztec_code_size) / sizeof(int) == MODE_COUNT);
 
-// codes for ambigious characters, ie. those that can be encoded in multiple modes
+// codes for ambiguous characters, ie. those that can be encoded in multiple modes
 static const aztec_code_t aztec_special_chars[SPECIAL_CHAR_COUNT][MODE_COUNT - 1] = {
     /*     NoMode         Upper           Lower         Mixed          Punct          Digit   */
     {{0, NoMode}, {1, Upper}, {1, Lower}, {1, Mixed}, {1, Upper}, {1, Digit}}, /* SP */
@@ -355,7 +355,7 @@ static void aztecEncodeResolveAmbigious(Mode currentMode, const std::vector<azte
         }
     }
 
-    // pick one if we still have an ambigious symbol
+    // pick one if we still have an ambiguous symbol
     if ((*begin).mode != Special) {
         return;
     }

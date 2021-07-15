@@ -8,6 +8,7 @@
 
 #include <QColor>
 #include <QPainter>
+#include <QVariant>
 
 using namespace Prison;
 /**
@@ -16,7 +17,7 @@ using namespace Prison;
 class Prison::AbstractBarcodePrivate
 {
 public:
-    QString m_data;
+    QVariant m_data;
     QImage m_cache;
     QColor m_foreground = Qt::black;
     QColor m_background = Qt::white;
@@ -28,9 +29,22 @@ public:
         return m_cache.width() > size.width() || m_cache.height() > size.height();
     }
 
+    bool isEmpty() const
+    {
+        switch (m_data.type()) {
+        case QVariant::String:
+            return m_data.toString().isEmpty();
+        case QVariant::ByteArray:
+            return m_data.toByteArray().isEmpty();
+        default:
+            break;
+        }
+        return true;
+    }
+
     void recompute()
     {
-        if (m_cache.isNull() && !m_data.isEmpty()) {
+        if (m_cache.isNull() && !isEmpty()) {
             m_cache = q->paintImage({});
         }
     }
@@ -59,7 +73,12 @@ AbstractBarcode::AbstractBarcode(AbstractBarcode::Dimensions dim)
 
 QString AbstractBarcode::data() const
 {
-    return d->m_data;
+    return d->m_data.type() == QVariant::String ? d->m_data.toString() : QString();
+}
+
+QByteArray AbstractBarcode::byteArrayData() const
+{
+    return d->m_data.type() == QVariant::ByteArray ? d->m_data.toByteArray() : QByteArray();
 }
 
 QImage AbstractBarcode::toImage(const QSizeF &size)
@@ -84,6 +103,12 @@ QImage AbstractBarcode::toImage(const QSizeF &size)
 }
 
 void AbstractBarcode::setData(const QString &data)
+{
+    d->m_data = data;
+    d->m_cache = QImage();
+}
+
+void AbstractBarcode::setData(const QByteArray &data)
 {
     d->m_data = data;
     d->m_cache = QImage();

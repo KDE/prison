@@ -621,7 +621,7 @@ QImage Code93Barcode::paintImage(const QSizeF &size)
     {
         // translate the string into a code sequence
         QList<int> codes;
-        const QString str = data();
+        const QString str = data().isEmpty() ? QString::fromLatin1(byteArrayData().constData(), byteArrayData().size()) : data();
         for (int i = 0; i < str.size(); i++) {
             codes += codesForChar(str.at(i).unicode());
         }

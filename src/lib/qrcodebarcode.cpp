@@ -7,7 +7,12 @@
 #include "qrcodebarcode.h"
 #include <qrencode.h>
 
+#include <memory>
+
 using namespace Prison;
+
+using QRcode_ptr = std::unique_ptr<QRcode, decltype(&QRcode_free)>;
+using QRinput_ptr = std::unique_ptr<QRinput, decltype(&QRinput_free)>;
 
 QRCodeBarcode::QRCodeBarcode()
     : AbstractBarcode(AbstractBarcode::TwoDimensions)
@@ -18,8 +23,28 @@ QRCodeBarcode::~QRCodeBarcode() = default;
 QImage QRCodeBarcode::paintImage(const QSizeF &size)
 {
     Q_UNUSED(size);
-    const QByteArray trimmedData(data().trimmed().toUtf8());
-    QRcode *code = QRcode_encodeString8bit(trimmedData.constData(), 0, QR_ECLEVEL_Q);
+
+    QRcode_ptr code(nullptr, &QRcode_free);
+    QRinput_ptr input(nullptr, &QRinput_free);
+    if (!data().isEmpty()) {
+        const QByteArray trimmedData(data().trimmed().toUtf8());
+        code.reset(QRcode_encodeString8bit(trimmedData.constData(), 0, QR_ECLEVEL_Q));
+    } else {
+        const auto b = byteArrayData();
+        const auto isReallyBinary = std::any_of(b.begin(), b.end(), [](unsigned char c) {
+            return std::iscntrl(c) && !std::isspace(c);
+        });
+        // prefer encodeString whenever possible, as that selects the more efficient encoding
+        // automatically, otherwise we end up needlessly in the binary encoding unconditionally
+        if (isReallyBinary) {
+            input.reset(QRinput_new());
+            QRinput_append(input.get(), QR_MODE_8, byteArrayData().size(), reinterpret_cast<const uint8_t *>(byteArrayData().constData()));
+            code.reset(QRcode_encodeInput(input.get()));
+        } else {
+            code.reset(QRcode_encodeString8bit(b.constData(), 0, QR_ECLEVEL_Q));
+        }
+    }
+
     if (!code) {
         return QImage();
     }
@@ -70,6 +95,5 @@ QImage QRCodeBarcode::paintImage(const QSizeF &size)
     const auto result =
         QImage(img, code->width + 2 * margin, code->width + 2 * margin, QImage::Format_ARGB32).copy(); // deep copy as we are going to delete img
     delete[] img;
-    QRcode_free(code);
     return result;
 }

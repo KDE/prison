@@ -19,12 +19,12 @@ BarcodeQuickItem::BarcodeQuickItem(QQuickItem *parent)
 
 BarcodeQuickItem::~BarcodeQuickItem() = default;
 
-QString BarcodeQuickItem::content() const
+QVariant BarcodeQuickItem::content() const
 {
     return m_content;
 }
 
-void BarcodeQuickItem::setContent(const QString &content)
+void BarcodeQuickItem::setContent(const QVariant &content)
 {
     if (m_content == content)
         return;
@@ -111,12 +111,34 @@ qreal BarcodeQuickItem::minimumWidth() const
     return m_barcode ? m_barcode->trueMinimumSize().width() : 0.0;
 }
 
+bool BarcodeQuickItem::isEmpty() const
+{
+    switch (m_content.type()) {
+    case QVariant::String:
+        return m_content.toString().isEmpty();
+    case QVariant::ByteArray:
+        return m_content.toByteArray().isEmpty();
+    default:
+        break;
+    }
+    return true;
+}
+
 void BarcodeQuickItem::updateBarcode()
 {
     if (!isComponentComplete())
         return;
 
-    if (m_type == Prison::Null || m_content.isEmpty()) {
+    QString content;
+    if (m_content.type() == QVariant::String) {
+        content = m_content.toString();
+    }
+    if (m_content.type() == QVariant::ByteArray) {
+        const auto b = m_content.toByteArray();
+        content = QString::fromLatin1(b.constData(), b.size()); // ### fix this once Prison::Barcode can consume QByteArrays
+    }
+
+    if (m_type == Prison::Null || isEmpty()) {
         m_barcode.reset();
         update();
         Q_EMIT dimensionsChanged();
@@ -126,7 +148,11 @@ void BarcodeQuickItem::updateBarcode()
     if (!m_barcode)
         m_barcode.reset(Prison::createBarcode(m_type));
     if (m_barcode) {
-        m_barcode->setData(m_content);
+        if (m_content.type() == QVariant::String) {
+            m_barcode->setData(m_content.toString());
+        } else {
+            m_barcode->setData(m_content.toByteArray());
+        }
         m_barcode->setForegroundColor(m_fgColor);
         m_barcode->setBackgroundColor(m_bgColor);
         const auto size = m_barcode->preferredSize(QGuiApplication::primaryScreen()->devicePixelRatio());

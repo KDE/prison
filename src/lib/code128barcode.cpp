@@ -48,7 +48,7 @@ QImage Code128Barcode::paintImage(const QSizeF &size)
 {
     Q_UNUSED(size);
 
-    const auto bits = encode(data().toLatin1());
+    const auto bits = encode(data().isEmpty() ? byteArrayData() : data().toLatin1());
     const auto width = bits.size() + 2 * QuietZone;
 
     QImage img(width, 1, QImage::Format_ARGB32);

@@ -21,7 +21,7 @@ class AbstractBarcode;
 class BarcodeQuickItem : public QQuickPaintedItem
 {
     Q_OBJECT
-    Q_PROPERTY(QString content READ content WRITE setContent NOTIFY contentChanged)
+    Q_PROPERTY(QVariant content READ content WRITE setContent NOTIFY contentChanged)
     Q_PROPERTY(BarcodeType barcodeType READ barcodeType WRITE setBarcodeType NOTIFY barcodeTypeChanged)
     Q_PROPERTY(QColor foregroundColor READ foregroundColor WRITE setForegroundColor NOTIFY foregroundColorChanged)
     Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
@@ -51,8 +51,8 @@ public:
     explicit BarcodeQuickItem(QQuickItem *parent = nullptr);
     ~BarcodeQuickItem();
 
-    QString content() const;
-    void setContent(const QString &data);
+    QVariant content() const;
+    void setContent(const QVariant &data);
 
     Prison::BarcodeQuickItem::BarcodeType barcodeType() const;
     void setBarcodeType(Prison::BarcodeQuickItem::BarcodeType type);
@@ -84,9 +84,10 @@ Q_SIGNALS:
     void dimensionsChanged();
 
 private:
+    bool isEmpty() const;
     void updateBarcode();
 
-    QString m_content;
+    QVariant m_content;
     std::unique_ptr<AbstractBarcode> m_barcode;
     QColor m_fgColor = Qt::black;
     QColor m_bgColor = Qt::white;

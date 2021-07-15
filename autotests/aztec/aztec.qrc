@@ -1,5 +1,9 @@
+<!--
+    SPDX-FileCopyrightText: none
+    SPDX-License-Identifier: CC0-1.0
+-->
 <RCC>
-    <qresource prefix="/">
+    <qresource prefix="/aztec/">
         <file>rendering/aztec-full-grid.png</file>
         <file>rendering/aztec-full-data-0011.png</file>
         <file>rendering/aztec-full-data-0101.png</file>
@@ -25,5 +29,6 @@
         <file>encoding/aztec-complete-compact4.png</file>
         <file>encoding/aztec-complete-full5.png</file>
         <file>encoding/aztec-complete-big.png</file>
+        <file>encoding/aztec-binary.png</file>
     </qresource>
 </RCC>

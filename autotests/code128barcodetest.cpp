@@ -201,6 +201,43 @@ private Q_SLOTS:
         QCOMPARE(barcode->toImage(barcode->preferredSize(1)).size(), QSize(308, 50));
         QCOMPARE(barcode->toImage({1, 1}).isNull(), true);
     }
+
+    void testRender_data()
+    {
+        QTest::addColumn<QByteArray>("input");
+        QTest::addColumn<QString>("refName");
+
+        QTest::newRow("text") << QByteArray("KF5::Prison") << "code128-text.png";
+        QTest::newRow("binary") << QByteArray("KDE\x0\x1\x2\x3\x4\x5\x6\x7\x8\x9kde", 16) << "code128-binary.png";
+    }
+
+    void testRender()
+    {
+        QFETCH(QByteArray, input);
+        QFETCH(QString, refName);
+
+        {
+            Code128Barcode code;
+            code.setData(QString::fromLatin1(input.constData(), input.size()));
+            const auto img = code.paintImage({});
+            img.save(refName);
+
+            QImage ref(QStringLiteral(":/code128/") + refName);
+            ref = ref.convertToFormat(img.format());
+            QCOMPARE(img, ref);
+        }
+
+        {
+            Code128Barcode code;
+            code.setData(input);
+            const auto img = code.paintImage({});
+            img.save(refName);
+
+            QImage ref(QStringLiteral(":/code128/") + refName);
+            ref = ref.convertToFormat(img.format());
+            QCOMPARE(img, ref);
+        }
+    }
 };
 
 QTEST_APPLESS_MAIN(Code128BarcodeTest)

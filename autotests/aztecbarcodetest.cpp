@@ -218,7 +218,7 @@ private Q_SLOTS:
         img.fill(code.backgroundColor());
         code.paintFullGrid(&img);
 
-        QImage ref(QStringLiteral(":/rendering/aztec-full-grid.png"));
+        QImage ref(QStringLiteral(":/aztec/rendering/aztec-full-grid.png"));
         ref = ref.convertToFormat(img.format());
         QCOMPARE(img, ref);
     }
@@ -231,7 +231,7 @@ private Q_SLOTS:
         code.paintCompactGrid(&img);
         img.save(QStringLiteral("aztec-compact-grid.png"));
 
-        QImage ref(QStringLiteral(":/rendering/aztec-compact-grid.png"));
+        QImage ref(QStringLiteral(":/aztec/rendering/aztec-compact-grid.png"));
         ref = ref.convertToFormat(img.format());
         QCOMPARE(img, ref);
     }
@@ -280,7 +280,7 @@ private Q_SLOTS:
         code.paintFullData(&img, data, layer);
         img.save(refName);
 
-        QImage ref(QStringLiteral(":/rendering/") + refName);
+        QImage ref(QStringLiteral(":/aztec/rendering/") + refName);
         ref = ref.convertToFormat(img.format());
         QCOMPARE(img, ref);
     }
@@ -317,7 +317,7 @@ private Q_SLOTS:
         code.paintFullModeMessage(&img, data);
         img.save(refName);
 
-        QImage ref(QStringLiteral(":/rendering/") + refName);
+        QImage ref(QStringLiteral(":/aztec/rendering/") + refName);
         ref = ref.convertToFormat(img.format());
         QCOMPARE(img, ref);
     }
@@ -366,7 +366,7 @@ private Q_SLOTS:
         code.paintCompactData(&img, data, layer);
         img.save(refName);
 
-        QImage ref(QStringLiteral(":/rendering/") + refName);
+        QImage ref(QStringLiteral(":/aztec/rendering/") + refName);
         ref = ref.convertToFormat(img.format());
         QCOMPARE(img, ref);
     }
@@ -403,22 +403,22 @@ private Q_SLOTS:
         code.paintCompactModeMessage(&img, data);
         img.save(refName);
 
-        QImage ref(QStringLiteral(":/rendering/") + refName);
+        QImage ref(QStringLiteral(":/aztec/rendering/") + refName);
         ref = ref.convertToFormat(img.format());
         QCOMPARE(img, ref);
     }
 
     void testCodeGen_data()
     {
-        QTest::addColumn<QString>("input");
+        QTest::addColumn<QByteArray>("input");
         QTest::addColumn<QString>("refName");
 
-        QTest::newRow("short compact") << QStringLiteral("KF5::Prison") << "aztec-complete-compact1.png";
-        QTest::newRow("compact 3 layer") << QStringLiteral("M1KRAUSE/VOLKER       ABCDEFG TXLRIXBT 0212 309Y014E0063 100") << "aztec-complete-compact3.png";
-        QTest::newRow("long compact") << QStringLiteral("KF5::Prison - the barcode generation library of KDE Frameworks 5!") << "aztec-complete-compact4.png";
-        QTest::newRow("short full") << QStringLiteral("KF5::Prison - the MIT licensed free software barcode generation library of KDE Frameworks 5!")
+        QTest::newRow("short compact") << QByteArray("KF5::Prison") << "aztec-complete-compact1.png";
+        QTest::newRow("compact 3 layer") << QByteArray("M1KRAUSE/VOLKER       ABCDEFG TXLRIXBT 0212 309Y014E0063 100") << "aztec-complete-compact3.png";
+        QTest::newRow("long compact") << QByteArray("KF5::Prison - the barcode generation library of KDE Frameworks 5!") << "aztec-complete-compact4.png";
+        QTest::newRow("short full") << QByteArray("KF5::Prison - the MIT licensed free software barcode generation library of KDE Frameworks 5!")
                                     << "aztec-complete-full5.png";
-        QTest::newRow("long full") << QString::fromLatin1(
+        QTest::newRow("long full") << QByteArray(
             "Permission is hereby granted, free of charge, to any person\n"
             "obtaining a copy of this software and associated documentation\n"
             "files (the \"Software\"), to deal in the Software without\n"
@@ -438,21 +438,35 @@ private Q_SLOTS:
             "FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR\n"
             "OTHER DEALINGS IN THE SOFTWARE.")
                                    << "aztec-complete-big.png";
+        QTest::newRow("binary") << QByteArray("KDE\x0\x1\x2\x3\x4\x5\x6\x7\x8\x9kde", 16) << "aztec-binary.png";
     }
 
     void testCodeGen()
     {
-        QFETCH(QString, input);
+        QFETCH(QByteArray, input);
         QFETCH(QString, refName);
 
-        AztecBarcode code;
-        code.setData(input);
-        const auto img = code.paintImage({});
-        img.save(refName);
+        {
+            AztecBarcode code;
+            code.setData(QString::fromLatin1(input.constData(), input.size()));
+            const auto img = code.paintImage({});
+            img.save(refName);
 
-        QImage ref(QStringLiteral(":/encoding/") + refName);
-        ref = ref.convertToFormat(img.format());
-        QCOMPARE(img, ref);
+            QImage ref(QStringLiteral(":/aztec/encoding/") + refName);
+            ref = ref.convertToFormat(img.format());
+            QCOMPARE(img, ref);
+        }
+
+        {
+            AztecBarcode code;
+            code.setData(input);
+            const auto img = code.paintImage({});
+            img.save(refName);
+
+            QImage ref(QStringLiteral(":/aztec/encoding/") + refName);
+            ref = ref.convertToFormat(img.format());
+            QCOMPARE(img, ref);
+        }
     }
 
     void testDimension()

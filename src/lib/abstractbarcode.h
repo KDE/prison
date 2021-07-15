@@ -43,17 +43,37 @@ public:
 
     virtual ~AbstractBarcode();
     /**
-     * @return the QString encoded in this barcode.
+     * Textual content encoded in this barcode.
+     * This returns an empty QString if binary content is set.
+     * @see byteArrayData()
      */
     QString data() const;
     /**
-     * sets the data to be drawn by this function
-     * calling this function does not do any repaints of anything, they are
-     * your own responsibility. If you are using the barcodes thru BarcodeWidget or BarcodeItem, you
-     * should rather use their setData function, as they handle the relevant updates.
-     * @param data QString containing the data
+     * Binary data encoded in this barcode.
+     * This returns an empty QByteArray if textual content is set.
+     * @see data()
+     * @since 5.85
+     */
+    QByteArray byteArrayData() const;
+    /**
+     * Sets textual data to be drawn as a barcode.
+     * Only use this function if your content is textual, use the QByteArray overload
+     * when your content contains non-textual binary content.
+     * Calling this function does not do any repaints of anything, they are
+     * your own responsibility.
+     * @param data textual barcode content
      */
     void setData(const QString &data);
+    /**
+     * Sets binary data to be drawn as a barcode.
+     * Prefer the QString overload if your content is purely textual, to reduce
+     * the risk of encoding issues for non-ASCII content.
+     * Calling this function does not do any repaints of anything, they are
+     * your own responsibility.
+     * @param data binary barcode content
+     * @since 5.85
+     */
+    void setData(const QByteArray &data);
     /**
      * Creates a image with a barcode on
      * @return QImage with a barcode on, trying to match the requested \param size

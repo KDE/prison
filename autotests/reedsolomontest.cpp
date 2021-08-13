@@ -26,7 +26,8 @@ private Q_SLOTS:
         QTest::addColumn<BitVector>("input");
         QTest::addColumn<BitVector>("output");
 
-        BitVector in, out;
+        BitVector in;
+        BitVector out;
         out.appendMSB(0, 20);
         QTest::newRow("empty") << (int)ReedSolomon::GF16 << 5 << in << out;
 

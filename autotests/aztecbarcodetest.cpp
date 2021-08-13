@@ -174,7 +174,8 @@ private Q_SLOTS:
         QTest::addColumn<BitVector>("output");
         QTest::addColumn<int>("codeWordSize");
 
-        BitVector in, out;
+        BitVector in;
+        BitVector out;
         QTest::newRow("empty") << in << out << 4;
         in.appendMSB(0x2, 2);
         out.appendMSB(0xB, 4);
@@ -243,28 +244,33 @@ private Q_SLOTS:
         QTest::addColumn<int>("layer");
 
         BitVector v;
-        for (int i = 0; i < 1248; ++i)
+        for (int i = 0; i < 1248; ++i) {
             v.appendLSB(0x9249, 16);
+        }
         QTest::newRow("1001-31") << v << QStringLiteral("aztec-full-data-1001.png") << 32;
 
         v.clear();
-        for (int i = 0; i < 1248 * 8; ++i)
+        for (int i = 0; i < 1248 * 8; ++i) {
             v.appendLSB(0x2, 2);
+        }
         QTest::newRow("0101-31") << v << QStringLiteral("aztec-full-data-0101.png") << 32;
 
         v.clear();
-        for (int i = 0; i < 1248; ++i)
+        for (int i = 0; i < 1248; ++i) {
             v.appendLSB(0xffff, 16);
+        }
         QTest::newRow("1111-31") << v << QStringLiteral("aztec-full-data-1111.png") << 32;
 
         v.clear();
-        for (int i = 0; i < 704 * 4; ++i)
+        for (int i = 0; i < 704 * 4; ++i) {
             v.appendLSB(0x1, 2);
+        }
         QTest::newRow("1010-15") << v << QStringLiteral("aztec-full-data-1010.png") << 16;
 
         v.clear();
-        for (int i = 0; i < 16; ++i)
+        for (int i = 0; i < 16; ++i) {
             v.appendLSB(0xCC, 8);
+        }
         QTest::newRow("0011-0") << v << QStringLiteral("aztec-full-data-0011.png") << 1;
     }
 
@@ -291,18 +297,21 @@ private Q_SLOTS:
         QTest::addColumn<QString>("refName");
 
         BitVector v;
-        for (int i = 0; i < 8; ++i)
+        for (int i = 0; i < 8; ++i) {
             v.appendMSB(i + 1, 5);
+        }
         QTest::newRow("1234") << v << QStringLiteral("aztec-full-mode-1234.png");
 
         v.clear();
-        for (int i = 0; i < 8; ++i)
+        for (int i = 0; i < 8; ++i) {
             v.appendLSB(i + 1, 5);
+        }
         QTest::newRow("1234-rev") << v << QStringLiteral("aztec-full-mode-1234-rev.png");
 
         v.clear();
-        for (int i = 0; i < 4; ++i)
+        for (int i = 0; i < 4; ++i) {
             v.appendMSB(0xffff, 10);
+        }
         QTest::newRow("1111") << v << QStringLiteral("aztec-full-mode-1111.png");
     }
 
@@ -329,28 +338,33 @@ private Q_SLOTS:
         QTest::addColumn<int>("layer");
 
         BitVector v;
-        for (int i = 0; i < 304; ++i)
+        for (int i = 0; i < 304; ++i) {
             v.appendLSB(0x9249, 16);
+        }
         QTest::newRow("1001-3") << v << QStringLiteral("aztec-compact-data-1001.png") << 4;
 
         v.clear();
-        for (int i = 0; i < 608 * 4; ++i)
+        for (int i = 0; i < 608 * 4; ++i) {
             v.appendLSB(0x2, 2);
+        }
         QTest::newRow("0101-3") << v << QStringLiteral("aztec-compact-data-0101.png") << 4;
 
         v.clear();
-        for (int i = 0; i < 304; ++i)
+        for (int i = 0; i < 304; ++i) {
             v.appendLSB(0xffff, 16);
+        }
         QTest::newRow("1111-3") << v << QStringLiteral("aztec-compact-data-1111.png") << 4;
 
         v.clear();
-        for (int i = 0; i < 102 * 4; ++i)
+        for (int i = 0; i < 102 * 4; ++i) {
             v.appendLSB(0x1, 2);
+        }
         QTest::newRow("1010-2") << v << QStringLiteral("aztec-compact-data-1010.png") << 3;
 
         v.clear();
-        for (int i = 0; i < 13; ++i)
+        for (int i = 0; i < 13; ++i) {
             v.appendLSB(0xCC, 8);
+        }
         QTest::newRow("0011-0") << v << QStringLiteral("aztec-compact-data-0011.png") << 1;
     }
 
@@ -377,18 +391,21 @@ private Q_SLOTS:
         QTest::addColumn<QString>("refName");
 
         BitVector v;
-        for (int i = 0; i < 4; ++i)
+        for (int i = 0; i < 4; ++i) {
             v.appendMSB(i + 1, 7);
+        }
         QTest::newRow("1234") << v << QStringLiteral("aztec-compact-mode-1234.png");
 
         v.clear();
-        for (int i = 0; i < 4; ++i)
+        for (int i = 0; i < 4; ++i) {
             v.appendLSB(i + 1, 7);
+        }
         QTest::newRow("1234-rev") << v << QStringLiteral("aztec-compact-mode-1234-rev.png");
 
         v.clear();
-        for (int i = 0; i < 4; ++i)
+        for (int i = 0; i < 4; ++i) {
             v.appendMSB(0xffff, 7);
+        }
         QTest::newRow("1111") << v << QStringLiteral("aztec-compact-mode-1111.png");
     }
 

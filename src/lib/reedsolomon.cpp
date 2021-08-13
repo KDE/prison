@@ -17,8 +17,9 @@ using namespace Prison;
 static int highestBit(int n)
 {
     int i = 0;
-    while (n >= (1 << i))
+    while (n >= (1 << i)) {
         ++i;
+    }
     return i - 1;
 }
 

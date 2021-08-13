@@ -25,8 +25,9 @@ BarcodeExampleWidget::BarcodeExampleWidget(AbstractBarcode *barcode, QWidget *pa
 
 void BarcodeExampleWidget::setData(const QString &data)
 {
-    if (m_barcode)
+    if (m_barcode) {
         m_barcode->setData(data);
+    }
     updateGeometry();
     repaint();
 }

@@ -219,8 +219,9 @@ static CodeSetChange opForData(const QByteArray &data, int index, CodeSet curren
     // determine if Code C makes sense at this point
     int codeC = 0;
     for (int i = index; i < data.size(); ++i, ++codeC) {
-        if (data.at(i) < '0' || data.at(i) > '9')
+        if (data.at(i) < '0' || data.at(i) > '9') {
             break;
+        }
     }
     if (currentSet == CodeSetC && codeC >= 2) { // already in C
         return {CodeSetC, None};
@@ -247,13 +248,15 @@ static CodeSetChange opForData(const QByteArray &data, int index, CodeSet curren
     // count how many following characters we could encode in A or B
     int countA = 0;
     for (int i = index + 1; i < data.size(); ++i, ++countA) {
-        if (!isInCodeSetA(data.at(i)))
+        if (!isInCodeSetA(data.at(i))) {
             break;
+        }
     }
     int countB = 0;
     for (int i = index + 1; i < data.size(); ++i, ++countB) {
-        if (!isInCodeSetB(data.at(i)))
+        if (!isInCodeSetB(data.at(i))) {
             break;
+        }
     }
 
     // select how we want to switch to Code A or Code B, biased to B as that's the more useful one in general

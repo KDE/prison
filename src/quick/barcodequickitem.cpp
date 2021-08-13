@@ -26,8 +26,9 @@ QVariant BarcodeQuickItem::content() const
 
 void BarcodeQuickItem::setContent(const QVariant &content)
 {
-    if (m_content == content)
+    if (m_content == content) {
         return;
+    }
     m_content = content;
     Q_EMIT contentChanged();
     updateBarcode();
@@ -40,8 +41,9 @@ BarcodeQuickItem::BarcodeType BarcodeQuickItem::barcodeType() const
 
 void BarcodeQuickItem::setBarcodeType(BarcodeQuickItem::BarcodeType type)
 {
-    if (m_type == static_cast<Prison::BarcodeType>(type))
+    if (m_type == static_cast<Prison::BarcodeType>(type)) {
         return;
+    }
     m_type = static_cast<Prison::BarcodeType>(type);
     Q_EMIT barcodeTypeChanged();
     m_barcode.reset();
@@ -55,8 +57,9 @@ QColor BarcodeQuickItem::foregroundColor() const
 
 void BarcodeQuickItem::setForegroundColor(const QColor &color)
 {
-    if (m_fgColor == color)
+    if (m_fgColor == color) {
         return;
+    }
     m_fgColor = color;
     Q_EMIT foregroundColorChanged();
     updateBarcode();
@@ -69,8 +72,9 @@ QColor BarcodeQuickItem::backgroundColor() const
 
 void BarcodeQuickItem::setBackgroundColor(const QColor &color)
 {
-    if (m_bgColor == color)
+    if (m_bgColor == color) {
         return;
+    }
     m_bgColor = color;
     Q_EMIT backgroundColorChanged();
     updateBarcode();
@@ -83,8 +87,9 @@ BarcodeQuickItem::Dimensions Prison::BarcodeQuickItem::dimensions() const
 
 void BarcodeQuickItem::paint(QPainter *painter)
 {
-    if (!m_barcode)
+    if (!m_barcode) {
         return;
+    }
 
     const auto w_max = std::max(minimumWidth(), width());
     const auto h_max = std::max(minimumHeight(), height());
@@ -126,8 +131,9 @@ bool BarcodeQuickItem::isEmpty() const
 
 void BarcodeQuickItem::updateBarcode()
 {
-    if (!isComponentComplete())
+    if (!isComponentComplete()) {
         return;
+    }
 
     QString content;
     if (m_content.type() == QVariant::String) {
@@ -145,8 +151,9 @@ void BarcodeQuickItem::updateBarcode()
         return;
     }
 
-    if (!m_barcode)
+    if (!m_barcode) {
         m_barcode.reset(Prison::createBarcode(m_type));
+    }
     if (m_barcode) {
         if (m_content.type() == QVariant::String) {
             m_barcode->setData(m_content.toString());

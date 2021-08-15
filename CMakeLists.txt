@@ -31,7 +31,7 @@ set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprec
 option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)" OFF)
 add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
 
-set(REQUIRED_QT_VERSION 5.15.0)
+set(REQUIRED_QT_VERSION 5.15.2)
 find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core Gui)
 find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG OPTIONAL_COMPONENTS Quick)
 find_package(QRencode)
@@ -48,7 +48,7 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX PRISON
                         PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5PrisonConfigVersion.cmake"
                         SOVERSION 5
 )
-add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050f00)
+add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050f02)
 add_subdirectory(src)
 if(BUILD_TESTING)
     find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Test Widgets)

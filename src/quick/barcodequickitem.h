@@ -46,6 +46,7 @@ public:
         Code39 = Prison::Code39,
         Code93 = Prison::Code93,
         Code128 = Prison::Code128,
+        PDF417 = Prison::PDF417,
     };
     Q_ENUM(BarcodeType)
     explicit BarcodeQuickItem(QQuickItem *parent = nullptr);

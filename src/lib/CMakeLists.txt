@@ -2,6 +2,9 @@ include(CMakePackageConfigHelpers)
 if(TARGET Dmtx::Dmtx)
     set(HAVE_DMTX 1)
 endif()
+if (TARGET ZXing::ZXing)
+    set(HAVE_ZXING 1)
+endif()
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-prison.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-prison.h)
 
 add_library(KF5Prison)
@@ -28,6 +31,10 @@ target_sources(KF5Prison PRIVATE
 if(TARGET Dmtx::Dmtx)
     target_sources(KF5Prison PRIVATE datamatrixbarcode.cpp)
 endif()
+if(TARGET ZXing::ZXing)
+    target_sources(KF5Prison PRIVATE pdf417barcode.cpp)
+endif()
+kde_source_files_enable_exceptions(pdf417barcode.cpp)
 
 ecm_qt_declare_logging_category(KF5Prison
     HEADER prison_debug.h
@@ -57,6 +64,9 @@ PRIVATE
 )
 if(TARGET Dmtx::Dmtx)
     target_link_libraries(KF5Prison PRIVATE Dmtx::Dmtx)
+endif()
+if(TARGET ZXing::ZXing)
+    target_link_libraries(KF5Prison PRIVATE ZXing::ZXing)
 endif()
 
 install(TARGETS KF5Prison EXPORT KF5PrisonTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})

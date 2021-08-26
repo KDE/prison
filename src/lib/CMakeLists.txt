@@ -7,6 +7,12 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-prison.h.in ${CMAKE_CURRENT_BI
 add_library(KF5Prison)
 add_library(KF5::Prison ALIAS KF5Prison)
 
+set_target_properties(KF5Prison PROPERTIES
+    VERSION     ${PRISON_VERSION}
+    SOVERSION   ${PRISON_SOVERSION}
+    EXPORT_NAME Prison
+)
+
 target_sources(KF5Prison PRIVATE
     abstractbarcode.cpp
     aztecbarcode.cpp
@@ -52,12 +58,6 @@ PRIVATE
 if(TARGET Dmtx::Dmtx)
     target_link_libraries(KF5Prison PRIVATE Dmtx::Dmtx)
 endif()
-
-set_target_properties(KF5Prison PROPERTIES
-    VERSION ${PRISON_VERSION}
-    SOVERSION ${PRISON_SOVERSION}
-    EXPORT_NAME Prison
-)
 
 install(TARGETS KF5Prison EXPORT KF5PrisonTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
 

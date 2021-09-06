@@ -30,5 +30,7 @@ set(code128barcodetest_srcs
 
 ecm_add_test(${code128barcodetest_srcs} TEST_NAME prison-code128barcodetest LINK_LIBRARIES Qt5::Test KF5::Prison)
 
-ecm_add_test(datamatrixtest.cpp datamatrix/datamatrix.qrc TEST_NAME prison-datamatrixtest LINK_LIBRARIES Qt5::Test KF5::Prison)
+if(TARGET Dmtx::Dmtx)
+    ecm_add_test(datamatrixtest.cpp datamatrix/datamatrix.qrc TEST_NAME prison-datamatrixtest LINK_LIBRARIES Qt5::Test KF5::Prison)
+endif()
 ecm_add_test(qrtest.cpp qr/qr.qrc TEST_NAME prison-qrtest LINK_LIBRARIES Qt5::Test KF5::Prison)

@@ -28,7 +28,7 @@ QImage QRCodeBarcode::paintImage(const QSizeF &size)
     QRinput_ptr input(nullptr, &QRinput_free);
     if (!data().isEmpty()) {
         const QByteArray trimmedData(data().trimmed().toUtf8());
-        code.reset(QRcode_encodeString8bit(trimmedData.constData(), 0, QR_ECLEVEL_Q));
+        code.reset(QRcode_encodeString(trimmedData.constData(), 0, QR_ECLEVEL_Q, QR_MODE_8, true));
     } else {
         const auto b = byteArrayData();
         const auto isReallyBinary = std::any_of(b.begin(), b.end(), [](unsigned char c) {
@@ -41,7 +41,7 @@ QImage QRCodeBarcode::paintImage(const QSizeF &size)
             QRinput_append(input.get(), QR_MODE_8, byteArrayData().size(), reinterpret_cast<const uint8_t *>(byteArrayData().constData()));
             code.reset(QRcode_encodeInput(input.get()));
         } else {
-            code.reset(QRcode_encodeString8bit(b.constData(), 0, QR_ECLEVEL_Q));
+            code.reset(QRcode_encodeString(b.constData(), 0, QR_ECLEVEL_Q, QR_MODE_8, true));
         }
     }
 

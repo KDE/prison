@@ -114,7 +114,7 @@ public:
      * @see trueMinimumSize
      * @since 5.69
      */
-    QSizeF preferredSize(qreal devicePixelRatio) const;
+    QSizeF preferredSize(qreal devicePixelRatio) const; // TODO KF6: make virtual
 
     /**
      * @return the foreground color (by default black) to be used for the barcode.

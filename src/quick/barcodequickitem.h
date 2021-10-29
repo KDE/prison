@@ -50,7 +50,7 @@ public:
     };
     Q_ENUM(BarcodeType)
     explicit BarcodeQuickItem(QQuickItem *parent = nullptr);
-    ~BarcodeQuickItem();
+    ~BarcodeQuickItem() override;
 
     QVariant content() const;
     void setContent(const QVariant &data);

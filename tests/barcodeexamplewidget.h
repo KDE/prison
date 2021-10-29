@@ -25,7 +25,7 @@ public:
      * @param parent the parent in QWidget hierarchy
      */
     BarcodeExampleWidget(Prison::AbstractBarcode *barcode, QWidget *parent = nullptr);
-    virtual ~BarcodeExampleWidget();
+    ~BarcodeExampleWidget() override;
     /**
      * sets the data shown to data, and triggers a repaint and resize if needed
      * @param data QString holding the data to be shown

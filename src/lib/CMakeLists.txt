@@ -18,21 +18,31 @@ set_target_properties(KF5Prison PROPERTIES
 
 target_sources(KF5Prison PRIVATE
     abstractbarcode.cpp
+    abstractbarcode.h
     aztecbarcode.cpp
-    bitvector.cpp
-    code39barcode.cpp
-    code93barcode.cpp
-    code128barcode.cpp
-    qrcodebarcode.cpp
-    prison.cpp
-    reedsolomon.cpp
+    aztecbarcode.h
     barcodeutil.cpp
+    barcodeutil.h
+    bitvector.cpp
+    bitvector_p.h
+    code128barcode.cpp
+    code128barcode.h
+    code39barcode.cpp
+    code39barcode.h
+    code93barcode.cpp
+    code93barcode.h
+    prison.cpp
+    prison.h
+    qrcodebarcode.cpp
+    qrcodebarcode.h
+    reedsolomon.cpp
+    reedsolomon_p.h
 )
 if(TARGET Dmtx::Dmtx)
-    target_sources(KF5Prison PRIVATE datamatrixbarcode.cpp)
+    target_sources(KF5Prison PRIVATE datamatrixbarcode.cpp datamatrixbarcode.h)
 endif()
 if(TARGET ZXing::ZXing)
-    target_sources(KF5Prison PRIVATE pdf417barcode.cpp)
+    target_sources(KF5Prison PRIVATE pdf417barcode.cpp pdf417barcode.h)
 endif()
 kde_source_files_enable_exceptions(pdf417barcode.cpp)
 

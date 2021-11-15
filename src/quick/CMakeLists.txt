@@ -1,5 +1,6 @@
 add_library(prisonquickplugin SHARED
     barcodequickitem.cpp
+    barcodequickitem.h
     prisonquickplugin.cpp
 )
 target_link_libraries(prisonquickplugin PRIVATE Qt5::Quick KF5::Prison)

@@ -9,6 +9,8 @@
 #include <ZXing/BitMatrix.h>
 #include <ZXing/MultiFormatWriter.h>
 
+#include <stdexcept>
+
 using namespace Prison;
 
 Pdf417Barcode::Pdf417Barcode()

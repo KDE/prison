@@ -30,7 +30,7 @@ private Q_SLOTS:
 
         std::unique_ptr<Prison::AbstractBarcode> code(Prison::createBarcode(Prison::QRCode));
         code->setData(input);
-        const auto img = code->toImage(code->minimumSize());
+        const auto img = code->toImage(code->trueMinimumSize());
         img.save(refName);
 
         QImage ref(QStringLiteral(":/qr/") + refName);
@@ -54,7 +54,7 @@ private Q_SLOTS:
 
         std::unique_ptr<Prison::AbstractBarcode> code(Prison::createBarcode(Prison::QRCode));
         code->setData(input);
-        const auto img = code->toImage(code->minimumSize());
+        const auto img = code->toImage(code->trueMinimumSize());
         img.save(refName);
 
         QImage ref(QStringLiteral(":/qr/") + refName);

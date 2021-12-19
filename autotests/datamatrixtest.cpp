@@ -32,7 +32,7 @@ private Q_SLOTS:
         {
             std::unique_ptr<Prison::AbstractBarcode> code(Prison::createBarcode(Prison::DataMatrix));
             code->setData(QString::fromLatin1(input.constData(), input.size()));
-            const auto img = code->toImage(code->trueMinimumSize());
+            const auto img = code->toImage(code->preferredSize(1));
             img.save(refName);
 
             QImage ref(QStringLiteral(":/datamatrix/") + refName);
@@ -42,7 +42,7 @@ private Q_SLOTS:
         {
             std::unique_ptr<Prison::AbstractBarcode> code(Prison::createBarcode(Prison::DataMatrix));
             code->setData(input);
-            const auto img = code->toImage(code->trueMinimumSize());
+            const auto img = code->toImage(code->preferredSize(1));
             img.save(refName);
 
             QImage ref(QStringLiteral(":/datamatrix/") + refName);

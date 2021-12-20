@@ -1,6 +1,6 @@
 add_subdirectory(lib)
 add_subdirectory(tools)
-if(TARGET Qt5::Quick)
+if(TARGET Qt${QT_MAJOR_VERSION}::Quick)
     add_subdirectory(quick)
 endif()
 

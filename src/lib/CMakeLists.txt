@@ -119,7 +119,7 @@ if(BUILD_QCH)
             ${Prison_HEADERS}
         MD_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md"
         LINK_QCHS
-            Qt5Gui_QCH
+            Qt${QT_MAJOR_VERSION}Gui_QCH
         INCLUDE_DIRS
             ${CMAKE_CURRENT_BINARY_DIR}
         BLANK_MACROS

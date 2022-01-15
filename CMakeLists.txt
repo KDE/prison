@@ -91,7 +91,7 @@ install(EXPORT KF5PrisonTargets
 
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/prison_version.h
-  DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/prison
+  DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/Prison/prison
   COMPONENT Devel
 )
 

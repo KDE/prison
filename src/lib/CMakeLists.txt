@@ -64,7 +64,7 @@ ecm_generate_export_header(KF5Prison
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
 
-target_include_directories(KF5Prison INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/prison/>")
+target_include_directories(KF5Prison INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/Prison>")
 
 target_link_libraries(KF5Prison
 PUBLIC
@@ -85,26 +85,23 @@ ecm_generate_headers(Prison_CamelCase_HEADERS
     HEADER_NAMES
     AbstractBarcode
     Prison
-    PREFIX PRISON
+    PREFIX Prison
     REQUIRED_HEADERS Prison_HEADERS
 )
 
-# KF6: install to a path having both include visibility layer & namespace dir prefix:
-# CamelCase includes to ${KDE_INSTALL_INCLUDEDIR_KF}/Prison/Prison
-# normal headers to ${KDE_INSTALL_INCLUDEDIR_KF}/Prison/prison
-# The generated cmake config files currently points behind the namespace dir prefix, by
-# target_include_directories(KF5Prison INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/prison>")
-# which should though point to before the namespace dir prefix level.
-# Includes using <prison/*> only work currently due to the actual include base ${KDE_INSTALL_INCLUDEDIR_KF}
-# also being set, via KF5_INSTALL_TARGETS_DEFAULT_ARGS.
 install(FILES
     ${Prison_CamelCase_HEADERS}
-    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/prison COMPONENT Devel)
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/Prison/prison COMPONENT Devel)
 
 install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/prison_export.h
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/Prison/prison
+    COMPONENT Devel
+)
+
+install(FILES
     ${Prison_HEADERS}
-    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/prison
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/Prison/prison
     COMPONENT Devel
 )
 
@@ -136,6 +133,6 @@ endif()
 
 # INCLUDE_INSTALL_DIR has to be without prison/ subdir
 # as the generated CamelCase headers have the prison/ path in the forward include
-ecm_generate_pri_file(BASE_NAME Prison LIB_NAME KF5Prison DEPS "gui" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF})
+ecm_generate_pri_file(BASE_NAME Prison LIB_NAME KF5Prison DEPS "gui" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}/prison)
 install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
 

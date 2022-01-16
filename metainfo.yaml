@@ -6,6 +6,7 @@ platforms:
     - name: Linux
     - name: FreeBSD
     - name: Android
+    - name: Windows
 portingAid: false
 deprecated: false
 release: true

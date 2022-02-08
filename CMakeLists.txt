@@ -91,6 +91,14 @@ install(EXPORT KF5PrisonTargets
 
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/prison_version.h
+  DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/Prison
+  COMPONENT Devel
+)
+
+# TODO KF6: remove this, kept for backwards-compatibility in KF5 so that #inlcude <prison/prison_version.h>
+# continues working
+install(FILES
+  ${CMAKE_CURRENT_BINARY_DIR}/prison_version.h
   DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/Prison/prison
   COMPONENT Devel
 )

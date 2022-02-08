@@ -90,20 +90,34 @@ ecm_generate_headers(Prison_CamelCase_HEADERS
 )
 
 install(FILES
-    ${Prison_CamelCase_HEADERS}
-    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/Prison/prison COMPONENT Devel)
-
-install(FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/prison_export.h
-    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/Prison/prison
-    COMPONENT Devel
-)
-
-install(FILES
     ${Prison_HEADERS}
     DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/Prison/prison
     COMPONENT Devel
 )
+
+# To keep backwards compatibility we stick with this layout for KF5,
+# and use the Prison/Prison and Prison/prison layout for KF6
+if (QT_MAJOR_VERSION STREQUAL "5")
+    install(FILES
+        ${Prison_CamelCase_HEADERS}
+        DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/Prison/prison COMPONENT Devel)
+
+    install(FILES
+        ${CMAKE_CURRENT_BINARY_DIR}/prison_export.h
+        DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/Prison/prison
+        COMPONENT Devel
+    )
+else()
+    install(FILES
+        ${Prison_CamelCase_HEADERS}
+        DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/Prison/Prison COMPONENT Devel)
+
+    install(FILES
+        ${CMAKE_CURRENT_BINARY_DIR}/prison_export.h
+        DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/Prison
+        COMPONENT Devel
+    )
+endif()
 
 if(BUILD_QCH)
     ecm_add_qch(

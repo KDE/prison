@@ -33,7 +33,7 @@ class VideoScannerFrame
 {
 public:
     explicit VideoScannerFrame();
-    explicit VideoScannerFrame(const QVideoFrame &frame, Format::BarcodeFormats formats);
+    explicit VideoScannerFrame(const QVideoFrame &frame, bool verticallyFlipped, Format::BarcodeFormats formats);
     ~VideoScannerFrame();
 
     int width() const;
@@ -78,6 +78,13 @@ public:
     /** The requested barcode formats. */
     Format::BarcodeFormats formats() const;
 
+    /** Returns @c true if the raw frame data is vertically flipped compared
+     *  to how it's displayed. This doesn't impact barcode detection as such,
+     *  but it requires corresponding adjustments to the coordinates at which
+     *  a barcode has been detected.
+     */
+    bool isVerticallyFlipped() const;
+
 private:
     /** The amount of data to copy. This can be less than the entire frame
      *  size for planar formats.
@@ -89,6 +96,7 @@ private:
     const uint8_t *m_frameData = nullptr;
     QImage m_image;
     Format::BarcodeFormats m_formats = {};
+    bool m_verticallyFlipped = false;
 };
 
 }

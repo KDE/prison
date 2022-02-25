@@ -17,7 +17,7 @@ namespace Prison
 class VideoScannerPrivate
 {
 public:
-    void newFrame(const QVideoFrame &videoFrame);
+    void newFrame(const QVideoFrame &videoFrame, bool verticallyFlipped);
     void setResult(VideoScanner *q, const ScanResult &result);
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
@@ -46,13 +46,13 @@ private:
 
 }
 
-void VideoScannerPrivate::newFrame(const QVideoFrame &videoFrame)
+void VideoScannerPrivate::newFrame(const QVideoFrame &videoFrame, bool verticallyFlipped)
 {
     // NOTE: this runs in the render thread
     if (!m_workerBusy && videoFrame.isValid()) {
         m_workerBusy = true;
 
-        VideoScannerFrame frame(videoFrame, m_formats);
+        VideoScannerFrame frame(videoFrame, verticallyFlipped, m_formats);
         // check if we are only allowed to access this in the render thread
         if (frame.copyRequired()) {
             frame.map();
@@ -93,8 +93,7 @@ VideoScannerFilterRunnable::VideoScannerFilterRunnable(VideoScannerPrivate *dd)
 
 QVideoFrame VideoScannerFilterRunnable::run(QVideoFrame *input, const QVideoSurfaceFormat &surfaceFormat, QVideoFilterRunnable::RunFlags /* flags */)
 {
-    Q_UNUSED(surfaceFormat);
-    d->newFrame(*input);
+    d->newFrame(*input, surfaceFormat.scanLineDirection() == QVideoSurfaceFormat::BottomToTop);
     return *input;
 }
 #endif
@@ -171,7 +170,7 @@ void VideoScanner::setVideoSink(QVideoSink *sink)
     }
     d->m_sink = sink;
     connect(d->m_sink, &QVideoSink::videoFrameChanged, this, [this](const QVideoFrame &frame) {
-        d->newFrame(frame);
+        d->newFrame(frame, frame.surfaceFormat().scanLineDirection() == QVideoFrameFormat::BottomToTop);
     });
     Q_EMIT videoSinkChanged();
 }

@@ -15,9 +15,10 @@ using namespace Prison;
 
 VideoScannerFrame::VideoScannerFrame() = default;
 
-VideoScannerFrame::VideoScannerFrame(const QVideoFrame &frame, Format::BarcodeFormats formats)
+VideoScannerFrame::VideoScannerFrame(const QVideoFrame &frame, bool isVerticallyFlipped, Format::BarcodeFormats formats)
     : m_frame(frame)
     , m_formats(formats)
+    , m_verticallyFlipped(isVerticallyFlipped)
 {
 }
 
@@ -182,6 +183,14 @@ void VideoScannerFrame::convertToImage()
     m_image = m_frame.toImage();
 #endif
     m_image.convertTo(QImage::Format_Grayscale8);
+}
+
+bool VideoScannerFrame::isVerticallyFlipped() const
+{
+#ifdef Q_OS_ANDROID
+    return true;
+#endif
+    return m_verticallyFlipped;
 }
 
 Format::BarcodeFormats VideoScannerFrame::formats() const

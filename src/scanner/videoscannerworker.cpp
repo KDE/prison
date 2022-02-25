@@ -10,6 +10,7 @@
 
 #include <QDebug>
 #include <QImage>
+#include <QTransform>
 
 #include <ZXing/ReadBarcode.h>
 #include <ZXing/TextUtfEncoding.h>
@@ -203,6 +204,14 @@ void VideoScannerWorker::slotScanFrame(VideoScannerFrame frame)
             y2 = std::max(y2, p[i].y);
         }
         res->boundingRect = QRect(QPoint(x1, y1), QPoint(x2, y2));
+
+        // apply frame transformations to the bounding rect
+        if (frame.isVerticallyFlipped()) {
+            QTransform t;
+            t.scale(1, -1);
+            t.translate(0, -frame.height());
+            res->boundingRect = t.mapRect(res->boundingRect);
+        }
 
         res->format = Format::toFormat(zxRes.format());
     }

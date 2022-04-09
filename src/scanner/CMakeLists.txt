@@ -3,6 +3,13 @@
 
 add_library(KF5PrisonScanner)
 add_library(KF5::PrisonScanner ALIAS KF5PrisonScanner)
+
+set_target_properties(KF5PrisonScanner PROPERTIES
+    VERSION     ${PRISON_VERSION}
+    SOVERSION   ${PRISON_SOVERSION}
+    EXPORT_NAME PrisonScanner
+)
+
 target_sources(KF5PrisonScanner PRIVATE
     format.cpp
     scanresult.cpp

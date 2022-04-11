@@ -152,6 +152,19 @@ private Q_SLOTS:
         v.appendMSB(29, 5);
         v.appendMSB(2, 5);
         QTest::newRow("punct/mixed/upper sequence") << QByteArray(">?@A") << v;
+        v.clear();
+        v.appendMSB(2, 5);
+        v.appendMSB(3, 5);
+        v.appendMSB(4, 5);
+        v.appendMSB(29, 5); // latch to Punct via latch to Mixed, shift to Punct directly would be more efficient here
+        v.appendMSB(30, 5);
+        v.appendMSB(19, 5);
+        v.appendMSB(31, 5); // latch to Upper due to shift to Binary not available in Punct
+        v.appendMSB(31, 5);
+        v.appendMSB(2, 5);
+        v.appendMSB(0, 8);
+        v.appendMSB(0, 8);
+        QTest::newRow("upper/special -> binary") << QByteArray("ABC.\x00\x00", 6) << v;
     }
 
     void testAztecEncode()

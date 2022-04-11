@@ -262,12 +262,12 @@ static const int aztec_code_size[] = {0, 5, 5, 5, 5, 4, 8};
 Q_STATIC_ASSERT(sizeof(aztec_code_size) / sizeof(int) == MODE_COUNT);
 
 // codes for ambiguous characters, ie. those that can be encoded in multiple modes
-static const aztec_code_t aztec_special_chars[SPECIAL_CHAR_COUNT][MODE_COUNT - 1] = {
-    /*     NoMode         Upper           Lower         Mixed          Punct          Digit   */
-    {{0, NoMode}, {1, Upper}, {1, Lower}, {1, Mixed}, {1, Upper}, {1, Digit}}, /* SP */
-    {{0, NoMode}, {1, Punct}, {1, Punct}, {14, Mixed}, {1, Punct}, {1, Punct}}, /* CR */
-    {{0, NoMode}, {17, Punct}, {17, Punct}, {17, Punct}, {17, Punct}, {12, Digit}}, /* Comma */
-    {{0, NoMode}, {19, Punct}, {19, Punct}, {19, Punct}, {19, Punct}, {13, Digit}}, /* Dot */
+static const aztec_code_t aztec_special_chars[SPECIAL_CHAR_COUNT][MODE_COUNT] = {
+    /*   NoMode      Upper      Lower        Mixed        Punct      Digit     Binary  */
+    {{0, NoMode}, {1, Upper}, {1, Lower}, {1, Mixed}, {1, Upper}, {1, Digit}, {0, NoMode}}, /* SP */
+    {{0, NoMode}, {1, Punct}, {1, Punct}, {14, Mixed}, {1, Punct}, {1, Punct}, {0, NoMode}}, /* CR */
+    {{0, NoMode}, {17, Punct}, {17, Punct}, {17, Punct}, {17, Punct}, {12, Digit}, {0, NoMode}}, /* Comma */
+    {{0, NoMode}, {19, Punct}, {19, Punct}, {19, Punct}, {19, Punct}, {13, Digit}, {0, NoMode}}, /* Dot */
 };
 
 // shift code table, source mode -> target mode

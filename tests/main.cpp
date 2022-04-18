@@ -1,4 +1,4 @@
-#include "prison.h"
+#include "prisontest.h"
 #include <QApplication>
 
 int main(int argc, char **argv)

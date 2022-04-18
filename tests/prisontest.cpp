@@ -4,12 +4,12 @@
     SPDX-License-Identifier: MIT
 */
 
-#include "prison.h"
+#include "prisontest.h"
 
 #include "barcodeexamplewidget.h"
 // Prison
-#include <prison/abstractbarcode.h>
-#include <prison/prison.h>
+#include <Prison/AbstractBarcode>
+#include <Prison/Prison>
 // Qt
 #include <QDebug>
 #include <QHBoxLayout>

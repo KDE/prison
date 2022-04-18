@@ -7,7 +7,7 @@
 #ifndef PRISON_BARCODEQUICKITEM_H
 #define PRISON_BARCODEQUICKITEM_H
 
-#include <prison/prison.h>
+#include <Prison/Prison>
 
 #include <QColor>
 #include <QQuickPaintedItem>

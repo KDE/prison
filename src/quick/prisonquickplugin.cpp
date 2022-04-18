@@ -6,7 +6,7 @@
 
 #include "barcodequickitem.h"
 
-#include <prison/prison.h>
+#include <Prison/Prison>
 
 #include <QQmlExtensionPlugin>
 

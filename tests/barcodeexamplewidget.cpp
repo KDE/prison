@@ -6,7 +6,7 @@
 
 #include "barcodeexamplewidget.h"
 // Prison
-#include <prison/abstractbarcode.h>
+#include <Prison/AbstractBarcode>
 // Qt
 #include <QDrag>
 #include <QGuiApplication>

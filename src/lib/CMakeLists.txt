@@ -89,6 +89,12 @@ ecm_generate_headers(Prison_CamelCase_HEADERS
     OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/Prison
 )
 
+set(_all_headers
+    ${Prison_HEADERS}
+    ${Prison_CamelCase_HEADERS}
+    ${CMAKE_CURRENT_BINARY_DIR}/prison_export.h
+)
+
 # So that the headers are found at build time
 target_include_directories(KF5Prison PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>")
 
@@ -96,20 +102,14 @@ target_include_directories(KF5Prison PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_B
 # for KF6 everything goes into <includedir>/KF6/Prison/Prison only
 if (QT_MAJOR_VERSION STREQUAL "5")
     install(
-        FILES
-            ${Prison_HEADERS}
-            ${Prison_CamelCase_HEADERS}
-            ${CMAKE_CURRENT_BINARY_DIR}/prison_export.h
+        FILES ${_all_headers}
         DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/Prison/prison
         COMPONENT Devel
     )
 endif()
 
 install(
-    FILES
-        ${Prison_HEADERS}
-        ${Prison_CamelCase_HEADERS}
-        ${CMAKE_CURRENT_BINARY_DIR}/prison_export.h
+    FILES ${_all_headers}
     DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/Prison/Prison
     COMPONENT Devel
 )

@@ -43,14 +43,12 @@ ecm_generate_headers(PrisonScanner_CamelCase_HEADERS
     REQUIRED_HEADERS PrisonScanner_HEADERS
 )
 
-install(FILES
-    ${PrisonScanner_CamelCase_HEADERS}
-    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/PrisonScanner/Prison COMPONENT Devel)
-
-install(FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/prisonscanner_export.h
-    ${PrisonScanner_HEADERS}
-    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/PrisonScanner/prison
+install(
+    FILES
+        ${PrisonScanner_CamelCase_HEADERS}
+        ${PrisonScanner_HEADERS}
+        ${CMAKE_CURRENT_BINARY_DIR}/prisonscanner_export.h
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/PrisonScanner/Prison
     COMPONENT Devel
 )
 

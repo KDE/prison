@@ -4,7 +4,6 @@
 */
 
 #include "videoscanner.h"
-#include "scanresult.h"
 #include "videoscannerframe_p.h"
 #include "videoscannerworker_p.h"
 

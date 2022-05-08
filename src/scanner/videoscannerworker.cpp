@@ -40,28 +40,28 @@ void VideoScannerWorker::slotScanFrame(VideoScannerFrame frame)
     case QVideoFrame::Format_ARGB32:
     case QVideoFrame::Format_ARGB32_Premultiplied:
     case QVideoFrame::Format_RGB32:
-        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::XRGB}, hints);
+        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::XRGB, frame.bytesPerLine()}, hints);
         break;
     case QVideoFrame::Format_RGB24:
-        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::RGB}, hints);
+        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::RGB, frame.bytesPerLine()}, hints);
         break;
     case QVideoFrame::Format_BGRA32:
     case QVideoFrame::Format_BGRA32_Premultiplied:
     case QVideoFrame::Format_BGR32:
-        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::BGRX}, hints);
+        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::BGRX, frame.bytesPerLine()}, hints);
         break;
     case QVideoFrame::Format_ABGR32:
-        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::XBGR}, hints);
+        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::XBGR, frame.bytesPerLine()}, hints);
         break;
     case QVideoFrame::Format_BGR24:
-        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::BGR}, hints);
+        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::BGR, frame.bytesPerLine()}, hints);
         break;
     case QVideoFrame::Format_AYUV444:
     case QVideoFrame::Format_AYUV444_Premultiplied:
-        zxRes = ZXing::ReadBarcode({frame.bits() + 1, frame.width(), frame.height(), ZXing::ImageFormat::Lum, 0, 4}, hints);
+        zxRes = ZXing::ReadBarcode({frame.bits() + 1, frame.width(), frame.height(), ZXing::ImageFormat::Lum, frame.bytesPerLine(), 4}, hints);
         break;
     case QVideoFrame::Format_YUV444:
-        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::Lum, 0, 3}, hints);
+        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::Lum, frame.bytesPerLine(), 3}, hints);
         break;
     case QVideoFrame::Format_YUV420P:
     case QVideoFrame::Format_YUV422P:
@@ -72,19 +72,19 @@ void VideoScannerWorker::slotScanFrame(VideoScannerFrame frame)
     case QVideoFrame::Format_IMC2:
     case QVideoFrame::Format_IMC3:
     case QVideoFrame::Format_IMC4:
-        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::Lum}, hints);
+        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::Lum, frame.bytesPerLine()}, hints);
         break;
     case QVideoFrame::Format_UYVY:
-        zxRes = ZXing::ReadBarcode({frame.bits() + 1, frame.width(), frame.height(), ZXing::ImageFormat::Lum, 0, 2}, hints);
+        zxRes = ZXing::ReadBarcode({frame.bits() + 1, frame.width(), frame.height(), ZXing::ImageFormat::Lum, frame.bytesPerLine(), 2}, hints);
         break;
     case QVideoFrame::Format_YUYV:
-        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::Lum, 0, 2}, hints);
+        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::Lum, frame.bytesPerLine(), 2}, hints);
         break;
     case QVideoFrame::Format_Y8:
-        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::Lum}, hints);
+        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::Lum, frame.bytesPerLine()}, hints);
         break;
     case QVideoFrame::Format_Y16:
-        zxRes = ZXing::ReadBarcode({frame.bits() + 1, frame.width(), frame.height(), ZXing::ImageFormat::Lum, 0, 1}, hints);
+        zxRes = ZXing::ReadBarcode({frame.bits() + 1, frame.width(), frame.height(), ZXing::ImageFormat::Lum, frame.bytesPerLine(), 1}, hints);
         break;
 
     // formats needing conversion before ZXing can consume them
@@ -110,24 +110,24 @@ void VideoScannerWorker::slotScanFrame(VideoScannerFrame frame)
     case QVideoFrameFormat::Format_ARGB8888:
     case QVideoFrameFormat::Format_ARGB8888_Premultiplied:
     case QVideoFrameFormat::Format_XRGB8888:
-        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::XRGB}, hints);
+        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::XRGB, frame.bytesPerLine()}, hints);
         break;
     case QVideoFrameFormat::Format_BGRA8888:
     case QVideoFrameFormat::Format_BGRA8888_Premultiplied:
     case QVideoFrameFormat::Format_BGRX8888:
-        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::BGRX}, hints);
+        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::BGRX, frame.bytesPerLine()}, hints);
         break;
     case QVideoFrameFormat::Format_ABGR8888:
     case QVideoFrameFormat::Format_XBGR8888:
-        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::XBGR}, hints);
+        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::XBGR, frame.bytesPerLine()}, hints);
         break;
     case QVideoFrameFormat::Format_RGBA8888:
     case QVideoFrameFormat::Format_RGBX8888:
-        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::RGBX}, hints);
+        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::RGBX, frame.bytesPerLine()}, hints);
         break;
     case QVideoFrameFormat::Format_AYUV:
     case QVideoFrameFormat::Format_AYUV_Premultiplied:
-        zxRes = ZXing::ReadBarcode({frame.bits() + 1, frame.width(), frame.height(), ZXing::ImageFormat::Lum, 0, 4}, hints);
+        zxRes = ZXing::ReadBarcode({frame.bits() + 1, frame.width(), frame.height(), ZXing::ImageFormat::Lum, frame.bytesPerLine(), 4}, hints);
         break;
     case QVideoFrameFormat::Format_YUV420P:
     case QVideoFrameFormat::Format_YUV422P:
@@ -138,23 +138,23 @@ void VideoScannerWorker::slotScanFrame(VideoScannerFrame frame)
     case QVideoFrameFormat::Format_IMC2:
     case QVideoFrameFormat::Format_IMC3:
     case QVideoFrameFormat::Format_IMC4:
-        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::Lum}, hints);
+        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::Lum, frame.bytesPerLine()}, hints);
         break;
     case QVideoFrameFormat::Format_UYVY:
-        zxRes = ZXing::ReadBarcode({frame.bits() + 1, frame.width(), frame.height(), ZXing::ImageFormat::Lum, 0, 2}, hints);
+        zxRes = ZXing::ReadBarcode({frame.bits() + 1, frame.width(), frame.height(), ZXing::ImageFormat::Lum, frame.bytesPerLine(), 2}, hints);
         break;
     case QVideoFrameFormat::Format_YUYV:
-        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::Lum, 0, 2}, hints);
+        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::Lum, frame.bytesPerLine(), 2}, hints);
         break;
     case QVideoFrameFormat::Format_Y8:
-        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::Lum}, hints);
+        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::Lum, frame.bytesPerLine()}, hints);
         break;
     case QVideoFrameFormat::Format_Y16:
-        zxRes = ZXing::ReadBarcode({frame.bits() + 1, frame.width(), frame.height(), ZXing::ImageFormat::Lum, 0, 1}, hints);
+        zxRes = ZXing::ReadBarcode({frame.bits() + 1, frame.width(), frame.height(), ZXing::ImageFormat::Lum, frame.bytesPerLine(), 1}, hints);
         break;
     case QVideoFrameFormat::Format_P010:
     case QVideoFrameFormat::Format_P016:
-        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::Lum, 0, 1}, hints);
+        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::Lum, frame.bytesPerLine(), 1}, hints);
         break;
 
     // formats needing conversion before ZXing can consume them
@@ -162,7 +162,7 @@ void VideoScannerWorker::slotScanFrame(VideoScannerFrame frame)
     case QVideoFrameFormat::Format_SamplerExternalOES:
     case QVideoFrameFormat::Format_SamplerRect:
         frame.convertToImage();
-        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::Lum}, hints);
+        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::Lum, frame.bytesPerLine()}, hints);
         break;
     }
 #endif

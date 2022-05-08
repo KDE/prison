@@ -38,6 +38,7 @@ public:
 
     int width() const;
     int height() const;
+    int bytesPerLine() const;
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QVideoFrame::PixelFormat pixelFormat() const;
 #else

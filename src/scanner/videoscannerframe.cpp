@@ -34,6 +34,15 @@ int VideoScannerFrame::height() const
     return m_frame.height();
 }
 
+int VideoScannerFrame::bytesPerLine() const
+{
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    return m_frame.bytesPerLine();
+#else
+    return m_frame.bytesPerLine(0);
+#endif
+}
+
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 QVideoFrame::PixelFormat VideoScannerFrame::pixelFormat() const
 #else

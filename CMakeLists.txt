@@ -36,11 +36,17 @@ set(REQUIRED_QT_VERSION 5.15.2)
 find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core Gui)
 find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG OPTIONAL_COMPONENTS Quick Multimedia)
 find_package(QRencode)
-set_package_properties(QRencode PROPERTIES TYPE REQUIRED)
+set_package_properties(QRencode PROPERTIES
+    PURPOSE "Required for generation of QRCode barcodes."
+    TYPE REQUIRED)
 find_package(Dmtx)
-set_package_properties(Dmtx PROPERTIES TYPE RECOMMENDED)
+set_package_properties(Dmtx PROPERTIES
+    PURPOSE "Required for generation of Data Matrix barcodes."
+    TYPE RECOMMENDED)
 find_package(ZXing 1.2.0)
-set_package_properties(ZXing PROPERTIES TYPE RECOMMENDED)
+set_package_properties(ZXing PROPERTIES
+    PURPOSE "Required for generation of PDF417 barcodes and for scanning of barcodes from live video feed."
+    TYPE RECOMMENDED)
 
 if (Qt5_POSITION_INDEPENDENT_CODE)
   set(CMAKE_POSITION_INDEPENDENT_CODE ON)

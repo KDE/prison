@@ -5,12 +5,17 @@ A barcode abstraction layer providing uniform access to generation of barcodes w
 ## Introduction
 
 Prison has a Prison::AbstractBarcode, which is the base class for the actual
-barcode generators, currently Prison::QRCodeBarcode and Prison::DataMatrixBarcode
-are the two implemented barcode generators.
+barcode generators. Prison currently implements barcode generators for the following formats:
 
-Prison currently ships a BarcodeWidget, which is a QWidget with a barcode
-painted upon, as well as a BarcodeItem, which is a QGraphicsItem with a
-barcode painted upon.
+- QRCode
+- Data Matrix
+- Aztec
+- Code39
+- Code93
+- Code128
+- PDF417
+
+Prison currently ships the org.kde.prison.Barcode QML element that can be used to render barcodes in QML code.
 
 ## Supported Barcode types
 

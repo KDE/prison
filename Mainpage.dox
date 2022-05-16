@@ -6,11 +6,16 @@
  *
  * \section overview Overview
  *
- * %prison has a prison::AbstractBarcode, which is the base class for the actual barcode generators, currently prison::QRCodeBarcode
- * and prison::DataMatrixBarcode is the two implemented barcode generators.
+ * %prison has a Prison::AbstractBarcode, which is the base class for the actual barcode generators. Prison currently implements barcode generators for the following formats:
+ * \li QRCode
+ * \li Data Matrix
+ * \li Aztec
+ * \li Code39
+ * \li Code93
+ * \li Code128
+ * \li PDF417
  *
- * %prison currently ships a BarcodeWidget, which is a QWidget with a barcode painted upon, as well as a BarcodeItem, which is a
- * QGraphicsItem with a barcode painted upon.
+ * %prison currently ships the org.kde.prison.Barcode QML element that can be used to render barcodes in QML code.
  *
  * \section supported Supported Barcode types
  *
@@ -24,6 +29,18 @@
  * %prison is currently using <a href="https://github.com/dmtx/libdmtx">libdmtx</a> for generation of  <a href="http://en.wikipedia.org/wiki/Datamatrix">DataMatrix</a> barcodes
  *
  * %prison is currently using <a href="https://fukuchi.org/works/qrencode/">libqrencode</a> for generation of <a href="http://en.wikipedia.org/wiki/QR_Code">QRCode</a> barcodes
+ *
+ *
+ * \section scanner Prison Scanner
+ *
+ * A barcode scanner consuming a live video feed from QtMultimedia.
+ *
+ * Prison's barcode scanner can be used from C++ code using the Prison::VideoScanner class, or from QML using the org.kde.prison.scanner.VideoScanner QML element.
+ *
+ * There are standalone QML examples in tests/scanner-qt(5|6).qml demonstrating
+ * the QML API.
+ *
+ * Barcode detection is implemented using the <a href="https://github.com/nu-book/zxing-cpp">ZXing</a> library, all formats supported by ZXing can be detected.
  *
  */
 

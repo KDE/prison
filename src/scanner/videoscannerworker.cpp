@@ -178,7 +178,7 @@ void VideoScannerWorker::slotScanFrame(VideoScannerFrame frame)
             return c > 255;
         });
         const auto hasControlChars = std::any_of(zxRes.text().begin(), zxRes.text().end(), [](auto c) {
-            return c < 20 && c != 0x0a && c != 0x0d;
+            return c < 0x20 && c != 0x0a && c != 0x0d;
         });
         if (hasWideChars || !hasControlChars) {
             res->content = QString::fromStdString(ZXing::TextUtfEncoding::ToUtf8(zxRes.text()));

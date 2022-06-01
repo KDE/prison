@@ -39,7 +39,6 @@ ecm_generate_headers(PrisonScanner_CamelCase_HEADERS
         Format
         ScanResult
         VideoScanner
-    PREFIX Prison
     REQUIRED_HEADERS PrisonScanner_HEADERS
 )
 

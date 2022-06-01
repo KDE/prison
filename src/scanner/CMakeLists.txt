@@ -23,7 +23,6 @@ ecm_generate_export_header(KF5PrisonScanner
     VERSION ${KF_VERSION}
 )
 target_include_directories(KF5PrisonScanner INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/PrisonScanner/>")
-target_include_directories(KF5PrisonScanner PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>")
 target_link_libraries(KF5PrisonScanner
     PUBLIC
         Qt${QT_MAJOR_VERSION}::Multimedia
@@ -39,6 +38,7 @@ ecm_generate_headers(PrisonScanner_CamelCase_HEADERS
         Format
         ScanResult
         VideoScanner
+    OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/Prison
     REQUIRED_HEADERS PrisonScanner_HEADERS
 )
 

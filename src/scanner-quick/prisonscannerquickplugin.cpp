@@ -3,8 +3,8 @@
     SPDX-License-Identifier: MIT
 */
 
-#include <Prison/Format>
-#include <Prison/VideoScanner>
+#include "format.h"
+#include "videoscanner.h"
 
 #include <QQmlEngine>
 #include <QQmlExtensionPlugin>

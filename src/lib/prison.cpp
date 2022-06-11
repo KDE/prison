@@ -22,7 +22,7 @@ Prison::AbstractBarcode *Prison::createBarcode(BarcodeType type)
     case Prison::QRCode:
         return new QRCodeBarcode;
     case Prison::DataMatrix:
-#ifdef HAVE_DMTX
+#if HAVE_DMTX
         return new DataMatrixBarcode;
 #else
         return nullptr;

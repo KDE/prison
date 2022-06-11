@@ -5,7 +5,7 @@ endif()
 if (TARGET ZXing::ZXing)
     set(HAVE_ZXING 1)
 endif()
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-prison.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-prison.h)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-prison.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-prison.h)
 
 add_library(KF5Prison)
 add_library(KF5::Prison ALIAS KF5Prison)

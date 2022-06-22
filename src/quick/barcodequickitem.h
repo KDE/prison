@@ -68,7 +68,7 @@ public:
         OneDimension,
         TwoDimensions,
     };
-    Q_ENUM(Dimensions);
+    Q_ENUM(Dimensions)
     Dimensions dimensions() const;
 
     void paint(QPainter *painter) override;

@@ -1,6 +1,8 @@
 # SPDX-FileCopyrightText: 2022 Volker Krause <vkrause@kde.org>
 # SPDX-License-Identifier: BSD-3-Clause
 
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-prison-scanner.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-prison-scanner.h)
+
 add_library(KF5PrisonScanner)
 add_library(KF5::PrisonScanner ALIAS KF5PrisonScanner)
 

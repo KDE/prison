@@ -3,6 +3,7 @@
     SPDX-License-Identifier: MIT
 */
 
+#include "config-prison-scanner.h"
 #include "format_p.h"
 #include "scanresult_p.h"
 #include "videoscannerframe_p.h"
@@ -12,6 +13,7 @@
 #include <QImage>
 #include <QTransform>
 
+#define ZX_USE_UTF8 1
 #include <ZXing/ReadBarcode.h>
 #include <ZXing/TextUtfEncoding.h>
 
@@ -25,7 +27,11 @@ VideoScannerWorker::VideoScannerWorker(QObject *parent)
 
 void VideoScannerWorker::slotScanFrame(VideoScannerFrame frame)
 {
+#if ZXING_VERSION < QT_VERSION_CHECK(1, 4, 0)
     ZXing::Result zxRes(ZXing::DecodeStatus::FormatError);
+#else
+    ZXing::Result zxRes;
+#endif
     ZXing::DecodeHints hints;
     hints.setFormats(frame.formats() == Format::NoFormat ? ZXing::BarcodeFormats::all() : Format::toZXing(frame.formats()));
 
@@ -173,6 +179,7 @@ void VideoScannerWorker::slotScanFrame(VideoScannerFrame frame)
     if (zxRes.isValid()) {
         auto res = ScanResultPrivate::get(scanResult);
 
+#if ZXING_VERSION < QT_VERSION_CHECK(1, 4, 0)
         // distinguish between binary and text content
         const auto hasWideChars = std::any_of(zxRes.text().begin(), zxRes.text().end(), [](auto c) {
             return c > 255;
@@ -188,6 +195,16 @@ void VideoScannerWorker::slotScanFrame(VideoScannerFrame frame)
             std::copy(zxRes.text().begin(), zxRes.text().end(), b.begin());
             res->content = b;
         }
+#else
+        if (zxRes.contentType() == ZXing::ContentType::Text) {
+            res->content = QString::fromStdString(zxRes.text());
+        } else {
+            QByteArray b;
+            b.resize(zxRes.bytes().size());
+            std::copy(zxRes.bytes().begin(), zxRes.bytes().end(), b.begin());
+            res->content = b;
+        }
+#endif
 
         // determine the bounding rect
         // the cooridinates we get from ZXing are a polygon, we need to determine the

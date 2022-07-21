@@ -645,16 +645,19 @@ QImage Code93Barcode::paintImage(const QSizeF &size)
     }
 
     const int barWidth = 1;
+    const int quietZoneWidth = 10 * barWidth;
 
     // build one line of the result image
     QVector<QRgb> line;
-    line.reserve(barWidth * barcode.size());
+    line.reserve(barWidth * barcode.size() + 2 * quietZoneWidth);
+    line.insert(0, quietZoneWidth, backgroundColor().rgba());
     for (int i = 0; i < barcode.size(); i++) {
         const QRgb color = (barcode.at(i) ? foregroundColor() : backgroundColor()).rgba();
         for (int j = 0; j < barWidth; j++) {
             line.append(color);
         }
     }
+    line.insert(line.size(), quietZoneWidth, backgroundColor().rgba());
 
     // build the complete barcode
     QImage ret(line.size(), 1, QImage::Format_ARGB32);

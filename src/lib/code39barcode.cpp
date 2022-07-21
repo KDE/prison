@@ -150,9 +150,12 @@ QImage Code39Barcode::paintImage(const QSizeF &size)
     const int smallWidth = 1;
     Q_ASSERT(largeWidth > smallWidth);
 
+    const int quietZoneWidth = 10 * smallWidth;
+
     // one line of the result image
     QVector<QRgb> line;
-    line.reserve(wide * largeWidth + narrow * smallWidth);
+    line.reserve(wide * largeWidth + narrow * smallWidth + 2 * quietZoneWidth);
+    line.insert(0, quietZoneWidth, backgroundColor().rgba());
     for (int i = 0; i < barcode.size(); i++) {
         const QRgb color = (((i & 1) == 0) ? foregroundColor() : backgroundColor()).rgba(); // alternate between foreground and background color
         const int width = barcode.at(i) ? largeWidth : smallWidth;
@@ -160,6 +163,7 @@ QImage Code39Barcode::paintImage(const QSizeF &size)
             line.append(color);
         }
     }
+    line.insert(line.size(), quietZoneWidth, backgroundColor().rgba());
 
     // build the complete barcode
     QImage ret(line.size(), 1, QImage::Format_ARGB32);

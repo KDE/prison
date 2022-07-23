@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
     QString outputformat;
     QStringList arguments = app.arguments();
 
-    QString appname = arguments.takeFirst();
+    arguments.takeFirst(); // Program (argv[0]).
     while (!arguments.isEmpty()) {
         QString argument = arguments.takeFirst();
         if (argument == QLatin1String("--")) {

@@ -20,6 +20,17 @@ QRCodeBarcode::QRCodeBarcode()
 }
 QRCodeBarcode::~QRCodeBarcode() = default;
 
+static void qrEncodeString(QRcode_ptr &code, const QByteArray &data)
+{
+    // try decreasing ECC levels, in case the higher levels result in overflowing the maximum content size
+    for (auto ecc : {QR_ECLEVEL_Q, QR_ECLEVEL_M, QR_ECLEVEL_L}) {
+        code.reset(QRcode_encodeString(data.constData(), 0, ecc, QR_MODE_8, true));
+        if (code) {
+            break;
+        }
+    }
+}
+
 QImage QRCodeBarcode::paintImage(const QSizeF &size)
 {
     Q_UNUSED(size);
@@ -28,7 +39,7 @@ QImage QRCodeBarcode::paintImage(const QSizeF &size)
     QRinput_ptr input(nullptr, &QRinput_free);
     if (!data().isEmpty()) {
         const QByteArray trimmedData(data().trimmed().toUtf8());
-        code.reset(QRcode_encodeString(trimmedData.constData(), 0, QR_ECLEVEL_Q, QR_MODE_8, true));
+        qrEncodeString(code, trimmedData);
     } else {
         const auto b = byteArrayData();
         const auto isReallyBinary = std::any_of(b.begin(), b.end(), [](unsigned char c) {
@@ -41,7 +52,7 @@ QImage QRCodeBarcode::paintImage(const QSizeF &size)
             QRinput_append(input.get(), QR_MODE_8, byteArrayData().size(), reinterpret_cast<const uint8_t *>(byteArrayData().constData()));
             code.reset(QRcode_encodeInput(input.get()));
         } else {
-            code.reset(QRcode_encodeString(b.constData(), 0, QR_ECLEVEL_Q, QR_MODE_8, true));
+            qrEncodeString(code, b);
         }
     }
 

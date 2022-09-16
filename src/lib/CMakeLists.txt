@@ -79,7 +79,7 @@ if(TARGET ZXing::ZXing)
     target_link_libraries(KF5Prison PRIVATE ZXing::ZXing)
 endif()
 
-install(TARGETS KF5Prison EXPORT KF5PrisonTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS KF5Prison EXPORT KF5PrisonTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
 
 ecm_generate_headers(Prison_CamelCase_HEADERS
     HEADER_NAMES

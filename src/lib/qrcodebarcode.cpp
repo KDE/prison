@@ -59,7 +59,7 @@ QImage QRCodeBarcode::paintImage(const QSizeF &size)
     if (!code) {
         return QImage();
     }
-    const int margin = 2;
+    const int margin = 4;
     /*32 bit colors, 8 bit pr byte*/
     uchar *img = new uchar[4 * sizeof(char *) * (2 * margin + code->width) * (2 * margin * +code->width)];
     uchar *p = img;

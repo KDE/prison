@@ -31,6 +31,8 @@ target_sources(KF6Prison PRIVATE
     code39barcode_p.h
     code93barcode.cpp
     code93barcode_p.h
+    mecard.cpp
+    mecard.h
     prison.h
     qrcodebarcode.cpp
     qrcodebarcode_p.h
@@ -99,6 +101,7 @@ ecm_generate_headers(Prison_CamelCase_HEADERS
     HEADER_NAMES
     Barcode
     Prison
+    MeCard
     REQUIRED_HEADERS Prison_HEADERS
     OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/Prison
 )

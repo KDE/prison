@@ -43,3 +43,9 @@ if (TARGET ZXing::ZXing)
     ecm_add_test(zxingutiltest.cpp ${PROJECT_SOURCE_DIR}/src/lib/zxingutil.cpp TEST_NAME prison-zxingutiltest LINK_LIBRARIES Qt6::Test ZXing::ZXing KF6::Prison)
     kde_source_files_enable_exceptions(${PROJECT_SOURCE_DIR}/src/lib/zxingutil.cpp )
 endif()
+
+ecm_add_test(
+    mecardtest.cpp
+    TEST_NAME prison-mecardtest
+    LINK_LIBRARIES Qt6::Test KF6::Prison
+)

@@ -58,8 +58,8 @@ endif()
 
 ecm_setup_version(PROJECT VARIABLE_PREFIX PRISON
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/prison_version.h"
-                        PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5PrisonConfigVersion.cmake"
-                        SOVERSION 5
+                        PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF6PrisonConfigVersion.cmake"
+                        SOVERSION 6
 )
 ecm_set_disabled_deprecation_versions(
     QT 5.15.2
@@ -72,35 +72,35 @@ if(BUILD_TESTING)
     add_subdirectory(tests)
 endif()
 
-set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5Prison")
+set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF6Prison")
 
 if (BUILD_QCH)
     ecm_install_qch_export(
-        TARGETS KF5Prison_QCH
-        FILE KF5PrisonQchTargets.cmake
+        TARGETS KF6Prison_QCH
+        FILE KF6PrisonQchTargets.cmake
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel
     )
-    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF5PrisonQchTargets.cmake\")")
+    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF6PrisonQchTargets.cmake\")")
 endif()
 
 configure_package_config_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/KF5PrisonConfig.cmake.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/KF5PrisonConfig.cmake"
+  "${CMAKE_CURRENT_SOURCE_DIR}/KF6PrisonConfig.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/KF6PrisonConfig.cmake"
   INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
 )
 
 install(FILES
-  "${CMAKE_CURRENT_BINARY_DIR}/KF5PrisonConfig.cmake"
-  "${CMAKE_CURRENT_BINARY_DIR}/KF5PrisonConfigVersion.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/KF6PrisonConfig.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/KF6PrisonConfigVersion.cmake"
   DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
   COMPONENT Devel
 )
 
-install(EXPORT KF5PrisonTargets
+install(EXPORT KF6PrisonTargets
   DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
-  FILE KF5PrisonTargets.cmake
-  NAMESPACE KF5::
+  FILE KF6PrisonTargets.cmake
+  NAMESPACE KF6::
 )
 
 install(FILES
@@ -109,7 +109,7 @@ install(FILES
   COMPONENT Devel
 )
 
-# TODO KF6: remove this, kept for backwards-compatibility in KF5 so that #inlcude <prison/prison_version.h>
+# TODO KF6: remove this, kept for backwards-compatibility in KF6 so that #inlcude <prison/prison_version.h>
 # continues working
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/prison_version.h

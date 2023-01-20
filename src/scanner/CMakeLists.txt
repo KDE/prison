@@ -3,29 +3,29 @@
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-prison-scanner.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-prison-scanner.h)
 
-add_library(KF5PrisonScanner)
-add_library(KF5::PrisonScanner ALIAS KF5PrisonScanner)
+add_library(KF6PrisonScanner)
+add_library(KF6::PrisonScanner ALIAS KF6PrisonScanner)
 
-set_target_properties(KF5PrisonScanner PROPERTIES
+set_target_properties(KF6PrisonScanner PROPERTIES
     VERSION     ${PRISON_VERSION}
     SOVERSION   ${PRISON_SOVERSION}
     EXPORT_NAME PrisonScanner
 )
 
-target_sources(KF5PrisonScanner PRIVATE
+target_sources(KF6PrisonScanner PRIVATE
     format.cpp
     scanresult.cpp
     videoscanner.cpp
     videoscannerframe.cpp
     videoscannerworker.cpp
 )
-ecm_generate_export_header(KF5PrisonScanner
+ecm_generate_export_header(KF6PrisonScanner
     BASE_NAME PrisonScanner
     GROUP_BASE_NAME KF
     VERSION ${KF_VERSION}
 )
-target_include_directories(KF5PrisonScanner INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/PrisonScanner/>")
-target_link_libraries(KF5PrisonScanner
+target_include_directories(KF6PrisonScanner INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/PrisonScanner/>")
+target_link_libraries(KF6PrisonScanner
     PUBLIC
         Qt${QT_MAJOR_VERSION}::Multimedia
     PRIVATE
@@ -33,7 +33,7 @@ target_link_libraries(KF5PrisonScanner
         ZXing::ZXing
 )
 
-install(TARGETS KF5PrisonScanner EXPORT KF5PrisonTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS KF6PrisonScanner EXPORT KF6PrisonTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
 
 ecm_generate_headers(PrisonScanner_CamelCase_HEADERS
     HEADER_NAMES
@@ -55,9 +55,9 @@ install(
 
 if(BUILD_QCH)
     ecm_add_qch(
-        KF5PrisonScanner_QCH
+        KF6PrisonScanner_QCH
         NAME PrisonScanner
-        BASE_NAME KF5PrisonScanner
+        BASE_NAME KF6PrisonScanner
         VERSION ${KF_VERSION}
         ORG_DOMAIN org.kde
         SOURCES # using only public headers, to cover only public API

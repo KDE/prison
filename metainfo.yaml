@@ -14,8 +14,8 @@ deprecated: false
 release: true
 libraries:
  - qmake: Prison
-   cmake: "KF5::Prison"
-cmakename: KF5Prison
+   cmake: "KF6::Prison"
+cmakename: KF6Prison
 
 public_lib: true
 group: Frameworks

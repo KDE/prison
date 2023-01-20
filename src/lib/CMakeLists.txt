@@ -7,16 +7,16 @@ if (TARGET ZXing::ZXing)
 endif()
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-prison.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-prison.h)
 
-add_library(KF5Prison)
-add_library(KF5::Prison ALIAS KF5Prison)
+add_library(KF6Prison)
+add_library(KF6::Prison ALIAS KF6Prison)
 
-set_target_properties(KF5Prison PROPERTIES
+set_target_properties(KF6Prison PROPERTIES
     VERSION     ${PRISON_VERSION}
     SOVERSION   ${PRISON_SOVERSION}
     EXPORT_NAME Prison
 )
 
-target_sources(KF5Prison PRIVATE
+target_sources(KF6Prison PRIVATE
     abstractbarcode.cpp
     abstractbarcode.h
     aztecbarcode.cpp
@@ -39,14 +39,14 @@ target_sources(KF5Prison PRIVATE
     reedsolomon_p.h
 )
 if(TARGET Dmtx::Dmtx)
-    target_sources(KF5Prison PRIVATE datamatrixbarcode.cpp datamatrixbarcode.h)
+    target_sources(KF6Prison PRIVATE datamatrixbarcode.cpp datamatrixbarcode.h)
 endif()
 if(TARGET ZXing::ZXing)
-    target_sources(KF5Prison PRIVATE pdf417barcode.cpp pdf417barcode.h)
+    target_sources(KF6Prison PRIVATE pdf417barcode.cpp pdf417barcode.h)
 endif()
 kde_source_files_enable_exceptions(pdf417barcode.cpp)
 
-ecm_qt_declare_logging_category(KF5Prison
+ecm_qt_declare_logging_category(KF6Prison
     HEADER prison_debug.h
     IDENTIFIER Prison::Log
     CATEGORY_NAME kf.prison
@@ -55,7 +55,7 @@ ecm_qt_declare_logging_category(KF5Prison
     EXPORT PRISON
 )
 
-ecm_generate_export_header(KF5Prison
+ecm_generate_export_header(KF6Prison
     BASE_NAME Prison
     GROUP_BASE_NAME KF
     VERSION ${KF_VERSION}
@@ -64,22 +64,22 @@ ecm_generate_export_header(KF5Prison
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
 
-target_include_directories(KF5Prison INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/Prison>")
+target_include_directories(KF6Prison INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/Prison>")
 
-target_link_libraries(KF5Prison
+target_link_libraries(KF6Prison
 PUBLIC
    Qt${QT_MAJOR_VERSION}::Gui
 PRIVATE
    QRencode::QRencode
 )
 if(TARGET Dmtx::Dmtx)
-    target_link_libraries(KF5Prison PRIVATE Dmtx::Dmtx)
+    target_link_libraries(KF6Prison PRIVATE Dmtx::Dmtx)
 endif()
 if(TARGET ZXing::ZXing)
-    target_link_libraries(KF5Prison PRIVATE ZXing::ZXing)
+    target_link_libraries(KF6Prison PRIVATE ZXing::ZXing)
 endif()
 
-install(TARGETS KF5Prison EXPORT KF5PrisonTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS KF6Prison EXPORT KF6PrisonTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
 
 ecm_generate_headers(Prison_CamelCase_HEADERS
     HEADER_NAMES
@@ -96,9 +96,9 @@ set(_all_headers
 )
 
 # So that the headers are found at build time
-target_include_directories(KF5Prison PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>")
+target_include_directories(KF6Prison PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>")
 
-# To keep backwards compatibility with KF5, all headers are copied to <includedir>/KF5/Prison/prison,
+# To keep backwards compatibility with KF6, all headers are copied to <includedir>/KF6/Prison/prison,
 # for KF6 everything goes into <includedir>/KF6/Prison/Prison only
 if (QT_MAJOR_VERSION STREQUAL "5")
     install(
@@ -116,9 +116,9 @@ install(
 
 if(BUILD_QCH)
     ecm_add_qch(
-        KF5Prison_QCH
+        KF6Prison_QCH
         NAME Prison
-        BASE_NAME KF5Prison
+        BASE_NAME KF6Prison
         VERSION ${KF_VERSION}
         ORG_DOMAIN org.kde
         SOURCES # using only public headers, to cover only public API
@@ -142,6 +142,6 @@ endif()
 
 # INCLUDE_INSTALL_DIR has to be without prison/ subdir
 # as the generated CamelCase headers have the prison/ path in the forward include
-ecm_generate_pri_file(BASE_NAME Prison LIB_NAME KF5Prison DEPS "gui" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}/Prison)
+ecm_generate_pri_file(BASE_NAME Prison LIB_NAME KF6Prison DEPS "gui" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}/Prison)
 install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
 

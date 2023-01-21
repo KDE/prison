@@ -60,13 +60,6 @@ public:
  * @endcond
  */
 
-#if PRISON_BUILD_DEPRECATED_SINCE(5, 69)
-AbstractBarcode::AbstractBarcode()
-    : d(new AbstractBarcodePrivate(this))
-{
-}
-#endif
-
 AbstractBarcode::AbstractBarcode(AbstractBarcode::Dimensions dim)
     : d(new AbstractBarcodePrivate(this))
 {
@@ -116,29 +109,6 @@ void AbstractBarcode::setData(const QByteArray &data)
     d->m_cache = QImage();
 }
 
-#if PRISON_BUILD_DEPRECATED_SINCE(5, 72)
-QSizeF AbstractBarcode::minimumSize() const
-{
-    d->recompute();
-
-    // ### backward compatibility: this is applying minimum size behavior that the specific
-    // implementations were doing prior to 5.69. This is eventually to be dropped.
-    if (d->m_cache.isNull()) {
-        return {};
-    }
-    switch (d->m_dimension) {
-    case NoDimensions:
-        return {};
-    case OneDimension:
-        return QSizeF(d->m_cache.width(), std::max(d->m_cache.height(), 10));
-    case TwoDimensions:
-        return d->m_cache.size() * 4;
-    }
-
-    return d->m_cache.size();
-}
-#endif
-
 QSizeF AbstractBarcode::trueMinimumSize() const
 {
     d->recompute();
@@ -165,13 +135,6 @@ QSizeF AbstractBarcode::preferredSize(qreal devicePixelRatio) const
     }
     return {};
 }
-
-#if PRISON_BUILD_DEPRECATED_SINCE(5, 69)
-void AbstractBarcode::setMinimumSize(const QSizeF &minimumSize)
-{
-    Q_UNUSED(minimumSize);
-}
-#endif
 
 const QColor &AbstractBarcode::backgroundColor() const
 {

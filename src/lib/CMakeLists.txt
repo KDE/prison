@@ -60,7 +60,7 @@ ecm_generate_export_header(KF6Prison
     GROUP_BASE_NAME KF
     VERSION ${KF_VERSION}
     DEPRECATED_BASE_VERSION 0
-    DEPRECATION_VERSIONS 5.69 5.72
+    DEPRECATION_VERSIONS
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
 
@@ -97,16 +97,6 @@ set(_all_headers
 
 # So that the headers are found at build time
 target_include_directories(KF6Prison PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>")
-
-# To keep backwards compatibility with KF6, all headers are copied to <includedir>/KF6/Prison/prison,
-# for KF6 everything goes into <includedir>/KF6/Prison/Prison only
-if (QT_MAJOR_VERSION STREQUAL "5")
-    install(
-        FILES ${_all_headers}
-        DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/Prison/prison
-        COMPONENT Devel
-    )
-endif()
 
 install(
     FILES ${_all_headers}

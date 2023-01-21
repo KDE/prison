@@ -32,15 +32,6 @@ namespace Prison
 class PRISON_EXPORT AbstractBarcode
 {
 public:
-#if PRISON_ENABLE_DEPRECATED_SINCE(5, 69)
-    /**
-     * creates a barcode generator without any data
-     * @deprecated since 5.69 Use Prison::createBarcode instead.
-     */
-    PRISON_DEPRECATED_VERSION(5, 69, "Use Prison::createBarcode()")
-    AbstractBarcode();
-#endif
-
     virtual ~AbstractBarcode();
     /**
      * Textual content encoded in this barcode.
@@ -82,17 +73,6 @@ public:
      * a null QImage will be returned
      */
     QImage toImage(const QSizeF &size);
-
-#if PRISON_ENABLE_DEPRECATED_SINCE(5, 72)
-    /**
-     * The minimal size of this barcode.
-     * @note This isn't the absolute minimum, but closer to the result of preferredSize(1).
-     * @return the minimal size for this barcode.
-     * @deprecated Since 5.69, use preferredSize() or trueMinimumSize().
-     */
-    PRISON_DEPRECATED_VERSION_BELATED(5, 72, 5, 69, "Use preferredSize() or trueMinimumSize()")
-    QSizeF minimumSize() const;
-#endif
 
     /**
      * The minimal amount of pixels needed to represent this barcode without loss of information.
@@ -153,17 +133,6 @@ protected:
     ///@cond internal
     explicit AbstractBarcode(Dimensions dim);
     ///@endcond
-
-#if PRISON_ENABLE_DEPRECATED_SINCE(5, 69)
-    /**
-     * Sets the minimum size for this barcode.
-     * Some barcodes have minimum sizes for when they are readable and such
-     * @param minimumSize QSizeF holding the minimum size for this barcode
-     * @deprecated since 5.69, function is a no-op, no need to call this anymore.
-     */
-    PRISON_DEPRECATED_VERSION(5, 69, "no need to call this anymore")
-    void setMinimumSize(const QSizeF &minimumSize);
-#endif
 
     /**
      * Doing the actual painting of the image

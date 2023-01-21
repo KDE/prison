@@ -39,11 +39,7 @@ public:
     int width() const;
     int height() const;
     int bytesPerLine() const;
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    QVideoFrame::PixelFormat pixelFormat() const;
-#else
     QVideoFrameFormat::PixelFormat pixelFormat() const;
-#endif
 
     /** Map/unmap the frame if needed, ie. if we don't already have a copy. */
     void map();

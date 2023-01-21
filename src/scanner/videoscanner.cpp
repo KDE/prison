@@ -19,9 +19,7 @@ public:
     void newFrame(const QVideoFrame &videoFrame, bool verticallyFlipped);
     void setResult(VideoScanner *q, const ScanResult &result);
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     QVideoSink *m_sink = nullptr;
-#endif
     VideoScannerThread m_thread;
     VideoScannerWorker m_worker;
     QByteArray m_frameDataBuffer; // reused memory when we have to copy frame data
@@ -30,19 +28,6 @@ public:
     Format::BarcodeFormats m_formats = Format::NoFormat;
     bool m_workerBusy = false;
 };
-
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-class VideoScannerFilterRunnable : public QVideoFilterRunnable
-{
-public:
-    VideoScannerFilterRunnable(VideoScannerPrivate *dd);
-    QVideoFrame run(QVideoFrame *input, const QVideoSurfaceFormat &surfaceFormat, QVideoFilterRunnable::RunFlags flags) override;
-
-private:
-    VideoScannerPrivate *d = nullptr;
-};
-#endif
-
 }
 
 void VideoScannerPrivate::newFrame(const QVideoFrame &videoFrame, bool verticallyFlipped)
@@ -84,25 +69,8 @@ void VideoScannerPrivate::setResult(VideoScanner *q, const ScanResult &result)
     Q_EMIT q->resultContentChanged(result);
 }
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-VideoScannerFilterRunnable::VideoScannerFilterRunnable(VideoScannerPrivate *dd)
-    : d(dd)
-{
-}
-
-QVideoFrame VideoScannerFilterRunnable::run(QVideoFrame *input, const QVideoSurfaceFormat &surfaceFormat, QVideoFilterRunnable::RunFlags /* flags */)
-{
-    d->newFrame(*input, surfaceFormat.scanLineDirection() == QVideoSurfaceFormat::BottomToTop);
-    return *input;
-}
-#endif
-
 VideoScanner::VideoScanner(QObject *parent)
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    : QAbstractVideoFilter(parent)
-#else
     : QObject(parent)
-#endif
     , d(new VideoScannerPrivate)
 {
     d->m_worker.moveToThread(&d->m_thread);
@@ -125,13 +93,6 @@ VideoScanner::~VideoScanner()
     d->m_thread.wait();
 }
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-QVideoFilterRunnable *VideoScanner::createFilterRunnable()
-{
-    return new VideoScannerFilterRunnable(d.get());
-}
-#endif
-
 ScanResult VideoScanner::result() const
 {
     return d->m_result;
@@ -152,7 +113,6 @@ void VideoScanner::setFormats(Format::BarcodeFormats formats)
     Q_EMIT formatsChanged();
 }
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 QVideoSink *VideoScanner::videoSink() const
 {
     return d->m_sink;
@@ -173,4 +133,3 @@ void VideoScanner::setVideoSink(QVideoSink *sink)
     });
     Q_EMIT videoSinkChanged();
 }
-#endif

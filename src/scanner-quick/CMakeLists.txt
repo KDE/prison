@@ -3,5 +3,5 @@
 
 ecm_add_qml_module(prisonscannerquickplugin URI "org.kde.prison.scanner" VERSION 1.0 CLASSNAME "PrisonScannerQuickPlugin")
 target_sources(prisonscannerquickplugin PRIVATE prisonscannerquickplugin.cpp)
-target_link_libraries(prisonscannerquickplugin PRIVATE Qt${QT_MAJOR_VERSION}::Quick KF6::PrisonScanner)
+target_link_libraries(prisonscannerquickplugin PRIVATE Qt6::Quick KF6::PrisonScanner)
 ecm_finalize_qml_module(prisonscannerquickplugin DESTINATION ${KDE_INSTALL_QMLDIR})

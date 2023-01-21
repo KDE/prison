@@ -27,9 +27,9 @@ ecm_generate_export_header(KF6PrisonScanner
 target_include_directories(KF6PrisonScanner INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/PrisonScanner/>")
 target_link_libraries(KF6PrisonScanner
     PUBLIC
-        Qt${QT_MAJOR_VERSION}::Multimedia
+        Qt6::Multimedia
     PRIVATE
-        Qt${QT_MAJOR_VERSION}::Core
+        Qt6::Core
         ZXing::ZXing
 )
 
@@ -64,7 +64,7 @@ if(BUILD_QCH)
             ${PrisonScanner_HEADERS}
         MD_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md"
         LINK_QCHS
-            Qt${QT_MAJOR_VERSION}Multimedia_QCH
+            Qt6Multimedia_QCH
         INCLUDE_DIRS
             ${CMAKE_CURRENT_BINARY_DIR}
         BLANK_MACROS

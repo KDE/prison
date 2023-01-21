@@ -68,7 +68,7 @@ target_include_directories(KF6Prison INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTAL
 
 target_link_libraries(KF6Prison
 PUBLIC
-   Qt${QT_MAJOR_VERSION}::Gui
+   Qt6::Gui
 PRIVATE
    QRencode::QRencode
 )
@@ -115,7 +115,7 @@ if(BUILD_QCH)
             ${Prison_HEADERS}
         MD_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md"
         LINK_QCHS
-            Qt${QT_MAJOR_VERSION}Gui_QCH
+            Qt6Gui_QCH
         INCLUDE_DIRS
             ${CMAKE_CURRENT_BINARY_DIR}
         BLANK_MACROS

@@ -118,10 +118,10 @@ qreal BarcodeQuickItem::minimumWidth() const
 
 bool BarcodeQuickItem::isEmpty() const
 {
-    switch (m_content.type()) {
-    case QVariant::String:
+    switch (m_content.userType()) {
+    case QMetaType::QString:
         return m_content.toString().isEmpty();
-    case QVariant::ByteArray:
+    case QMetaType::QByteArray:
         return m_content.toByteArray().isEmpty();
     default:
         break;
@@ -136,10 +136,10 @@ void BarcodeQuickItem::updateBarcode()
     }
 
     QString content;
-    if (m_content.type() == QVariant::String) {
+    if (m_content.userType() == QMetaType::QString) {
         content = m_content.toString();
     }
-    if (m_content.type() == QVariant::ByteArray) {
+    if (m_content.userType() == QMetaType::QByteArray) {
         const auto b = m_content.toByteArray();
         content = QString::fromLatin1(b.constData(), b.size()); // ### fix this once Prison::Barcode can consume QByteArrays
     }
@@ -155,7 +155,7 @@ void BarcodeQuickItem::updateBarcode()
         m_barcode.reset(Prison::createBarcode(m_type));
     }
     if (m_barcode) {
-        if (m_content.type() == QVariant::String) {
+        if (m_content.userType() == QMetaType::QString) {
             m_barcode->setData(m_content.toString());
         } else {
             m_barcode->setData(m_content.toByteArray());

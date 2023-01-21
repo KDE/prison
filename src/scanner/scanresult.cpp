@@ -34,7 +34,7 @@ QVariant ScanResult::content() const
 
 bool ScanResult::hasText() const
 {
-    return d->content.userType() == QVariant::String;
+    return d->content.userType() == QMetaType::QString;
 }
 
 QString ScanResult::text() const
@@ -44,7 +44,7 @@ QString ScanResult::text() const
 
 bool ScanResult::hasBinaryData() const
 {
-    return d->content.userType() == QVariant::ByteArray;
+    return d->content.userType() == QMetaType::QByteArray;
 }
 
 QByteArray ScanResult::binaryData() const

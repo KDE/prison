@@ -33,10 +33,10 @@ public:
 
     bool isEmpty() const
     {
-        switch (m_data.type()) {
-        case QVariant::String:
+        switch (m_data.userType()) {
+        case QMetaType::QString:
             return m_data.toString().isEmpty();
-        case QVariant::ByteArray:
+        case QMetaType::QByteArray:
             return m_data.toByteArray().isEmpty();
         default:
             break;
@@ -75,12 +75,12 @@ AbstractBarcode::AbstractBarcode(AbstractBarcode::Dimensions dim)
 
 QString AbstractBarcode::data() const
 {
-    return d->m_data.type() == QVariant::String ? d->m_data.toString() : QString();
+    return d->m_data.userType() == QMetaType::QString ? d->m_data.toString() : QString();
 }
 
 QByteArray AbstractBarcode::byteArrayData() const
 {
-    return d->m_data.type() == QVariant::ByteArray ? d->m_data.toByteArray() : QByteArray();
+    return d->m_data.userType() == QMetaType::QByteArray ? d->m_data.toByteArray() : QByteArray();
 }
 
 QImage AbstractBarcode::toImage(const QSizeF &size)

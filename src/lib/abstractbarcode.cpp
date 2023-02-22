@@ -5,6 +5,7 @@
 */
 
 #include "abstractbarcode.h"
+#include "abstractbarcode_p.h"
 #include "config-prison.h"
 #include "pdf417barcode.h"
 
@@ -13,52 +14,36 @@
 #include <QVariant>
 
 using namespace Prison;
-/**
- * @cond private
- */
-class Prison::AbstractBarcodePrivate
+
+AbstractBarcodePrivate::AbstractBarcodePrivate(AbstractBarcode *barcode)
+    : q(barcode)
 {
-public:
-    QVariant m_data;
-    QImage m_cache;
-    QColor m_foreground = Qt::black;
-    QColor m_background = Qt::white;
-    AbstractBarcode::Dimensions m_dimension = AbstractBarcode::NoDimensions;
-    AbstractBarcode *q;
+}
 
-    bool sizeTooSmall(const QSizeF &size) const
-    {
-        return m_cache.width() > size.width() || m_cache.height() > size.height();
-    }
+bool AbstractBarcodePrivate::sizeTooSmall(const QSizeF &size) const
+{
+    return m_cache.width() > size.width() || m_cache.height() > size.height();
+}
 
-    bool isEmpty() const
-    {
-        switch (m_data.userType()) {
-        case QMetaType::QString:
-            return m_data.toString().isEmpty();
-        case QMetaType::QByteArray:
-            return m_data.toByteArray().isEmpty();
-        default:
-            break;
-        }
-        return true;
+bool AbstractBarcodePrivate::isEmpty() const
+{
+    switch (m_data.userType()) {
+    case QMetaType::QString:
+        return m_data.toString().isEmpty();
+    case QMetaType::QByteArray:
+        return m_data.toByteArray().isEmpty();
+    default:
+        break;
     }
+    return true;
+}
 
-    void recompute()
-    {
-        if (m_cache.isNull() && !isEmpty()) {
-            m_cache = q->paintImage({});
-        }
+void AbstractBarcodePrivate::recompute()
+{
+    if (m_cache.isNull() && !isEmpty()) {
+        m_cache = q->paintImage({});
     }
-
-    explicit AbstractBarcodePrivate(AbstractBarcode *barcode)
-        : q(barcode)
-    {
-    }
-};
-/**
- * @endcond
- */
+}
 
 AbstractBarcode::AbstractBarcode(AbstractBarcode::Dimensions dim)
     : d(new AbstractBarcodePrivate(this))

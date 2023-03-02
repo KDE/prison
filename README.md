@@ -1,6 +1,6 @@
 # Prison
 
-A barcode abstraction layer providing uniform access to generation of barcodes with data
+A barcode abstraction layer providing uniform access to generation of barcodes with data.
 
 ## Introduction
 
@@ -12,8 +12,8 @@ barcode generators. Prison currently implements barcode generators for the follo
 - Aztec
 - Code39
 - Code93
-- Code128
-- PDF417
+- [Code128](https://en.wikipedia.org/wiki/Code_128)
+- [PDF417](https://en.wikipedia.org/wiki/PDF417) (ISO/IEC 15438)
 
 Prison currently ships the org.kde.prison.Barcode QML element that can be used to render barcodes in QML code.
 

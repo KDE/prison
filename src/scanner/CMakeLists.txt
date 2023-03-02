@@ -24,7 +24,11 @@ ecm_generate_export_header(KF5PrisonScanner
     GROUP_BASE_NAME KF
     VERSION ${KF_VERSION}
 )
-target_include_directories(KF5PrisonScanner INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/PrisonScanner/>")
+target_include_directories(KF5PrisonScanner
+    INTERFACE
+        "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/PrisonScanner>"
+        "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/Prison>" # module version header
+)
 target_link_libraries(KF5PrisonScanner
     PUBLIC
         Qt${QT_MAJOR_VERSION}::Multimedia

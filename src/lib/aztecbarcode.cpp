@@ -4,7 +4,7 @@
     SPDX-License-Identifier: MIT
 */
 
-#include "aztecbarcode.h"
+#include "aztecbarcode_p.h"
 #include "bitvector_p.h"
 #include "prison_debug.h"
 #include "reedsolomon_p.h"

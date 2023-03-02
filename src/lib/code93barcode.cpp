@@ -4,8 +4,8 @@
     SPDX-License-Identifier: MIT
 */
 
-#include "code93barcode.h"
-#include "barcodeutil.h"
+#include "barcodeutil_p.h"
+#include "code93barcode_p.h"
 #include <QChar>
 
 using namespace Prison;

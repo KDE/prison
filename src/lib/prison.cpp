@@ -5,13 +5,13 @@
 */
 
 #include "prison.h"
-#include "aztecbarcode.h"
-#include "code128barcode.h"
-#include "code39barcode.h"
-#include "code93barcode.h"
-#include "datamatrixbarcode.h"
-#include "pdf417barcode.h"
-#include "qrcodebarcode.h"
+#include "aztecbarcode_p.h"
+#include "code128barcode_p.h"
+#include "code39barcode_p.h"
+#include "code93barcode_p.h"
+#include "datamatrixbarcode_p.h"
+#include "pdf417barcode_p.h"
+#include "qrcodebarcode_p.h"
 #include <config-prison.h>
 
 Prison::AbstractBarcode *Prison::createBarcode(BarcodeType type)

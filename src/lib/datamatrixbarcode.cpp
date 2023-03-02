@@ -4,7 +4,7 @@
     SPDX-License-Identifier: MIT
 */
 
-#include "datamatrixbarcode.h"
+#include "datamatrixbarcode_p.h"
 #include <dmtx.h>
 using namespace Prison;
 

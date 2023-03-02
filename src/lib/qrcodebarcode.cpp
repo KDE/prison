@@ -4,7 +4,7 @@
     SPDX-License-Identifier: MIT
 */
 
-#include "qrcodebarcode.h"
+#include "qrcodebarcode_p.h"
 #include <qrencode.h>
 
 #include <memory>

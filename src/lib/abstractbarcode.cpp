@@ -7,7 +7,7 @@
 #include "abstractbarcode.h"
 #include "abstractbarcode_p.h"
 #include "config-prison.h"
-#include "pdf417barcode.h"
+#include "pdf417barcode_p.h"
 
 #include <QColor>
 #include <QPainter>

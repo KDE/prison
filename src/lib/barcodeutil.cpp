@@ -3,7 +3,7 @@
 
     SPDX-License-Identifier: MIT
 */
-#include "barcodeutil.h"
+#include "barcodeutil_p.h"
 
 using namespace Prison;
 

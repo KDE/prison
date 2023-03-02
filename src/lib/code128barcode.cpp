@@ -4,8 +4,8 @@
     SPDX-License-Identifier: MIT
 */
 
-#include "code128barcode.h"
 #include "bitvector_p.h"
+#include "code128barcode_p.h"
 #include "prison_debug.h"
 
 #include <QImage>

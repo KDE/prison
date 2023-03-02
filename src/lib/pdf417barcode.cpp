@@ -4,7 +4,7 @@
     SPDX-License-Identifier: MIT
 */
 
-#include "pdf417barcode.h"
+#include "pdf417barcode_p.h"
 
 #include <ZXing/BitMatrix.h>
 #include <ZXing/MultiFormatWriter.h>

@@ -20,29 +20,29 @@ target_sources(KF6Prison PRIVATE
     abstractbarcode.cpp
     abstractbarcode.h
     aztecbarcode.cpp
-    aztecbarcode.h
+    aztecbarcode_p.h
     barcodeutil.cpp
-    barcodeutil.h
+    barcodeutil_p.h
     bitvector.cpp
     bitvector_p.h
     code128barcode.cpp
-    code128barcode.h
+    code128barcode_p.h
     code39barcode.cpp
-    code39barcode.h
+    code39barcode_p.h
     code93barcode.cpp
-    code93barcode.h
+    code93barcode_p.h
     prison.cpp
     prison.h
     qrcodebarcode.cpp
-    qrcodebarcode.h
+    qrcodebarcode_p.h
     reedsolomon.cpp
     reedsolomon_p.h
 )
 if(TARGET Dmtx::Dmtx)
-    target_sources(KF6Prison PRIVATE datamatrixbarcode.cpp datamatrixbarcode.h)
+    target_sources(KF6Prison PRIVATE datamatrixbarcode.cpp datamatrixbarcode_p.h)
 endif()
 if(TARGET ZXing::ZXing)
-    target_sources(KF6Prison PRIVATE pdf417barcode.cpp pdf417barcode.h)
+    target_sources(KF6Prison PRIVATE pdf417barcode.cpp pdf417barcode_p.h)
 endif()
 kde_source_files_enable_exceptions(pdf417barcode.cpp)
 

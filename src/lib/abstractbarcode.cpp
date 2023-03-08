@@ -15,11 +15,6 @@
 
 using namespace Prison;
 
-AbstractBarcodePrivate::AbstractBarcodePrivate(AbstractBarcode *barcode)
-    : q(barcode)
-{
-}
-
 bool AbstractBarcodePrivate::sizeTooSmall(const QSizeF &size) const
 {
     return m_cache.width() > size.width() || m_cache.height() > size.height();
@@ -41,14 +36,14 @@ bool AbstractBarcodePrivate::isEmpty() const
 void AbstractBarcodePrivate::recompute()
 {
     if (m_cache.isNull() && !isEmpty()) {
-        m_cache = q->paintImage({});
+        m_cache = paintImage({});
     }
 }
 
-AbstractBarcode::AbstractBarcode(AbstractBarcode::Dimensions dim)
-    : d(new AbstractBarcodePrivate(this))
+AbstractBarcode::AbstractBarcode(AbstractBarcodePrivate *dd)
+    : d(dd)
 {
-    d->m_dimension = dim;
+    d->q = this;
 }
 
 QString AbstractBarcode::data() const

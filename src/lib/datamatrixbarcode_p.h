@@ -7,7 +7,7 @@
 #ifndef PRISON_DATAMATRIXBARCODE_H
 #define PRISON_DATAMATRIXBARCODE_H
 
-#include "abstractbarcode.h"
+#include "abstractbarcode_p.h"
 #include "prison_export.h"
 
 namespace Prison
@@ -16,7 +16,7 @@ namespace Prison
  * This is a Datamatrix barcode generator that uses libdmtx
  * for the actual generation of barcodes.
  */
-class DataMatrixBarcode : public Prison::AbstractBarcode
+class DataMatrixBarcode : public Prison::AbstractBarcodePrivate
 {
 public:
     /**

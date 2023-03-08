@@ -7,7 +7,7 @@
 #ifndef PRISON_QRCODEBARCODE_H
 #define PRISON_QRCODEBARCODE_H
 
-#include "abstractbarcode.h"
+#include "abstractbarcode_p.h"
 
 namespace Prison
 {
@@ -15,7 +15,7 @@ namespace Prison
  * QRCode Barcode generator ; uses libqrencode to do the actual encoding
  * of the barcode.
  */
-class QRCodeBarcode : public Prison::AbstractBarcode
+class QRCodeBarcode : public AbstractBarcodePrivate
 {
 public:
     /**

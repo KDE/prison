@@ -39,7 +39,7 @@ enum CodeSetOp : uint8_t {
 };
 
 Code128Barcode::Code128Barcode()
-    : AbstractBarcode(AbstractBarcode::OneDimension)
+    : AbstractBarcodePrivate(AbstractBarcode::OneDimension)
 {
 }
 Code128Barcode::~Code128Barcode() = default;
@@ -48,15 +48,15 @@ QImage Code128Barcode::paintImage(const QSizeF &size)
 {
     Q_UNUSED(size);
 
-    const auto bits = encode(data().isEmpty() ? byteArrayData() : data().toLatin1());
+    const auto bits = encode(q->data().isEmpty() ? q->byteArrayData() : q->data().toLatin1());
     const auto width = bits.size() + 2 * QuietZone;
 
     QImage img(width, 1, QImage::Format_ARGB32);
-    img.fill(backgroundColor());
+    img.fill(m_background);
     QPainter p(&img);
     for (int i = 0; i < bits.size(); ++i) {
         if (bits.at(i)) {
-            img.setPixel(QuietZone + i, 0, foregroundColor().rgb());
+            img.setPixel(QuietZone + i, 0, m_foreground.rgb());
         }
     }
 

@@ -7,7 +7,7 @@
 #ifndef PRISON_AZTECBARCODE_H
 #define PRISON_AZTECBARCODE_H
 
-#include "abstractbarcode.h"
+#include "abstractbarcode_p.h"
 
 class AztecBarcodeTest;
 
@@ -16,7 +16,7 @@ namespace Prison
 class BitVector;
 
 /** Aztec code generator. */
-class AztecBarcode : public AbstractBarcode
+class AztecBarcode : public AbstractBarcodePrivate
 {
 public:
     AztecBarcode();

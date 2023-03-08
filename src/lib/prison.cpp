@@ -5,6 +5,7 @@
 */
 
 #include "prison.h"
+#include "abstractbarcode_p.h"
 #include "aztecbarcode_p.h"
 #include "code128barcode_p.h"
 #include "code39barcode_p.h"
@@ -20,24 +21,24 @@ Prison::AbstractBarcode *Prison::createBarcode(BarcodeType type)
     case Prison::Null:
         return nullptr;
     case Prison::QRCode:
-        return new QRCodeBarcode;
+        return AbstractBarcodePrivate::makeBarcode(new QRCodeBarcode);
     case Prison::DataMatrix:
 #if HAVE_DMTX
-        return new DataMatrixBarcode;
+        return AbstractBarcodePrivate::makeBarcode(new DataMatrixBarcode);
 #else
         return nullptr;
 #endif
     case Prison::Aztec:
-        return new AztecBarcode;
+        return AbstractBarcodePrivate::makeBarcode(new AztecBarcode);
     case Prison::Code39:
-        return new Code39Barcode;
+        return AbstractBarcodePrivate::makeBarcode(new Code39Barcode);
     case Prison::Code93:
-        return new Code93Barcode;
+        return AbstractBarcodePrivate::makeBarcode(new Code93Barcode);
     case Prison::Code128:
-        return new Code128Barcode;
+        return AbstractBarcodePrivate::makeBarcode(new Code128Barcode);
 #if HAVE_ZXING
     case Prison::PDF417:
-        return new Pdf417Barcode;
+        return AbstractBarcodePrivate::makeBarcode(new Pdf417Barcode);
 #endif
     }
     return nullptr;

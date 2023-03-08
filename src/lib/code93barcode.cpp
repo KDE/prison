@@ -608,7 +608,7 @@ static int checksum(const QList<int> &codes, int wrap)
 }
 
 Code93Barcode::Code93Barcode()
-    : AbstractBarcode(AbstractBarcode::OneDimension)
+    : AbstractBarcodePrivate(AbstractBarcode::OneDimension)
 {
 }
 Code93Barcode::~Code93Barcode() = default;
@@ -621,7 +621,7 @@ QImage Code93Barcode::paintImage(const QSizeF &size)
     {
         // translate the string into a code sequence
         QList<int> codes;
-        const QString str = data().isEmpty() ? QString::fromLatin1(byteArrayData().constData(), byteArrayData().size()) : data();
+        const QString str = q->data().isEmpty() ? QString::fromLatin1(q->byteArrayData().constData(), q->byteArrayData().size()) : q->data();
         for (int i = 0; i < str.size(); i++) {
             codes += codesForChar(str.at(i).unicode());
         }
@@ -650,14 +650,14 @@ QImage Code93Barcode::paintImage(const QSizeF &size)
     // build one line of the result image
     QVector<QRgb> line;
     line.reserve(barWidth * barcode.size() + 2 * quietZoneWidth);
-    line.insert(0, quietZoneWidth, backgroundColor().rgba());
+    line.insert(0, quietZoneWidth, m_background.rgba());
     for (int i = 0; i < barcode.size(); i++) {
-        const QRgb color = (barcode.at(i) ? foregroundColor() : backgroundColor()).rgba();
+        const QRgb color = (barcode.at(i) ? m_foreground : m_background).rgba();
         for (int j = 0; j < barWidth; j++) {
             line.append(color);
         }
     }
-    line.insert(line.size(), quietZoneWidth, backgroundColor().rgba());
+    line.insert(line.size(), quietZoneWidth, m_background.rgba());
 
     // build the complete barcode
     QImage ret(line.size(), 1, QImage::Format_ARGB32);

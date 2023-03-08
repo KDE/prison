@@ -7,7 +7,7 @@
 #ifndef PRISON_PDF417BARCODE_H
 #define PRISON_PDF417BARCODE_H
 
-#include "abstractbarcode.h"
+#include "abstractbarcode_p.h"
 
 namespace Prison
 {
@@ -15,7 +15,7 @@ namespace Prison
  *  @see https://en.wikipedia.org/wiki/PDF417
  *  @see ISO/IEC 15438
  */
-class Pdf417Barcode : public AbstractBarcode
+class Pdf417Barcode : public AbstractBarcodePrivate
 {
 public:
     explicit Pdf417Barcode();

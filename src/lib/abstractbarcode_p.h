@@ -18,7 +18,25 @@ class AbstractBarcode;
 class AbstractBarcodePrivate
 {
 public:
-    explicit AbstractBarcodePrivate(AbstractBarcode *barcode);
+    explicit inline AbstractBarcodePrivate(AbstractBarcode::Dimensions dim)
+        : m_dimension(dim)
+    {
+    }
+    virtual ~AbstractBarcodePrivate() = default;
+
+    /**
+     * Doing the actual painting of the image
+     * @param size unused - will be removed in KF6
+     * @return image with barcode, or null image
+     */
+    // TODO KF6: remove the size argument
+    virtual QImage paintImage(const QSizeF &size) = 0;
+
+    static inline AbstractBarcode *makeBarcode(AbstractBarcodePrivate *dd)
+    {
+        return new AbstractBarcode(dd);
+    }
+
     bool isEmpty() const;
     bool sizeTooSmall(const QSizeF &size) const;
     void recompute();
@@ -28,7 +46,7 @@ public:
     QColor m_foreground = Qt::black;
     QColor m_background = Qt::white;
     AbstractBarcode::Dimensions m_dimension = AbstractBarcode::NoDimensions;
-    AbstractBarcode *q;
+    AbstractBarcode *q = nullptr;
 };
 
 }

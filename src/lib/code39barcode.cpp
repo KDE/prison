@@ -105,7 +105,7 @@ static QList<bool> sequenceForChar(ushort c)
 }
 
 Code39Barcode::Code39Barcode()
-    : AbstractBarcode(AbstractBarcode::OneDimension)
+    : AbstractBarcodePrivate(AbstractBarcode::OneDimension)
 {
 }
 Code39Barcode::~Code39Barcode() = default;
@@ -121,7 +121,7 @@ QImage Code39Barcode::paintImage(const QSizeF &size)
         barcode += endSequence;
         barcode += false;
         // translate the string
-        const QString str = data().isEmpty() ? QString::fromLatin1(byteArrayData().constData(), byteArrayData().size()) : data();
+        const QString str = q->data().isEmpty() ? QString::fromLatin1(q->byteArrayData().constData(), q->byteArrayData().size()) : q->data();
         for (int i = 0; i < str.size(); i++) {
             QList<bool> b = sequenceForChar(str.at(i).unicode());
             if (!b.empty()) {
@@ -155,15 +155,15 @@ QImage Code39Barcode::paintImage(const QSizeF &size)
     // one line of the result image
     QVector<QRgb> line;
     line.reserve(wide * largeWidth + narrow * smallWidth + 2 * quietZoneWidth);
-    line.insert(0, quietZoneWidth, backgroundColor().rgba());
+    line.insert(0, quietZoneWidth, m_background.rgba());
     for (int i = 0; i < barcode.size(); i++) {
-        const QRgb color = (((i & 1) == 0) ? foregroundColor() : backgroundColor()).rgba(); // alternate between foreground and background color
+        const QRgb color = (((i & 1) == 0) ? m_foreground : m_background).rgba(); // alternate between foreground and background color
         const int width = barcode.at(i) ? largeWidth : smallWidth;
         for (int j = 0; j < width; j++) {
             line.append(color);
         }
     }
-    line.insert(line.size(), quietZoneWidth, backgroundColor().rgba());
+    line.insert(line.size(), quietZoneWidth, m_background.rgba());
 
     // build the complete barcode
     QImage ret(line.size(), 1, QImage::Format_ARGB32);

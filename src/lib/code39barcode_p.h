@@ -7,14 +7,14 @@
 #ifndef PRISON_CODE39BARCODE_H
 #define PRISON_CODE39BARCODE_H
 
-#include "abstractbarcode.h"
+#include "abstractbarcode_p.h"
 
 namespace Prison
 {
 /**
  * Code 39 Barcode generator
  */
-class Code39Barcode : public Prison::AbstractBarcode
+class Code39Barcode : public Prison::AbstractBarcodePrivate
 {
 public:
     /**

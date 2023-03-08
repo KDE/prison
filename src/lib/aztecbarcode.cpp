@@ -33,7 +33,7 @@ enum {
 };
 
 AztecBarcode::AztecBarcode()
-    : AbstractBarcode(AbstractBarcode::TwoDimensions)
+    : AbstractBarcodePrivate(AbstractBarcode::TwoDimensions)
 {
 }
 AztecBarcode::~AztecBarcode() = default;
@@ -64,7 +64,7 @@ static int aztecFullDataBits(int layer)
 QImage AztecBarcode::paintImage(const QSizeF &size)
 {
     Q_UNUSED(size);
-    const auto inputData = aztecEncode(data().isEmpty() ? byteArrayData() : data().toLatin1());
+    const auto inputData = aztecEncode(q->data().isEmpty() ? q->byteArrayData() : q->data().toLatin1());
 
     int layerCount = 0;
     int codewordCount = 0;
@@ -139,14 +139,14 @@ QImage AztecBarcode::paintImage(const QSizeF &size)
     // render the result
     if (compactMode) {
         QImage img(CompactMaxSize, CompactMaxSize, QImage::Format_RGB32);
-        img.fill(backgroundColor());
+        img.fill(m_background);
         paintCompactGrid(&img);
         paintCompactData(&img, encodedData, layerCount);
         paintCompactModeMessage(&img, modeMsg);
         return cropAndScaleCompact(&img, layerCount);
     } else {
         QImage img(FullMaxSize, FullMaxSize, QImage::Format_RGB32);
-        img.fill(backgroundColor());
+        img.fill(m_background);
         paintFullGrid(&img);
         paintFullData(&img, encodedData, layerCount);
         paintFullModeMessage(&img, modeMsg);
@@ -519,7 +519,7 @@ void AztecBarcode::paintFullGrid(QImage *img) const
     p.translate(img->width() / 2, img->height() / 2);
 
     // alignment grids
-    QPen pen(foregroundColor());
+    QPen pen(m_foreground);
     pen.setDashPattern({1, 1});
     p.setPen(pen);
     for (int i = 0; i < img->width() / 2; i += FullGridInterval) {
@@ -530,13 +530,13 @@ void AztecBarcode::paintFullGrid(QImage *img) const
     }
 
     // bullseye background
-    p.setBrush(backgroundColor());
+    p.setBrush(m_background);
     p.setPen(Qt::NoPen);
     p.drawRect(-7, -7, 14, 14);
 
     // bullseye
     p.setBrush(Qt::NoBrush);
-    p.setPen(foregroundColor());
+    p.setPen(m_foreground);
     p.drawPoint(0, 0);
     p.drawRect(-2, -2, 4, 4);
     p.drawRect(-4, -4, 8, 8);
@@ -555,7 +555,7 @@ static const int aztecFullLayerOffset[] = {
 void AztecBarcode::paintFullData(QImage *img, const BitVector &data, int layerCount) const
 {
     QPainter p(img);
-    p.setPen(foregroundColor());
+    p.setPen(m_foreground);
 
     auto it = data.begin();
     for (int layer = layerCount - 1; layer >= 0; --layer) {
@@ -594,7 +594,7 @@ void AztecBarcode::paintFullModeMessage(QImage *img, const BitVector &modeData) 
     Q_ASSERT(modeData.size() == FullModeMessageSize);
 
     QPainter p(img);
-    p.setPen(foregroundColor());
+    p.setPen(m_foreground);
 
     auto it = modeData.begin();
     for (int rotation = 0; rotation < 4; ++rotation) {
@@ -633,7 +633,7 @@ void AztecBarcode::paintCompactGrid(QImage *img) const
     p.translate(img->width() / 2, img->height() / 2);
 
     // bullseye
-    p.setPen(foregroundColor());
+    p.setPen(m_foreground);
     p.drawPoint(0, 0);
     p.drawRect(-2, -2, 4, 4);
     p.drawRect(-4, -4, 8, 8);
@@ -649,7 +649,7 @@ static const int aztecCompactLayerOffset[] = {6, 4, 2, 0};
 void AztecBarcode::paintCompactData(QImage *img, const BitVector &data, int layerCount) const
 {
     QPainter p(img);
-    p.setPen(foregroundColor());
+    p.setPen(m_foreground);
 
     auto it = data.begin();
     for (int layer = layerCount - 1; layer >= 0; --layer) {
@@ -683,7 +683,7 @@ void AztecBarcode::paintCompactModeMessage(QImage *img, const BitVector &modeDat
     Q_ASSERT(modeData.size() == CompactModeMessageSize);
 
     QPainter p(img);
-    p.setPen(foregroundColor());
+    p.setPen(m_foreground);
 
     auto it = modeData.begin();
     for (int rotation = 0; rotation < 4; ++rotation) {

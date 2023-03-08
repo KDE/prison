@@ -14,7 +14,7 @@
 using namespace Prison;
 
 Pdf417Barcode::Pdf417Barcode()
-    : AbstractBarcode(TwoDimensions)
+    : AbstractBarcodePrivate(AbstractBarcode::TwoDimensions)
 {
 }
 
@@ -23,10 +23,10 @@ QImage Pdf417Barcode::paintImage(const QSizeF &size)
     Q_UNUSED(size);
 
     std::wstring input;
-    if (!data().isEmpty()) {
-        input = data().toStdWString();
+    if (!q->data().isEmpty()) {
+        input = q->data().toStdWString();
     } else {
-        const auto b = byteArrayData();
+        const auto b = q->byteArrayData();
         input.reserve(b.size());
         std::copy(b.begin(), b.end(), std::back_inserter(input));
     }
@@ -41,7 +41,7 @@ QImage Pdf417Barcode::paintImage(const QSizeF &size)
         QImage image(matrix.width(), matrix.height(), QImage::Format_ARGB32);
         for (int y = 0; y < matrix.height(); ++y) {
             for (int x = 0; x < matrix.width(); ++x) {
-                image.setPixel(x, y, matrix.get(x, y) ? foregroundColor().rgb() : backgroundColor().rgb());
+                image.setPixel(x, y, matrix.get(x, y) ? m_foreground.rgb() : m_background.rgb());
             }
         }
 

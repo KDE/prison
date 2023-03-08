@@ -15,7 +15,7 @@ using QRcode_ptr = std::unique_ptr<QRcode, decltype(&QRcode_free)>;
 using QRinput_ptr = std::unique_ptr<QRinput, decltype(&QRinput_free)>;
 
 QRCodeBarcode::QRCodeBarcode()
-    : AbstractBarcode(AbstractBarcode::TwoDimensions)
+    : AbstractBarcodePrivate(AbstractBarcode::TwoDimensions)
 {
 }
 QRCodeBarcode::~QRCodeBarcode() = default;
@@ -37,11 +37,11 @@ QImage QRCodeBarcode::paintImage(const QSizeF &size)
 
     QRcode_ptr code(nullptr, &QRcode_free);
     QRinput_ptr input(nullptr, &QRinput_free);
-    if (!data().isEmpty()) {
-        const QByteArray trimmedData(data().trimmed().toUtf8());
+    if (!q->data().isEmpty()) {
+        const QByteArray trimmedData(q->data().trimmed().toUtf8());
         qrEncodeString(code, trimmedData);
     } else {
-        const auto b = byteArrayData();
+        const auto b = q->byteArrayData();
         const auto isReallyBinary = std::any_of(b.begin(), b.end(), [](unsigned char c) {
             return std::iscntrl(c) && !std::isspace(c);
         });
@@ -49,7 +49,7 @@ QImage QRCodeBarcode::paintImage(const QSizeF &size)
         // automatically, otherwise we end up needlessly in the binary encoding unconditionally
         if (isReallyBinary) {
             input.reset(QRinput_new());
-            QRinput_append(input.get(), QR_MODE_8, byteArrayData().size(), reinterpret_cast<const uint8_t *>(byteArrayData().constData()));
+            QRinput_append(input.get(), QR_MODE_8, q->byteArrayData().size(), reinterpret_cast<const uint8_t *>(q->byteArrayData().constData()));
             code.reset(QRcode_encodeInput(input.get()));
         } else {
             qrEncodeString(code, b);
@@ -65,16 +65,16 @@ QImage QRCodeBarcode::paintImage(const QSizeF &size)
     uchar *p = img;
     QByteArray background;
     background.resize(4);
-    background[3] = qAlpha(backgroundColor().rgba());
-    background[2] = qRed(backgroundColor().rgba());
-    background[1] = qGreen(backgroundColor().rgba());
-    background[0] = qBlue(backgroundColor().rgba());
+    background[3] = qAlpha(m_background.rgba());
+    background[2] = qRed(m_background.rgba());
+    background[1] = qGreen(m_background.rgba());
+    background[0] = qBlue(m_background.rgba());
     QByteArray foreground;
     foreground.resize(4);
-    foreground[3] = qAlpha(foregroundColor().rgba());
-    foreground[2] = qRed(foregroundColor().rgba());
-    foreground[1] = qGreen(foregroundColor().rgba());
-    foreground[0] = qBlue(foregroundColor().rgba());
+    foreground[3] = qAlpha(m_foreground.rgba());
+    foreground[2] = qRed(m_foreground.rgba());
+    foreground[1] = qGreen(m_foreground.rgba());
+    foreground[0] = qBlue(m_foreground.rgba());
     for (int row = 0; row < code->width + 2 * margin; row++) {
         for (int col = 0; col < code->width + 2 * margin; col++) {
             if (row < margin || row >= (code->width + margin) || col < margin || col >= (code->width + margin)) {

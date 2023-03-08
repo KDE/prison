@@ -9,7 +9,7 @@
 using namespace Prison;
 
 DataMatrixBarcode::DataMatrixBarcode()
-    : AbstractBarcode(AbstractBarcode::TwoDimensions)
+    : AbstractBarcodePrivate(AbstractBarcode::TwoDimensions)
 {
 }
 DataMatrixBarcode::~DataMatrixBarcode() = default;
@@ -17,7 +17,7 @@ DataMatrixBarcode::~DataMatrixBarcode() = default;
 QImage DataMatrixBarcode::paintImage(const QSizeF &size)
 {
     Q_UNUSED(size);
-    if (data().size() > 1200) {
+    if (q->data().size() > 1200) {
         return QImage();
     }
 
@@ -26,7 +26,7 @@ QImage DataMatrixBarcode::paintImage(const QSizeF &size)
     dmtxEncodeSetProp(enc, DmtxPropModuleSize, 1);
     dmtxEncodeSetProp(enc, DmtxPropMarginSize, 2);
 
-    QByteArray trimmedData(data().trimmed().toUtf8());
+    QByteArray trimmedData(q->data().trimmed().toUtf8());
     DmtxPassFail result = dmtxEncodeDataMatrix(enc, trimmedData.length(), reinterpret_cast<unsigned char *>(trimmedData.data()));
     if (result == DmtxFail) {
         dmtxEncodeDestroy(&enc);
@@ -36,7 +36,7 @@ QImage DataMatrixBarcode::paintImage(const QSizeF &size)
 
     QImage ret;
 
-    if (foregroundColor() == Qt::black && backgroundColor() == Qt::white) {
+    if (m_foreground == Qt::black && m_background == Qt::white) {
         QImage tmp(enc->image->pxl, enc->image->width, enc->image->height, QImage::Format_ARGB32);
         // we need to copy, because QImage generated from a char pointer requires the
         // char pointer to be kept around forever, and manually deleted.
@@ -46,15 +46,15 @@ QImage DataMatrixBarcode::paintImage(const QSizeF &size)
             int size = enc->image->width * enc->image->height * 4;
             uchar *img = new uchar[size];
             QByteArray background(4, '\0');
-            background[3] = qAlpha(backgroundColor().rgba());
-            background[2] = qRed(backgroundColor().rgba());
-            background[1] = qGreen(backgroundColor().rgba());
-            background[0] = qBlue(backgroundColor().rgba());
+            background[3] = qAlpha(m_background.rgba());
+            background[2] = qRed(m_background.rgba());
+            background[1] = qGreen(m_background.rgba());
+            background[0] = qBlue(m_background.rgba());
             QByteArray foreground(4, '\0');
-            foreground[3] = qAlpha(foregroundColor().rgba());
-            foreground[2] = qRed(foregroundColor().rgba());
-            foreground[1] = qGreen(foregroundColor().rgba());
-            foreground[0] = qBlue(foregroundColor().rgba());
+            foreground[3] = qAlpha(m_foreground.rgba());
+            foreground[2] = qRed(m_foreground.rgba());
+            foreground[1] = qGreen(m_foreground.rgba());
+            foreground[0] = qBlue(m_foreground.rgba());
             for (int i = 1; i < size; i += 4) {
                 QByteArray color;
                 if (enc->image->pxl[i] == 0x00) {

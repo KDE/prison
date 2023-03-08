@@ -229,7 +229,7 @@ private Q_SLOTS:
     {
         AztecBarcode code;
         QImage img(151, 151, QImage::Format_ARGB32_Premultiplied);
-        img.fill(code.backgroundColor());
+        img.fill(code.m_background);
         code.paintFullGrid(&img);
 
         QImage ref(QStringLiteral(":/aztec/rendering/aztec-full-grid.png"));
@@ -241,7 +241,7 @@ private Q_SLOTS:
     {
         AztecBarcode code;
         QImage img(27, 27, QImage::Format_ARGB32_Premultiplied);
-        img.fill(code.backgroundColor());
+        img.fill(code.m_background);
         code.paintCompactGrid(&img);
         img.save(QStringLiteral("aztec-compact-grid.png"));
 
@@ -295,7 +295,7 @@ private Q_SLOTS:
 
         AztecBarcode code;
         QImage img(151, 151, QImage::Format_ARGB32_Premultiplied);
-        img.fill(code.backgroundColor());
+        img.fill(code.m_background);
         code.paintFullData(&img, data, layer);
         img.save(refName);
 
@@ -335,7 +335,7 @@ private Q_SLOTS:
 
         AztecBarcode code;
         QImage img(151, 151, QImage::Format_ARGB32_Premultiplied);
-        img.fill(code.backgroundColor());
+        img.fill(code.m_background);
         code.paintFullModeMessage(&img, data);
         img.save(refName);
 
@@ -389,7 +389,7 @@ private Q_SLOTS:
 
         AztecBarcode code;
         QImage img(27, 27, QImage::Format_ARGB32_Premultiplied);
-        img.fill(code.backgroundColor());
+        img.fill(code.m_background);
         code.paintCompactData(&img, data, layer);
         img.save(refName);
 
@@ -429,7 +429,7 @@ private Q_SLOTS:
 
         AztecBarcode code;
         QImage img(151, 151, QImage::Format_ARGB32_Premultiplied);
-        img.fill(code.backgroundColor());
+        img.fill(code.m_background);
         code.paintCompactModeMessage(&img, data);
         img.save(refName);
 

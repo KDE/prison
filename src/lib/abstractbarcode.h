@@ -18,6 +18,9 @@ class QColor;
 
 namespace Prison
 {
+
+class AbstractBarcodePrivate;
+
 /**
  * base class for barcode generators
  * To add your own barcode generator, subclass this class
@@ -131,16 +134,8 @@ public:
 
 protected:
     ///@cond internal
-    explicit AbstractBarcode(Dimensions dim);
+    explicit AbstractBarcode(AbstractBarcodePrivate *dd);
     ///@endcond
-
-    /**
-     * Doing the actual painting of the image
-     * @param size unused - will be removed in KF6
-     * @return image with barcode, or null image
-     */
-    // TODO KF6: remove the size argument
-    virtual QImage paintImage(const QSizeF &size) = 0;
 
 private:
     friend class AbstractBarcodePrivate;

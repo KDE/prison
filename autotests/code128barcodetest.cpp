@@ -208,9 +208,9 @@ private Q_SLOTS:
         QFETCH(QString, refName);
 
         {
-            Code128Barcode code;
-            code.setData(QString::fromLatin1(input.constData(), input.size()));
-            const auto img = code.paintImage({});
+            std::unique_ptr<AbstractBarcode> code(Prison::createBarcode(Prison::Code128));
+            code->setData(QString::fromLatin1(input.constData(), input.size()));
+            const auto img = code->toImage(code->trueMinimumSize());
             img.save(refName);
 
             QImage ref(QStringLiteral(":/code128/") + refName);
@@ -219,9 +219,9 @@ private Q_SLOTS:
         }
 
         {
-            Code128Barcode code;
-            code.setData(input);
-            const auto img = code.paintImage({});
+            std::unique_ptr<AbstractBarcode> code(Prison::createBarcode(Prison::Code128));
+            code->setData(QString::fromLatin1(input.constData(), input.size()));
+            const auto img = code->toImage(code->trueMinimumSize());
             img.save(refName);
 
             QImage ref(QStringLiteral(":/code128/") + refName);

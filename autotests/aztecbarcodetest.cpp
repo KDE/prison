@@ -477,9 +477,9 @@ private Q_SLOTS:
         QFETCH(QString, refName);
 
         {
-            AztecBarcode code;
-            code.setData(QString::fromLatin1(input.constData(), input.size()));
-            const auto img = code.paintImage({});
+            std::unique_ptr<AbstractBarcode> code(Prison::createBarcode(Prison::Aztec));
+            code->setData(QString::fromLatin1(input.constData(), input.size()));
+            const auto img = code->toImage(code->trueMinimumSize());
             img.save(refName);
 
             QImage ref(QStringLiteral(":/aztec/encoding/") + refName);
@@ -488,9 +488,9 @@ private Q_SLOTS:
         }
 
         {
-            AztecBarcode code;
-            code.setData(input);
-            const auto img = code.paintImage({});
+            std::unique_ptr<AbstractBarcode> code(Prison::createBarcode(Prison::Aztec));
+            code->setData(input);
+            const auto img = code->toImage(code->trueMinimumSize());
             img.save(refName);
 
             QImage ref(QStringLiteral(":/aztec/encoding/") + refName);

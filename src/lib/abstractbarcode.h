@@ -35,7 +35,7 @@ class AbstractBarcodePrivate;
 class PRISON_EXPORT AbstractBarcode
 {
 public:
-    virtual ~AbstractBarcode();
+    ~AbstractBarcode();
     /**
      * Textual content encoded in this barcode.
      * This returns an empty QString if binary content is set.

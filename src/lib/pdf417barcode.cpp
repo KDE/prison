@@ -48,3 +48,8 @@ QImage Pdf417Barcode::paintImage()
     }; // input too large
     return {};
 }
+
+QSizeF Pdf417Barcode::preferredSize(qreal devicePixelRatio) const
+{
+    return m_cache.size() * (devicePixelRatio < 2 ? 2 : 1);
+}

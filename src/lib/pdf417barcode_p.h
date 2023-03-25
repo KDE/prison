@@ -22,6 +22,7 @@ public:
 
 protected:
     QImage paintImage() override;
+    QSizeF preferredSize(qreal devicePixelRatio) const override;
 };
 
 }

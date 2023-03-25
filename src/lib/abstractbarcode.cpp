@@ -6,8 +6,6 @@
 
 #include "abstractbarcode.h"
 #include "abstractbarcode_p.h"
-#include "config-prison.h"
-#include "pdf417barcode_p.h"
 
 #include <QColor>
 #include <QPainter>
@@ -38,6 +36,19 @@ void AbstractBarcodePrivate::recompute()
     if (m_cache.isNull() && !isEmpty()) {
         m_cache = paintImage();
     }
+}
+
+QSizeF AbstractBarcodePrivate::preferredSize(qreal devicePixelRatio) const
+{
+    switch (m_dimension) {
+    case AbstractBarcode::NoDimensions:
+        return {};
+    case AbstractBarcode::OneDimension:
+        return QSizeF(m_cache.width() * (devicePixelRatio < 2 ? 2 : 1), std::max(m_cache.height(), 50));
+    case AbstractBarcode::TwoDimensions:
+        return m_cache.size() * (devicePixelRatio < 2 ? 4 : 2);
+    }
+    return {};
 }
 
 AbstractBarcode::AbstractBarcode(AbstractBarcodePrivate *dd)
@@ -98,22 +109,7 @@ QSizeF AbstractBarcode::trueMinimumSize() const
 QSizeF AbstractBarcode::preferredSize(qreal devicePixelRatio) const
 {
     d->recompute();
-    switch (d->m_dimension) {
-    case NoDimensions:
-        return {};
-    case OneDimension:
-        return QSizeF(d->m_cache.width() * (devicePixelRatio < 2 ? 2 : 1), std::max(d->m_cache.height(), 50));
-    case TwoDimensions:
-        // TODO KF6: clean this up once preferredSize is virtual
-#if HAVE_ZXING
-        // the smallest element of a PDF417 code is 1x 3px, for Aztec/QR/DataMatrix it's just 1x1 px
-        if (dynamic_cast<const Pdf417Barcode *>(this)) {
-            return d->m_cache.size() * (devicePixelRatio < 2 ? 2 : 1);
-        }
-#endif
-        return d->m_cache.size() * (devicePixelRatio < 2 ? 4 : 2);
-    }
-    return {};
+    return d->preferredSize(devicePixelRatio);
 }
 
 const QColor &AbstractBarcode::backgroundColor() const

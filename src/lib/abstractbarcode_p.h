@@ -31,6 +31,9 @@ public:
      */
     virtual QImage paintImage() = 0;
 
+    /** @see AbstractBarcode::preferredSize */
+    virtual QSizeF preferredSize(qreal devicePixelRatio) const;
+
     static inline AbstractBarcode *makeBarcode(AbstractBarcodePrivate *dd)
     {
         return new AbstractBarcode(dd);

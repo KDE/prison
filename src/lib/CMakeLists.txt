@@ -19,6 +19,7 @@ set_target_properties(KF6Prison PROPERTIES
 target_sources(KF6Prison PRIVATE
     abstractbarcode.cpp
     abstractbarcode.h
+    abstractbarcode_p.cpp
     aztecbarcode.cpp
     aztecbarcode_p.h
     barcodeutil.cpp

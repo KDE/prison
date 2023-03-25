@@ -18,11 +18,8 @@ class AbstractBarcode;
 class AbstractBarcodePrivate
 {
 public:
-    explicit inline AbstractBarcodePrivate(AbstractBarcode::Dimensions dim)
-        : m_dimension(dim)
-    {
-    }
-    virtual ~AbstractBarcodePrivate() = default;
+    explicit AbstractBarcodePrivate(AbstractBarcode::Dimensions dim);
+    virtual ~AbstractBarcodePrivate();
 
     /**
      * Doing the actual painting of the image

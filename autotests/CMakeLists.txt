@@ -5,7 +5,7 @@ set(aztecbarcodetest_srcs
     aztecbarcodetest.cpp
     aztec/aztec.qrc
     ../src/lib/aztecbarcode.cpp
-    ../src/lib/abstractbarcode.cpp
+    ../src/lib/abstractbarcode_p.cpp
     ../src/lib/bitvector.cpp
     ../src/lib/reedsolomon.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/../src/lib/prison_debug.cpp
@@ -24,7 +24,7 @@ ecm_add_test(
 set(code128barcodetest_srcs
     code128barcodetest.cpp
     code128/code128.qrc
-    ../src/lib/abstractbarcode.cpp
+    ../src/lib/abstractbarcode_p.cpp
     ../src/lib/code128barcode.cpp
     ../src/lib/bitvector.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/../src/lib/prison_debug.cpp

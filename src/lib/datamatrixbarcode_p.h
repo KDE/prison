@@ -30,7 +30,7 @@ protected:
      * This is the function doing the actual work in generating the barcode
      * @return QImage containing a DataMatrix, trying to approximate the requested sizes
      */
-    QImage paintImage(const QSizeF &size) override;
+    QImage paintImage() override;
 };
 }
 

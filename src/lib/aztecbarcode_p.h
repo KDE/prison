@@ -23,7 +23,7 @@ public:
     ~AztecBarcode() override;
 
 protected:
-    QImage paintImage(const QSizeF &size) override;
+    QImage paintImage() override;
 
 private:
     friend class ::AztecBarcodeTest;

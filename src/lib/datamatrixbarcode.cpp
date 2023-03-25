@@ -14,9 +14,8 @@ DataMatrixBarcode::DataMatrixBarcode()
 }
 DataMatrixBarcode::~DataMatrixBarcode() = default;
 
-QImage DataMatrixBarcode::paintImage(const QSizeF &size)
+QImage DataMatrixBarcode::paintImage()
 {
-    Q_UNUSED(size);
     if (q->data().size() > 1200) {
         return QImage();
     }

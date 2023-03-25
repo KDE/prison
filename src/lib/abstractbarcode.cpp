@@ -36,7 +36,7 @@ bool AbstractBarcodePrivate::isEmpty() const
 void AbstractBarcodePrivate::recompute()
 {
     if (m_cache.isNull() && !isEmpty()) {
-        m_cache = paintImage({});
+        m_cache = paintImage();
     }
 }
 

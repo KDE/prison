@@ -21,7 +21,7 @@ public:
     explicit Pdf417Barcode();
 
 protected:
-    QImage paintImage(const QSizeF &size) override;
+    QImage paintImage() override;
 };
 
 }

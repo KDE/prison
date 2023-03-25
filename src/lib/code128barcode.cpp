@@ -44,10 +44,8 @@ Code128Barcode::Code128Barcode()
 }
 Code128Barcode::~Code128Barcode() = default;
 
-QImage Code128Barcode::paintImage(const QSizeF &size)
+QImage Code128Barcode::paintImage()
 {
-    Q_UNUSED(size);
-
     const auto bits = encode(q->data().isEmpty() ? q->byteArrayData() : q->data().toLatin1());
     const auto width = bits.size() + 2 * QuietZone;
 

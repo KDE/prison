@@ -613,9 +613,8 @@ Code93Barcode::Code93Barcode()
 }
 Code93Barcode::~Code93Barcode() = default;
 
-QImage Code93Barcode::paintImage(const QSizeF &size)
+QImage Code93Barcode::paintImage()
 {
-    Q_UNUSED(size);
     QList<bool> barcode;
     // convert text into sequences of fg/bg bars
     {

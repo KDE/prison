@@ -27,9 +27,8 @@ protected:
     /**
      * This function generates the barcode
      * @return QImage containing a barcode, trying to approximate the requested sizes, or a null QImage if it can't be painted within requested size
-     * @param size
      */
-    QImage paintImage(const QSizeF &size) override;
+    QImage paintImage() override;
 };
 } // namespace
 

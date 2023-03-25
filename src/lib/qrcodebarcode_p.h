@@ -26,9 +26,8 @@ public:
     /**
      * This is the function doing the actual work in generating the barcode
      * @return QImage containing a QRCode, trying to approximate the requested sizes
-     * @param size The requested size of the barcode, approximate. if the barcode generator can't get the data to fit in there, it might be a null QImage
      */
-    QImage paintImage(const QSizeF &size) override;
+    QImage paintImage() override;
 };
 } // namespace
 

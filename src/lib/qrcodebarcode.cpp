@@ -31,10 +31,8 @@ static void qrEncodeString(QRcode_ptr &code, const QByteArray &data)
     }
 }
 
-QImage QRCodeBarcode::paintImage(const QSizeF &size)
+QImage QRCodeBarcode::paintImage()
 {
-    Q_UNUSED(size);
-
     QRcode_ptr code(nullptr, &QRcode_free);
     QRinput_ptr input(nullptr, &QRinput_free);
     if (!q->data().isEmpty()) {

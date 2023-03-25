@@ -29,8 +29,7 @@ public:
      * @param size unused - will be removed in KF6
      * @return image with barcode, or null image
      */
-    // TODO KF6: remove the size argument
-    virtual QImage paintImage(const QSizeF &size) = 0;
+    virtual QImage paintImage() = 0;
 
     static inline AbstractBarcode *makeBarcode(AbstractBarcodePrivate *dd)
     {

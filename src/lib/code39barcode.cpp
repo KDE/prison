@@ -110,9 +110,8 @@ Code39Barcode::Code39Barcode()
 }
 Code39Barcode::~Code39Barcode() = default;
 
-QImage Code39Barcode::paintImage(const QSizeF &size)
+QImage Code39Barcode::paintImage()
 {
-    Q_UNUSED(size);
     QList<bool> barcode;
     // convert text into sequences of wide/narrow bars
     {

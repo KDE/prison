@@ -61,9 +61,8 @@ static int aztecFullDataBits(int layer)
     return (112 + 16 * layer) * layer;
 }
 
-QImage AztecBarcode::paintImage(const QSizeF &size)
+QImage AztecBarcode::paintImage()
 {
-    Q_UNUSED(size);
     const auto inputData = aztecEncode(q->data().isEmpty() ? q->byteArrayData() : q->data().toLatin1());
 
     int layerCount = 0;

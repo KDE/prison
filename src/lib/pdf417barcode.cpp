@@ -18,10 +18,8 @@ Pdf417Barcode::Pdf417Barcode()
 {
 }
 
-QImage Pdf417Barcode::paintImage(const QSizeF &size)
+QImage Pdf417Barcode::paintImage()
 {
-    Q_UNUSED(size);
-
     std::wstring input;
     if (!q->data().isEmpty()) {
         input = q->data().toStdWString();

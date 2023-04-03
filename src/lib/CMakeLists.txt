@@ -59,12 +59,18 @@ ecm_generate_export_header(KF6Prison
     BASE_NAME Prison
     GROUP_BASE_NAME KF
     VERSION ${KF_VERSION}
+    USE_VERSION_HEADER
     DEPRECATED_BASE_VERSION 0
     DEPRECATION_VERSIONS
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
 
-target_include_directories(KF6Prison INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/Prison>")
+target_include_directories(KF6Prison
+    INTERFACE
+        "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/Prison>"
+    PUBLIC
+        "$<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>" # module version header
+)
 
 target_link_libraries(KF6Prison
 PUBLIC
@@ -94,9 +100,6 @@ set(_all_headers
     ${Prison_CamelCase_HEADERS}
     ${CMAKE_CURRENT_BINARY_DIR}/prison_export.h
 )
-
-# So that the headers are found at build time
-target_include_directories(KF6Prison PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>")
 
 install(
     FILES ${_all_headers}

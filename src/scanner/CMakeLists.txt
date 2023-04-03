@@ -19,15 +19,23 @@ target_sources(KF6PrisonScanner PRIVATE
     videoscannerframe.cpp
     videoscannerworker.cpp
 )
+
 ecm_generate_export_header(KF6PrisonScanner
     BASE_NAME PrisonScanner
     GROUP_BASE_NAME KF
     VERSION ${KF_VERSION}
+    USE_VERSION_HEADER
+    VERSION_BASE_NAME Prison
+    DEPRECATED_BASE_VERSION 0
+    EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
+
 target_include_directories(KF6PrisonScanner
     INTERFACE
         "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/PrisonScanner>"
         "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/Prison>" # module version header
+    PUBLIC
+        "$<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>" # module version header
 )
 target_link_libraries(KF6PrisonScanner
     PUBLIC

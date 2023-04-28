@@ -23,18 +23,27 @@ QImage Pdf417Barcode::paintImage(const QSizeF &size)
     Q_UNUSED(size);
 
     std::wstring input;
-    if (!data().isEmpty()) {
+    const bool isBinary = data().isEmpty();
+    if (!isBinary) {
         input = data().toStdWString();
     } else {
         const auto b = byteArrayData();
         input.reserve(b.size());
-        std::copy(b.begin(), b.end(), std::back_inserter(input));
+        // ensure we explicitly copy unsigned bytes here, ie. each byte ends up in the least significant byte of
+        // the std::wstring. If we end up converting to a signed value inbetween, values > 127 end up negative and
+        // will be wrongly represented in the std::wstring
+        for (uint8_t c : b) {
+            input.push_back(c);
+        }
     }
 
     try {
         ZXing::MultiFormatWriter writer(ZXing::BarcodeFormat::PDF417);
         // ISO/IEC 15438:2006(E) §5.8.3 Quiet Zone
         writer.setMargin(2);
+        if (isBinary) {
+            writer.setEncoding(ZXing::CharacterSet::BINARY);
+        }
         // aspect ratio 4 is hard-coded in ZXing
         const auto matrix = writer.encode(input, 4, 1);
 

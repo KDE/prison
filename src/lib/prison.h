@@ -37,6 +37,8 @@ enum BarcodeType {
     Code128,
     /** PDF417 barcode */
     PDF417,
+    /** EAN13 barcode */
+    EAN13,
 };
 /**
  * Factory method to create a barcode of a given type.

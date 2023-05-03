@@ -14,6 +14,7 @@ barcode generators. Prison currently implements barcode generators for the follo
 - Code93
 - [Code128](https://en.wikipedia.org/wiki/Code_128)
 - [PDF417](https://en.wikipedia.org/wiki/PDF417) (ISO/IEC 15438)
+- [EAN13](https://en.wikipedia.org/wiki/International_Article_Number)
 
 Prison currently ships the org.kde.prison.Barcode QML element that can be used to render barcodes in QML code.
 
@@ -33,7 +34,7 @@ Prison is currently using [libdmtx](https://github.com/dmtx/libdmtx) for generat
 [libqrencode](https://fukuchi.org/works/qrencode/) for generation
 of [QRCode](https://en.wikipedia.org/wiki/QR_Code) barcodes and
 [ZXing](https://github.com/nu-book/zxing-cpp) for generating
-[PDF417](https://en.wikipedia.org/wiki/PDF417) barcodes.
+[EAN13 and PDF417](https://en.wikipedia.org/wiki/PDF417) barcodes.
 
 # Prison Scanner
 

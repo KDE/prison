@@ -5,6 +5,8 @@
 */
 
 #include "prison.h"
+#include <config-prison.h>
+
 #include "abstractbarcode_p.h"
 #include "aztecbarcode_p.h"
 #include "code128barcode_p.h"
@@ -13,7 +15,9 @@
 #include "datamatrixbarcode_p.h"
 #include "pdf417barcode_p.h"
 #include "qrcodebarcode_p.h"
-#include <config-prison.h>
+#if HAVE_ZXING
+#include "zxingonedbarcode_p.h"
+#endif
 
 Prison::AbstractBarcode *Prison::createBarcode(BarcodeType type)
 {
@@ -39,6 +43,8 @@ Prison::AbstractBarcode *Prison::createBarcode(BarcodeType type)
 #if HAVE_ZXING
     case Prison::PDF417:
         return AbstractBarcodePrivate::makeBarcode(new Pdf417Barcode);
+    case Prison::EAN13:
+        return AbstractBarcodePrivate::makeBarcode(new ZXingOneDBarcode<ZXing::BarcodeFormat::EAN13>);
 #endif
     }
     return nullptr;

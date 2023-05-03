@@ -51,6 +51,7 @@ if(TARGET ZXing::ZXing)
 endif()
 kde_source_files_enable_exceptions(
     pdf417barcode.cpp
+    prison.cpp
     zxingutil.cpp
 )
 

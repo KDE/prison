@@ -12,6 +12,8 @@ namespace Prison
 namespace BarCodeUtil
 {
 QList<bool> barSequence(const char *str);
+
+QByteArray asLatin1ByteArray(const QVariant &data);
 }
 }
 

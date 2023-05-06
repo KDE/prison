@@ -5,6 +5,7 @@
 */
 
 #include "aztecbarcode_p.h"
+#include "barcodeutil_p.h"
 #include "bitvector_p.h"
 #include "prison_debug.h"
 #include "reedsolomon_p.h"
@@ -63,7 +64,7 @@ static int aztecFullDataBits(int layer)
 
 QImage AztecBarcode::paintImage()
 {
-    const auto inputData = aztecEncode(q->data().isEmpty() ? q->byteArrayData() : q->data().toLatin1());
+    const auto inputData = aztecEncode(BarCodeUtil::asLatin1ByteArray(m_data));
 
     int layerCount = 0;
     int codewordCount = 0;

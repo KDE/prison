@@ -120,9 +120,9 @@ QImage Code39Barcode::paintImage()
         barcode += endSequence;
         barcode += false;
         // translate the string
-        const QString str = q->data().isEmpty() ? QString::fromLatin1(q->byteArrayData().constData(), q->byteArrayData().size()) : q->data();
+        const auto str = BarCodeUtil::asLatin1ByteArray(m_data);
         for (int i = 0; i < str.size(); i++) {
-            QList<bool> b = sequenceForChar(str.at(i).unicode());
+            QList<bool> b = sequenceForChar(str.at(i));
             if (!b.empty()) {
                 barcode += b;
                 barcode += false; // add a narrow space between each character

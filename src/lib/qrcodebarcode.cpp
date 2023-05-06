@@ -35,11 +35,11 @@ QImage QRCodeBarcode::paintImage()
 {
     QRcode_ptr code(nullptr, &QRcode_free);
     QRinput_ptr input(nullptr, &QRinput_free);
-    if (!q->data().isEmpty()) {
-        const QByteArray trimmedData(q->data().trimmed().toUtf8());
+    if (m_data.typeId() == QMetaType::QString) {
+        const QByteArray trimmedData(m_data.toString().trimmed().toUtf8());
         qrEncodeString(code, trimmedData);
     } else {
-        const auto b = q->byteArrayData();
+        const auto b = m_data.toByteArray();
         const auto isReallyBinary = std::any_of(b.begin(), b.end(), [](unsigned char c) {
             return std::iscntrl(c) && !std::isspace(c);
         });
@@ -47,7 +47,7 @@ QImage QRCodeBarcode::paintImage()
         // automatically, otherwise we end up needlessly in the binary encoding unconditionally
         if (isReallyBinary) {
             input.reset(QRinput_new());
-            QRinput_append(input.get(), QR_MODE_8, q->byteArrayData().size(), reinterpret_cast<const uint8_t *>(q->byteArrayData().constData()));
+            QRinput_append(input.get(), QR_MODE_8, b.size(), reinterpret_cast<const uint8_t *>(b.constData()));
             code.reset(QRcode_encodeInput(input.get()));
         } else {
             qrEncodeString(code, b);

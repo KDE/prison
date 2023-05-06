@@ -16,7 +16,6 @@ using namespace Prison;
 AbstractBarcode::AbstractBarcode(AbstractBarcodePrivate *dd)
     : d(dd)
 {
-    d->q = this;
 }
 
 QString AbstractBarcode::data() const

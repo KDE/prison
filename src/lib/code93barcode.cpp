@@ -620,9 +620,9 @@ QImage Code93Barcode::paintImage()
     {
         // translate the string into a code sequence
         QList<int> codes;
-        const QString str = q->data().isEmpty() ? QString::fromLatin1(q->byteArrayData().constData(), q->byteArrayData().size()) : q->data();
+        const auto str = BarCodeUtil::asLatin1ByteArray(m_data);
         for (int i = 0; i < str.size(); i++) {
-            codes += codesForChar(str.at(i).unicode());
+            codes += codesForChar(str.at(i));
         }
 
         // calculate checksums

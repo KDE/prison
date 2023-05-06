@@ -5,6 +5,8 @@
 */
 #include "barcodeutil_p.h"
 
+#include <QVariant>
+
 using namespace Prison;
 
 QList<bool> BarCodeUtil::barSequence(const char *str)
@@ -16,4 +18,12 @@ QList<bool> BarCodeUtil::barSequence(const char *str)
         Q_ASSERT(str[i] == '0' || str[i] == '1');
     }
     return ret;
+}
+
+QByteArray BarCodeUtil::asLatin1ByteArray(const QVariant &data)
+{
+    if (data.typeId() == QMetaType::QString) {
+        return data.toString().toLatin1();
+    }
+    return data.toByteArray();
 }

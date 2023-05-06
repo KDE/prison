@@ -4,8 +4,10 @@
     SPDX-License-Identifier: MIT
 */
 
-#include "bitvector_p.h"
 #include "code128barcode_p.h"
+
+#include "barcodeutil_p.h"
+#include "bitvector_p.h"
 #include "prison_debug.h"
 
 #include <QImage>
@@ -46,7 +48,7 @@ Code128Barcode::~Code128Barcode() = default;
 
 QImage Code128Barcode::paintImage()
 {
-    const auto bits = encode(q->data().isEmpty() ? q->byteArrayData() : q->data().toLatin1());
+    const auto bits = encode(BarCodeUtil::asLatin1ByteArray(m_data));
     const auto width = bits.size() + 2 * QuietZone;
 
     QImage img(width, 1, QImage::Format_ARGB32);

@@ -16,7 +16,8 @@ DataMatrixBarcode::~DataMatrixBarcode() = default;
 
 QImage DataMatrixBarcode::paintImage()
 {
-    if (q->data().size() > 1200) {
+    const auto data = m_data.toString();
+    if (data.size() > 1200) {
         return QImage();
     }
 
@@ -25,7 +26,7 @@ QImage DataMatrixBarcode::paintImage()
     dmtxEncodeSetProp(enc, DmtxPropModuleSize, 1);
     dmtxEncodeSetProp(enc, DmtxPropMarginSize, 2);
 
-    QByteArray trimmedData(q->data().trimmed().toUtf8());
+    QByteArray trimmedData(data.trimmed().toUtf8());
     DmtxPassFail result = dmtxEncodeDataMatrix(enc, trimmedData.length(), reinterpret_cast<unsigned char *>(trimmedData.data()));
     if (result == DmtxFail) {
         dmtxEncodeDestroy(&enc);

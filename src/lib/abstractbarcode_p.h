@@ -45,7 +45,6 @@ public:
     QColor m_foreground = Qt::black;
     QColor m_background = Qt::white;
     AbstractBarcode::Dimensions m_dimension = AbstractBarcode::NoDimensions;
-    AbstractBarcode *q = nullptr;
 };
 
 }

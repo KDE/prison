@@ -22,6 +22,7 @@ target_sources(KF6Prison PRIVATE
     abstractbarcode_p.cpp
     aztecbarcode.cpp
     aztecbarcode_p.h
+    barcode.cpp
     barcodeutil.cpp
     barcodeutil_p.h
     bitvector.cpp
@@ -50,6 +51,7 @@ if(TARGET ZXing::ZXing)
     )
 endif()
 kde_source_files_enable_exceptions(
+    barcode.cpp
     pdf417barcode.cpp
     prison.cpp
     zxingutil.cpp
@@ -99,6 +101,7 @@ install(TARGETS KF6Prison EXPORT KF6PrisonTargets ${KF_INSTALL_TARGETS_DEFAULT_A
 ecm_generate_headers(Prison_CamelCase_HEADERS
     HEADER_NAMES
     AbstractBarcode
+    Barcode
     Prison
     REQUIRED_HEADERS Prison_HEADERS
     OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/Prison

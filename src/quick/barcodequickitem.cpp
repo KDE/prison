@@ -46,7 +46,7 @@ void BarcodeQuickItem::setBarcodeType(BarcodeQuickItem::BarcodeType type)
     }
     m_type = static_cast<Prison::BarcodeType>(type);
     Q_EMIT barcodeTypeChanged();
-    m_barcode.reset();
+    m_barcode = Barcode{};
     updateBarcode();
 }
 
@@ -82,18 +82,18 @@ void BarcodeQuickItem::setBackgroundColor(const QColor &color)
 
 BarcodeQuickItem::Dimensions Prison::BarcodeQuickItem::dimensions() const
 {
-    return m_barcode ? static_cast<BarcodeQuickItem::Dimensions>(m_barcode->dimensions()) : NoDimensions;
+    return static_cast<BarcodeQuickItem::Dimensions>(m_barcode.dimensions());
 }
 
 void BarcodeQuickItem::paint(QPainter *painter)
 {
-    if (!m_barcode) {
+    if (m_barcode.format() == Prison::Null) {
         return;
     }
 
     const auto w_max = std::max(minimumWidth(), width());
     const auto h_max = std::max(minimumHeight(), height());
-    const auto img = m_barcode->toImage(QSizeF(w_max, h_max));
+    const auto img = m_barcode.toImage(QSizeF(w_max, h_max));
     const auto x = (w_max - img.width()) / 2;
     const auto y = (h_max - img.height()) / 2;
     painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
@@ -108,12 +108,12 @@ void BarcodeQuickItem::componentComplete()
 
 qreal BarcodeQuickItem::minimumHeight() const
 {
-    return m_barcode ? m_barcode->trueMinimumSize().height() : 0.0;
+    return m_barcode.minimumSize().height();
 }
 
 qreal BarcodeQuickItem::minimumWidth() const
 {
-    return m_barcode ? m_barcode->trueMinimumSize().width() : 0.0;
+    return m_barcode.minimumSize().width();
 }
 
 bool BarcodeQuickItem::isEmpty() const
@@ -145,24 +145,24 @@ void BarcodeQuickItem::updateBarcode()
     }
 
     if (m_type == Prison::Null || isEmpty()) {
-        m_barcode.reset();
+        m_barcode = Barcode();
         update();
         Q_EMIT dimensionsChanged();
         return;
     }
 
-    if (!m_barcode) {
-        m_barcode.reset(Prison::createBarcode(m_type));
+    if (m_barcode.format() == Prison::Null) {
+        m_barcode = Barcode(m_type);
     }
-    if (m_barcode) {
+    if (m_barcode.format() != Prison::Null) {
         if (m_content.userType() == QMetaType::QString) {
-            m_barcode->setData(m_content.toString());
+            m_barcode.setData(m_content.toString());
         } else {
-            m_barcode->setData(m_content.toByteArray());
+            m_barcode.setData(m_content.toByteArray());
         }
-        m_barcode->setForegroundColor(m_fgColor);
-        m_barcode->setBackgroundColor(m_bgColor);
-        const auto size = m_barcode->preferredSize(QGuiApplication::primaryScreen()->devicePixelRatio());
+        m_barcode.setForegroundColor(m_fgColor);
+        m_barcode.setBackgroundColor(m_bgColor);
+        const auto size = m_barcode.preferredSize(QGuiApplication::primaryScreen()->devicePixelRatio());
         setImplicitSize(size.width(), size.height());
     }
 

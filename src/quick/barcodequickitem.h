@@ -7,12 +7,10 @@
 #ifndef PRISON_BARCODEQUICKITEM_H
 #define PRISON_BARCODEQUICKITEM_H
 
-#include <Prison/Prison>
+#include <Prison/Barcode>
 
 #include <QColor>
 #include <QQuickPaintedItem>
-
-#include <memory>
 
 namespace Prison
 {
@@ -90,7 +88,7 @@ private:
     void updateBarcode();
 
     QVariant m_content;
-    std::unique_ptr<AbstractBarcode> m_barcode;
+    Barcode m_barcode;
     QColor m_fgColor = Qt::black;
     QColor m_bgColor = Qt::white;
     Prison::BarcodeType m_type = Prison::Null;

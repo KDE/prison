@@ -42,9 +42,16 @@ if(TARGET Dmtx::Dmtx)
     target_sources(KF5Prison PRIVATE datamatrixbarcode.cpp datamatrixbarcode.h)
 endif()
 if(TARGET ZXing::ZXing)
-    target_sources(KF5Prison PRIVATE pdf417barcode.cpp pdf417barcode.h)
+    target_sources(KF5Prison PRIVATE
+        pdf417barcode.cpp
+        pdf417barcode.h
+        zxingutil.cpp
+    )
 endif()
-kde_source_files_enable_exceptions(pdf417barcode.cpp)
+kde_source_files_enable_exceptions(
+    pdf417barcode.cpp
+    zxingutil.cpp
+)
 
 ecm_qt_declare_logging_category(KF5Prison
     HEADER prison_debug.h

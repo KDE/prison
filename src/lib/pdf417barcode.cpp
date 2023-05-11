@@ -5,6 +5,7 @@
 */
 
 #include "pdf417barcode.h"
+#include "zxingutil_p.h"
 
 #include <ZXing/BitMatrix.h>
 #include <ZXing/MultiFormatWriter.h>
@@ -46,15 +47,7 @@ QImage Pdf417Barcode::paintImage(const QSizeF &size)
         }
         // aspect ratio 4 is hard-coded in ZXing
         const auto matrix = writer.encode(input, 4, 1);
-
-        QImage image(matrix.width(), matrix.height(), QImage::Format_ARGB32);
-        for (int y = 0; y < matrix.height(); ++y) {
-            for (int x = 0; x < matrix.width(); ++x) {
-                image.setPixel(x, y, matrix.get(x, y) ? foregroundColor().rgb() : backgroundColor().rgb());
-            }
-        }
-
-        return image;
+        return ZXingUtil::toImage(matrix, foregroundColor(), backgroundColor());
     } catch (const std::invalid_argument &e) {
     }; // input too large
     return {};

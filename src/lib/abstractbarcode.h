@@ -31,8 +31,10 @@ class AbstractBarcodePrivate;
  * the size and the data doesn't change. Using the same AbstractBarcode
  * to paint on several surfaces, if they aren't of the exact same size
  * will break the caching
+ *
+ * @deprecated Use Barcode instead
  */
-class PRISON_EXPORT AbstractBarcode
+class PRISON_DEPRECATED_EXPORT AbstractBarcode
 {
 public:
     ~AbstractBarcode();

@@ -44,8 +44,9 @@ enum BarcodeType {
  * Factory method to create a barcode of a given type.
  * @param type barcode type. See @ref BarcodeType enum for values
  * @return a barcode provider, or a null pointer if unsupported. Ownership is passed to the caller.
+ * @deprecated Use Barcode instead.
  */
-PRISON_EXPORT Prison::AbstractBarcode *createBarcode(BarcodeType type);
+PRISON_DEPRECATED_EXPORT Prison::AbstractBarcode *createBarcode(BarcodeType type);
 }
 
 #endif // PRISON_PRISON_H

@@ -105,7 +105,7 @@ static QList<bool> sequenceForChar(ushort c)
 }
 
 Code39Barcode::Code39Barcode()
-    : AbstractBarcodePrivate(AbstractBarcode::OneDimension)
+    : AbstractBarcodePrivate(Barcode::OneDimension)
 {
 }
 Code39Barcode::~Code39Barcode() = default;

@@ -174,5 +174,5 @@ void Barcode::setForegroundColor(const QColor &foregroundcolor)
 
 Barcode::Dimensions Barcode::dimensions() const
 {
-    return d ? static_cast<Barcode::Dimensions>(d->m_dimension) : Barcode::NoDimensions; // TODO
+    return d ? d->m_dimension : Barcode::NoDimensions;
 }

@@ -15,7 +15,7 @@
 using namespace Prison;
 
 Pdf417Barcode::Pdf417Barcode()
-    : AbstractBarcodePrivate(AbstractBarcode::TwoDimensions)
+    : AbstractBarcodePrivate(Barcode::TwoDimensions)
 {
 }
 

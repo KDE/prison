@@ -608,7 +608,7 @@ static int checksum(const QList<int> &codes, int wrap)
 }
 
 Code93Barcode::Code93Barcode()
-    : AbstractBarcodePrivate(AbstractBarcode::OneDimension)
+    : AbstractBarcodePrivate(Barcode::OneDimension)
 {
 }
 Code93Barcode::~Code93Barcode() = default;

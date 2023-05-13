@@ -15,7 +15,7 @@ using QRcode_ptr = std::unique_ptr<QRcode, decltype(&QRcode_free)>;
 using QRinput_ptr = std::unique_ptr<QRinput, decltype(&QRinput_free)>;
 
 QRCodeBarcode::QRCodeBarcode()
-    : AbstractBarcodePrivate(AbstractBarcode::TwoDimensions)
+    : AbstractBarcodePrivate(Barcode::TwoDimensions)
 {
 }
 QRCodeBarcode::~QRCodeBarcode() = default;

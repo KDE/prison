@@ -9,7 +9,7 @@
 using namespace Prison;
 
 DataMatrixBarcode::DataMatrixBarcode()
-    : AbstractBarcodePrivate(AbstractBarcode::TwoDimensions)
+    : AbstractBarcodePrivate(Barcode::TwoDimensions)
 {
 }
 DataMatrixBarcode::~DataMatrixBarcode() = default;

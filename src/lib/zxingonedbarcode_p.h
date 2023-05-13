@@ -22,7 +22,7 @@ class ZXingOneDBarcode : public AbstractBarcodePrivate
 {
 public:
     explicit inline ZXingOneDBarcode()
-        : AbstractBarcodePrivate(AbstractBarcode::OneDimension)
+        : AbstractBarcodePrivate(Barcode::OneDimension)
     {
     }
 

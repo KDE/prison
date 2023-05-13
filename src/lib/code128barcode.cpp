@@ -41,7 +41,7 @@ enum CodeSetOp : uint8_t {
 };
 
 Code128Barcode::Code128Barcode()
-    : AbstractBarcodePrivate(AbstractBarcode::OneDimension)
+    : AbstractBarcodePrivate(Barcode::OneDimension)
 {
 }
 Code128Barcode::~Code128Barcode() = default;

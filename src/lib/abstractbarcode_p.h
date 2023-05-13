@@ -7,19 +7,17 @@
 #ifndef PRISON_ABSTRACTBARCODE_P_H
 #define PRISON_ABSTRACTBARCODE_P_H
 
-#include "abstractbarcode.h"
+#include "barcode.h"
 #include "prison.h"
 
 #include <QVariant>
 
 namespace Prison
 {
-class AbstractBarcode;
-
 class AbstractBarcodePrivate
 {
 public:
-    explicit AbstractBarcodePrivate(AbstractBarcode::Dimensions dim);
+    explicit AbstractBarcodePrivate(Barcode::Dimensions dim);
     virtual ~AbstractBarcodePrivate();
 
     /**
@@ -45,7 +43,7 @@ public:
     QImage m_cache;
     QColor m_foreground = Qt::black;
     QColor m_background = Qt::white;
-    AbstractBarcode::Dimensions m_dimension = AbstractBarcode::NoDimensions;
+    Barcode::Dimensions m_dimension = Barcode::NoDimensions;
     Prison::BarcodeType m_format = Prison::Null;
 };
 

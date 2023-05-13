@@ -12,7 +12,7 @@
 
 using namespace Prison;
 
-AbstractBarcodePrivate::AbstractBarcodePrivate(AbstractBarcode::Dimensions dim)
+AbstractBarcodePrivate::AbstractBarcodePrivate(Barcode::Dimensions dim)
     : m_dimension(dim)
 {
 }

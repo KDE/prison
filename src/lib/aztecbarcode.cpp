@@ -34,7 +34,7 @@ enum {
 };
 
 AztecBarcode::AztecBarcode()
-    : AbstractBarcodePrivate(AbstractBarcode::TwoDimensions)
+    : AbstractBarcodePrivate(Barcode::TwoDimensions)
 {
 }
 AztecBarcode::~AztecBarcode() = default;

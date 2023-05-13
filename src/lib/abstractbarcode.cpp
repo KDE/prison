@@ -101,7 +101,7 @@ void AbstractBarcode::setForegroundColor(const QColor &foregroundcolor)
 
 AbstractBarcode::Dimensions AbstractBarcode::dimensions() const
 {
-    return d->m_dimension;
+    return static_cast<AbstractBarcode::Dimensions>(d->m_dimension);
 }
 
 AbstractBarcode::~AbstractBarcode() = default;

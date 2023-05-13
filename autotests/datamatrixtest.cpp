@@ -4,7 +4,7 @@
     SPDX-License-Identifier: MIT
 */
 
-#include <prison.h>
+#include <Prison/Barcode>
 
 #include <QObject>
 #include <QTest>
@@ -30,9 +30,9 @@ private Q_SLOTS:
         QFETCH(QString, refName);
 
         {
-            std::unique_ptr<Prison::AbstractBarcode> code(Prison::createBarcode(Prison::DataMatrix));
-            code->setData(QString::fromLatin1(input.constData(), input.size()));
-            const auto img = code->toImage(code->preferredSize(1));
+            Prison::Barcode code(Prison::DataMatrix);
+            code.setData(QString::fromLatin1(input.constData(), input.size()));
+            const auto img = code.toImage(code.preferredSize(1));
             img.save(refName);
 
             QImage ref(QStringLiteral(":/datamatrix/") + refName);
@@ -40,9 +40,9 @@ private Q_SLOTS:
             QCOMPARE(img, ref);
         }
         {
-            std::unique_ptr<Prison::AbstractBarcode> code(Prison::createBarcode(Prison::DataMatrix));
-            code->setData(input);
-            const auto img = code->toImage(code->preferredSize(1));
+            Prison::Barcode code(Prison::DataMatrix);
+            code.setData(input);
+            const auto img = code.toImage(code.preferredSize(1));
             img.save(refName);
 
             QImage ref(QStringLiteral(":/datamatrix/") + refName);

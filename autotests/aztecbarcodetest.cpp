@@ -477,9 +477,9 @@ private Q_SLOTS:
         QFETCH(QString, refName);
 
         {
-            std::unique_ptr<AbstractBarcode> code(Prison::createBarcode(Prison::Aztec));
-            code->setData(QString::fromLatin1(input.constData(), input.size()));
-            const auto img = code->toImage(code->trueMinimumSize());
+            Barcode code(Prison::Aztec);
+            code.setData(QString::fromLatin1(input.constData(), input.size()));
+            const auto img = code.toImage(code.minimumSize());
             img.save(refName);
 
             QImage ref(QStringLiteral(":/aztec/encoding/") + refName);
@@ -488,9 +488,9 @@ private Q_SLOTS:
         }
 
         {
-            std::unique_ptr<AbstractBarcode> code(Prison::createBarcode(Prison::Aztec));
-            code->setData(input);
-            const auto img = code->toImage(code->trueMinimumSize());
+            Barcode code(Prison::Aztec);
+            code.setData(input);
+            const auto img = code.toImage(code.minimumSize());
             img.save(refName);
 
             QImage ref(QStringLiteral(":/aztec/encoding/") + refName);
@@ -501,21 +501,21 @@ private Q_SLOTS:
 
     void testDimension()
     {
-        std::unique_ptr<Prison::AbstractBarcode> barcode(Prison::createBarcode(Prison::Aztec));
-        QVERIFY(barcode);
-        QCOMPARE(barcode->dimensions(), Prison::AbstractBarcode::TwoDimensions);
+        Prison::Barcode barcode(Prison::Aztec);
+        QCOMPARE(barcode.format(), Prison::Aztec);
+        QCOMPARE(barcode.dimensions(), Prison::Barcode::TwoDimensions);
     }
 
     void testSize()
     {
-        std::unique_ptr<Prison::AbstractBarcode> barcode(Prison::createBarcode(Prison::Aztec));
-        QVERIFY(barcode);
-        barcode->setData(QStringLiteral("UNIT TEST"));
-        QCOMPARE(barcode->trueMinimumSize(), QSize(15, 15));
-        QCOMPARE(barcode->preferredSize(1), QSize(60, 60));
-        QCOMPARE(barcode->preferredSize(2), QSize(30, 30));
-        QCOMPARE(barcode->toImage(barcode->preferredSize(1)).size(), QSize(60, 60));
-        QCOMPARE(barcode->toImage({1, 1}).isNull(), true);
+        Prison::Barcode barcode(Prison::Aztec);
+        QCOMPARE(barcode.format(), Prison::Aztec);
+        barcode.setData(QStringLiteral("UNIT TEST"));
+        QCOMPARE(barcode.minimumSize(), QSize(15, 15));
+        QCOMPARE(barcode.preferredSize(1), QSize(60, 60));
+        QCOMPARE(barcode.preferredSize(2), QSize(30, 30));
+        QCOMPARE(barcode.toImage(barcode.preferredSize(1)).size(), QSize(60, 60));
+        QCOMPARE(barcode.toImage({1, 1}).isNull(), true);
     }
 };
 

@@ -9,10 +9,8 @@
 
 #include <QWidget>
 
-namespace Prison
-{
-class AbstractBarcode;
-}
+#include <Prison/Barcode>
+
 /**
  * QWidget with a barcode on
  */
@@ -24,7 +22,7 @@ public:
      * @param barcode The barcode generator for this widget. Takes ownership over the barcode generator
      * @param parent the parent in QWidget hierarchy
      */
-    BarcodeExampleWidget(Prison::AbstractBarcode *barcode, QWidget *parent = nullptr);
+    BarcodeExampleWidget(Prison::Barcode &&barcode, QWidget *parent = nullptr);
     ~BarcodeExampleWidget() override;
     /**
      * sets the data shown to data, and triggers a repaint and resize if needed
@@ -55,7 +53,7 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
 
 private:
-    Prison::AbstractBarcode *m_barcode;
+    Prison::Barcode m_barcode;
 };
 
 #endif // PRISON_BARCODEWIDGET_H

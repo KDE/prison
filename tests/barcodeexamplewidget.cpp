@@ -5,8 +5,6 @@
 */
 
 #include "barcodeexamplewidget.h"
-// Prison
-#include <Prison/AbstractBarcode>
 // Qt
 #include <QDrag>
 #include <QGuiApplication>
@@ -17,17 +15,15 @@
 
 using namespace Prison;
 
-BarcodeExampleWidget::BarcodeExampleWidget(AbstractBarcode *barcode, QWidget *parent)
+BarcodeExampleWidget::BarcodeExampleWidget(Barcode &&barcode, QWidget *parent)
     : QWidget(parent)
-    , m_barcode(barcode)
+    , m_barcode(std::move(barcode))
 {
 }
 
 void BarcodeExampleWidget::setData(const QString &data)
 {
-    if (m_barcode) {
-        m_barcode->setData(data);
-    }
+    m_barcode.setData(data);
     updateGeometry();
     repaint();
 }
@@ -35,9 +31,9 @@ void BarcodeExampleWidget::setData(const QString &data)
 void BarcodeExampleWidget::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    if (m_barcode) {
+    if (m_barcode.format() != Prison::Null) {
         QRect targetrect = rect();
-        QImage image = m_barcode->toImage(targetrect.size());
+        QImage image = m_barcode.toImage(targetrect.size());
         if (!image.isNull()) {
             QRectF rect(targetrect.left() + targetrect.width() / 2 - image.size().width() / 2,
                         targetrect.top() + targetrect.height() / 2 - image.size().height() / 2,
@@ -55,18 +51,16 @@ void BarcodeExampleWidget::paintEvent(QPaintEvent *event)
 
 void BarcodeExampleWidget::resizeEvent(QResizeEvent *event)
 {
-    if (m_barcode) {
-        updateGeometry();
-        repaint();
-    }
+    updateGeometry();
+    repaint();
     QWidget::resizeEvent(event);
 }
 
 void BarcodeExampleWidget::mousePressEvent(QMouseEvent *event)
 {
-    if (m_barcode && event->buttons() & Qt::LeftButton) {
+    if (m_barcode.format() != Prison::Null && event->buttons() & Qt::LeftButton) {
         QMimeData *data = new QMimeData();
-        data->setImageData(m_barcode->toImage(rect().size()));
+        data->setImageData(m_barcode.toImage(rect().size()));
         QDrag *drag = new QDrag(this);
         drag->setMimeData(data);
         drag->exec();
@@ -77,14 +71,7 @@ void BarcodeExampleWidget::mousePressEvent(QMouseEvent *event)
 
 QSize BarcodeExampleWidget::minimumSizeHint() const
 {
-    if (m_barcode) {
-        return m_barcode->preferredSize(QGuiApplication::primaryScreen()->devicePixelRatio()).toSize();
-    } else {
-        return QWidget::minimumSizeHint();
-    }
+    return m_barcode.preferredSize(QGuiApplication::primaryScreen()->devicePixelRatio()).toSize();
 }
 
-BarcodeExampleWidget::~BarcodeExampleWidget()
-{
-    delete m_barcode;
-}
+BarcodeExampleWidget::~BarcodeExampleWidget() = default;

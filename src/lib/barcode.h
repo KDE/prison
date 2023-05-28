@@ -52,6 +52,11 @@ public:
     /** Barcode format of this barcode generator. */
     Prison::BarcodeType format() const;
 
+    /** Check whether this barcode generator has a valid format.
+     *  Same as `format() == Prison::Null`.
+     */
+    bool isNull() const;
+
     /**
      * Textual content encoded in this barcode.
      * This returns an empty QString if binary content is set.

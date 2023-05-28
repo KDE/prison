@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
     }
 
     Prison::Barcode barcode(Prison::DataMatrix);
-    if (barcode.format() == Prison::Null) {
+    if (barcode.isNull()) {
         error(QStringLiteral("unsupported barcode type"), QString());
     }
 

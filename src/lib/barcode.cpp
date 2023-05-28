@@ -77,6 +77,11 @@ Prison::BarcodeType Barcode::format() const
     return d ? d->m_format : Prison::Null;
 }
 
+bool Barcode::isNull() const
+{
+    return !d || d->m_format == Prison::Null;
+}
+
 QString Barcode::data() const
 {
     return d && d->m_data.userType() == QMetaType::QString ? d->m_data.toString() : QString();

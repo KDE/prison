@@ -87,7 +87,7 @@ BarcodeQuickItem::Dimensions Prison::BarcodeQuickItem::dimensions() const
 
 void BarcodeQuickItem::paint(QPainter *painter)
 {
-    if (m_barcode.format() == Prison::Null) {
+    if (m_barcode.isNull()) {
         return;
     }
 
@@ -151,7 +151,7 @@ void BarcodeQuickItem::updateBarcode()
         return;
     }
 
-    if (m_barcode.format() == Prison::Null) {
+    if (m_barcode.isNull()) {
         m_barcode = Barcode(m_type);
     }
     if (m_barcode.format() != Prison::Null) {

@@ -43,21 +43,21 @@ main_window::main_window()
 
     {
         auto barcode = Prison::Barcode(Prison::DataMatrix);
-        if (barcode.format() == Prison::Null) {
+        if (barcode.isNull()) {
             qDebug() << "unsupported barcode, showing a black square";
         }
         m_dmw = new BarcodeExampleWidget(std::move(barcode), this);
     }
     {
         auto barcode = Prison::Barcode(Prison::QRCode);
-        if (barcode.format() == Prison::Null) {
+        if (barcode.isNull()) {
             qDebug() << "unsupported barcode, showing a black square";
         }
         m_qrw = new BarcodeExampleWidget(std::move(barcode), this);
     }
     {
         auto barcode = Prison::Barcode(Prison::Code39);
-        if (barcode.format() == Prison::Null) {
+        if (barcode.isNull()) {
             qDebug() << "unsupported barcode, showing a black square";
         }
         m_39w = new BarcodeExampleWidget(std::move(barcode), this);

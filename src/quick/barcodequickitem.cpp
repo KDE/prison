@@ -169,3 +169,5 @@ void BarcodeQuickItem::updateBarcode()
     update();
     Q_EMIT dimensionsChanged();
 }
+
+#include "moc_barcodequickitem.cpp"

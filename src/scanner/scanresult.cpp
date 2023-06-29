@@ -61,3 +61,5 @@ QRect ScanResult::boundingRect() const
 {
     return d->boundingRect;
 }
+
+#include "moc_scanresult.cpp"

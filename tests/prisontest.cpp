@@ -129,3 +129,5 @@ main_window::main_window()
     m_lineedit->setText(QStringLiteral("AOEUIAOEUIAOEUI"));
     data_changed();
 }
+
+#include "moc_prisontest.cpp"

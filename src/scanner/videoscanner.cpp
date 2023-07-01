@@ -174,3 +174,5 @@ void VideoScanner::setVideoSink(QVideoSink *sink)
     Q_EMIT videoSinkChanged();
 }
 #endif
+
+#include "moc_videoscanner.cpp"

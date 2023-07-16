@@ -135,15 +135,6 @@ void BarcodeQuickItem::updateBarcode()
         return;
     }
 
-    QString content;
-    if (m_content.userType() == QMetaType::QString) {
-        content = m_content.toString();
-    }
-    if (m_content.userType() == QMetaType::QByteArray) {
-        const auto b = m_content.toByteArray();
-        content = QString::fromLatin1(b.constData(), b.size()); // ### fix this once Prison::Barcode can consume QByteArrays
-    }
-
     if (m_type == Prison::Null || isEmpty()) {
         m_barcode = Barcode();
         update();

@@ -20,7 +20,7 @@ class BarcodeQuickItem : public QQuickPaintedItem
 {
     Q_OBJECT
     Q_PROPERTY(QVariant content READ content WRITE setContent NOTIFY contentChanged)
-    Q_PROPERTY(BarcodeType barcodeType READ barcodeType WRITE setBarcodeType NOTIFY barcodeTypeChanged)
+    Q_PROPERTY(QJSValue barcodeType READ barcodeType WRITE setBarcodeType NOTIFY barcodeTypeChanged)
     Q_PROPERTY(QColor foregroundColor READ foregroundColor WRITE setForegroundColor NOTIFY foregroundColorChanged)
     Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
     Q_PROPERTY(Dimensions dimensions READ dimensions NOTIFY dimensionsChanged)
@@ -37,7 +37,6 @@ class BarcodeQuickItem : public QQuickPaintedItem
 
 public:
     enum BarcodeType {
-        Null = Prison::Null,
         QRCode = Prison::QRCode,
         DataMatrix = Prison::DataMatrix,
         Aztec = Prison::Aztec,
@@ -54,8 +53,8 @@ public:
     QVariant content() const;
     void setContent(const QVariant &data);
 
-    Prison::BarcodeQuickItem::BarcodeType barcodeType() const;
-    void setBarcodeType(Prison::BarcodeQuickItem::BarcodeType type);
+    QJSValue barcodeType() const;
+    void setBarcodeType(const QJSValue &type);
 
     QColor foregroundColor() const;
     void setForegroundColor(const QColor &color);
@@ -88,10 +87,10 @@ private:
     void updateBarcode();
 
     QVariant m_content;
-    Barcode m_barcode;
+    std::optional<Barcode> m_barcode;
     QColor m_fgColor = Qt::black;
     QColor m_bgColor = Qt::white;
-    Prison::BarcodeType m_type = Prison::Null;
+    std::optional<Prison::BarcodeType> m_type;
 };
 
 }

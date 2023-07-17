@@ -28,9 +28,10 @@ private Q_SLOTS:
         QFETCH(QString, input);
         QFETCH(QString, refName);
 
-        Prison::Barcode code(Prison::QRCode);
-        code.setData(input);
-        const auto img = code.toImage(code.preferredSize(1));
+        auto code = Prison::Barcode::create(Prison::QRCode);
+        QVERIFY(code);
+        code->setData(input);
+        const auto img = code->toImage(code->preferredSize(1));
         img.save(refName);
 
         QImage ref(QStringLiteral(":/qr/") + refName);
@@ -52,9 +53,10 @@ private Q_SLOTS:
         QFETCH(QByteArray, input);
         QFETCH(QString, refName);
 
-        Prison::Barcode code(Prison::QRCode);
-        code.setData(input);
-        const auto img = code.toImage(code.preferredSize(1));
+        auto code = Prison::Barcode::create(Prison::QRCode);
+        QVERIFY(code);
+        code->setData(input);
+        const auto img = code->toImage(code->preferredSize(1));
         img.save(refName);
 
         QImage ref(QStringLiteral(":/qr/") + refName);

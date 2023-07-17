@@ -44,7 +44,7 @@ public:
     QColor m_foreground = Qt::black;
     QColor m_background = Qt::white;
     Barcode::Dimensions m_dimension = Barcode::NoDimensions;
-    Prison::BarcodeType m_format = Prison::Null;
+    Prison::BarcodeType m_format;
 };
 
 }

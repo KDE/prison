@@ -38,13 +38,6 @@ class AbstractBarcodePrivate;
 class PRISON_EXPORT Barcode
 {
 public:
-    /** Create a new barcode generator.
-     *
-     *  If a format is requested that is not supported by the current build
-     *  due to missing/disabled optional dependencies, Barcode::format() will
-     *  return Prison::Null.
-     */
-    explicit Barcode(Prison::BarcodeType format = Prison::Null);
     Barcode(Barcode &&);
     ~Barcode();
     Barcode &operator=(Barcode &&);
@@ -143,8 +136,17 @@ public:
     /** Returns the amount of dimensions of the barcode. */
     Dimensions dimensions() const;
 
+    /** Create a new barcode generator.
+     *
+     *  If a format is requested that is not supported by the current build
+     *  due to missing/disabled optional dependencies, Barcode::format() will
+     *  return Prison::Null.
+     */
+    static std::optional<Prison::Barcode> create(Prison::BarcodeType type);
+
 private:
     friend class AbstractBarcodePrivate;
+    explicit Barcode(std::unique_ptr<AbstractBarcodePrivate> &&d);
     std::unique_ptr<class AbstractBarcodePrivate> d;
 };
 }

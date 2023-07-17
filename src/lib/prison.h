@@ -21,12 +21,10 @@ class AbstractBarcode;
  * possible supported barcode types
  */
 enum BarcodeType {
-    /** Null barcode */
-    Null = 0,
     /** QRCode 2d barcode */
-    QRCode = 1,
+    QRCode,
     /** DataMatrix 2d barcode */
-    DataMatrix = 2,
+    DataMatrix,
     /** Aztec 2d barcode */
     Aztec,
     /** Code39 barcode */

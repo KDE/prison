@@ -34,19 +34,32 @@ void BarcodeQuickItem::setContent(const QVariant &content)
     updateBarcode();
 }
 
-BarcodeQuickItem::BarcodeType BarcodeQuickItem::barcodeType() const
+QJSValue BarcodeQuickItem::barcodeType() const
 {
-    return static_cast<BarcodeType>(m_type);
+    if (m_type) {
+        return static_cast<BarcodeType>(m_type.value());
+    }
+    return QJSValue();
 }
 
-void BarcodeQuickItem::setBarcodeType(BarcodeQuickItem::BarcodeType type)
+void BarcodeQuickItem::setBarcodeType(const QJSValue &type)
 {
-    if (m_type == static_cast<Prison::BarcodeType>(type)) {
-        return;
+    if (!type.isNumber()) {
+        if (m_type) {
+            m_type.reset();
+        } else {
+            return;
+        }
+
+    } else {
+        auto enumType = static_cast<Prison::BarcodeType>(type.toInt());
+        if (enumType == m_type) {
+            return;
+        }
+        m_type = enumType;
     }
-    m_type = static_cast<Prison::BarcodeType>(type);
     Q_EMIT barcodeTypeChanged();
-    m_barcode = Barcode{};
+    m_barcode.reset();
     updateBarcode();
 }
 
@@ -82,18 +95,20 @@ void BarcodeQuickItem::setBackgroundColor(const QColor &color)
 
 BarcodeQuickItem::Dimensions Prison::BarcodeQuickItem::dimensions() const
 {
-    return static_cast<BarcodeQuickItem::Dimensions>(m_barcode.dimensions());
+    if (m_barcode)
+        return static_cast<BarcodeQuickItem::Dimensions>(m_barcode->dimensions());
+    return BarcodeQuickItem::Dimensions::NoDimensions;
 }
 
 void BarcodeQuickItem::paint(QPainter *painter)
 {
-    if (m_barcode.format() == Prison::Null) {
+    if (!m_barcode) {
         return;
     }
 
     const auto w_max = std::max(minimumWidth(), width());
     const auto h_max = std::max(minimumHeight(), height());
-    const auto img = m_barcode.toImage(QSizeF(w_max, h_max));
+    const auto img = m_barcode->toImage(QSizeF(w_max, h_max));
     const auto x = (w_max - img.width()) / 2;
     const auto y = (h_max - img.height()) / 2;
     painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
@@ -108,12 +123,12 @@ void BarcodeQuickItem::componentComplete()
 
 qreal BarcodeQuickItem::minimumHeight() const
 {
-    return m_barcode.minimumSize().height();
+    return m_barcode ? m_barcode->minimumSize().height() : 0;
 }
 
 qreal BarcodeQuickItem::minimumWidth() const
 {
-    return m_barcode.minimumSize().width();
+    return m_barcode ? m_barcode->minimumSize().width() : 0;
 }
 
 bool BarcodeQuickItem::isEmpty() const
@@ -135,30 +150,31 @@ void BarcodeQuickItem::updateBarcode()
         return;
     }
 
-    if (m_type == Prison::Null || isEmpty()) {
-        m_barcode = Barcode();
+    if (isEmpty() || !m_type) {
+        m_barcode.reset();
         update();
         Q_EMIT dimensionsChanged();
         return;
     }
-
-    if (m_barcode.format() == Prison::Null) {
-        m_barcode = Barcode(m_type);
+    if (!m_barcode) {
+        m_barcode = Prison::Barcode::create(m_type.value());
     }
-    if (m_barcode.format() != Prison::Null) {
+    if (!m_barcode) {
+        return;
+    }
+
         if (m_content.userType() == QMetaType::QString) {
-            m_barcode.setData(m_content.toString());
+            m_barcode->setData(m_content.toString());
         } else {
-            m_barcode.setData(m_content.toByteArray());
+            m_barcode->setData(m_content.toByteArray());
         }
-        m_barcode.setForegroundColor(m_fgColor);
-        m_barcode.setBackgroundColor(m_bgColor);
-        const auto size = m_barcode.preferredSize(QGuiApplication::primaryScreen()->devicePixelRatio());
+        m_barcode->setForegroundColor(m_fgColor);
+        m_barcode->setBackgroundColor(m_bgColor);
+        const auto size = m_barcode->preferredSize(QGuiApplication::primaryScreen()->devicePixelRatio());
         setImplicitSize(size.width(), size.height());
-    }
 
-    update();
-    Q_EMIT dimensionsChanged();
+        update();
+        Q_EMIT dimensionsChanged();
 }
 
 #include "moc_barcodequickitem.cpp"

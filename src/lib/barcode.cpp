@@ -26,11 +26,10 @@
 
 using namespace Prison;
 
-Barcode::Barcode(Prison::BarcodeType format)
+std::optional<Barcode> Barcode::create(Prison::BarcodeType format)
 {
+    std::unique_ptr<AbstractBarcodePrivate> d;
     switch (format) {
-    case Prison::Null:
-        break;
     case Prison::QRCode:
         d = std::make_unique<QRCodeBarcode>();
         break;
@@ -65,7 +64,14 @@ Barcode::Barcode(Prison::BarcodeType format)
 
     if (d) {
         d->m_format = format;
+        return Barcode(std::move(d));
     }
+    return std::nullopt;
+}
+
+Barcode::Barcode(std::unique_ptr<AbstractBarcodePrivate> &&dd)
+    : d(std::move(dd))
+{
 }
 
 Barcode::Barcode(Barcode &&) = default;
@@ -74,25 +80,21 @@ Barcode &Barcode::operator=(Barcode &&) = default;
 
 Prison::BarcodeType Barcode::format() const
 {
-    return d ? d->m_format : Prison::Null;
+    return d->m_format;
 }
 
 QString Barcode::data() const
 {
-    return d && d->m_data.userType() == QMetaType::QString ? d->m_data.toString() : QString();
+    return d->m_data.userType() == QMetaType::QString ? d->m_data.toString() : QString();
 }
 
 QByteArray Barcode::byteArrayData() const
 {
-    return d && d->m_data.userType() == QMetaType::QByteArray ? d->m_data.toByteArray() : QByteArray();
+    return d->m_data.userType() == QMetaType::QByteArray ? d->m_data.toByteArray() : QByteArray();
 }
 
 QImage Barcode::toImage(const QSizeF &size)
 {
-    if (!d) {
-        return QImage();
-    }
-
     d->recompute();
     if (d->m_cache.isNull() || d->sizeTooSmall(size)) {
         return QImage();
@@ -122,43 +124,35 @@ void Barcode::setData(const QString &data)
 
 void Barcode::setData(const QByteArray &data)
 {
-    if (d) {
-        d->m_data = data;
-        d->m_cache = QImage();
-    }
+    d->m_data = data;
+    d->m_cache = QImage();
 }
 
 QSizeF Barcode::minimumSize() const
 {
-    if (d) {
-        d->recompute();
-        return d->m_cache.size();
-    }
-    return QSizeF(0.0, 0.0);
+    d->recompute();
+    return d->m_cache.size();
 }
 
 QSizeF Barcode::preferredSize(qreal devicePixelRatio) const
 {
-    if (d) {
-        d->recompute();
-        return d->preferredSize(devicePixelRatio);
-    }
-    return QSizeF(0.0, 0.0);
+    d->recompute();
+    return d->preferredSize(devicePixelRatio);
 }
 
 QColor Barcode::backgroundColor() const
 {
-    return d ? d->m_background : QColor();
+    return d->m_background;
 }
 
 QColor Barcode::foregroundColor() const
 {
-    return d ? d->m_foreground : QColor();
+    return d->m_foreground;
 }
 
 void Barcode::setBackgroundColor(const QColor &backgroundcolor)
 {
-    if (d && backgroundcolor != backgroundColor()) {
+    if (backgroundcolor != backgroundColor()) {
         d->m_background = backgroundcolor;
         d->m_cache = QImage();
     }
@@ -166,7 +160,7 @@ void Barcode::setBackgroundColor(const QColor &backgroundcolor)
 
 void Barcode::setForegroundColor(const QColor &foregroundcolor)
 {
-    if (d && foregroundcolor != foregroundColor()) {
+    if (foregroundcolor != foregroundColor()) {
         d->m_foreground = foregroundcolor;
         d->m_cache = QImage();
     }
@@ -174,5 +168,5 @@ void Barcode::setForegroundColor(const QColor &foregroundcolor)
 
 Barcode::Dimensions Barcode::dimensions() const
 {
-    return d ? d->m_dimension : Barcode::NoDimensions;
+    return d->m_dimension;
 }

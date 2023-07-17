@@ -22,8 +22,6 @@
 Prison::AbstractBarcode *Prison::createBarcode(BarcodeType type)
 {
     switch (type) {
-    case Prison::Null:
-        return nullptr;
     case Prison::QRCode:
         return AbstractBarcodePrivate::makeBarcode(new QRCodeBarcode);
     case Prison::DataMatrix:

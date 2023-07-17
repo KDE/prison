@@ -17,12 +17,13 @@
 class BarcodeExampleWidget : public QWidget
 {
 public:
+    BarcodeExampleWidget(std::optional<Prison::Barcode> barcode, QWidget *parent = nullptr);
     /**
      * Creates a barcode widget with 'barcode' as barcode generator
      * @param barcode The barcode generator for this widget. Takes ownership over the barcode generator
      * @param parent the parent in QWidget hierarchy
      */
-    BarcodeExampleWidget(Prison::Barcode &&barcode, QWidget *parent = nullptr);
+    BarcodeExampleWidget(Prison::BarcodeType barcode, QWidget *parent = nullptr);
     ~BarcodeExampleWidget() override;
     /**
      * sets the data shown to data, and triggers a repaint and resize if needed
@@ -53,7 +54,7 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
 
 private:
-    Prison::Barcode m_barcode;
+    std::optional<Prison::Barcode> m_barcode;
 };
 
 #endif // PRISON_BARCODEWIDGET_H

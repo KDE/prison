@@ -24,8 +24,12 @@ Rectangle {
             }
             ComboBox {
                 id: typeCombobox
-                model: [ "Null", "QRCode", "DataMatrix", "Aztec", "Code39", "Code93", "Code128", "PDF417", "EAN13" ]
+                model: [ "QRCode", "DataMatrix", "Aztec", "Code39", "Code93", "Code128", "PDF417", "EAN13" ]
                 currentIndex: 3
+            }
+            Button {
+		text: "undef"
+                onClicked: barcode.barcodeType = undefined
             }
         }
 
@@ -48,6 +52,15 @@ Rectangle {
             }
             Label {
                 text: "Min size: " + barcode.minimumWidth + "x" + barcode.minimumHeight
+            }
+        }
+        Prison.Barcode {
+            id: nullbarcode
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            content: contentEdit.text
+	    Component.onCompleted: {
+               console.log(nullbarcode.barcodeType)
             }
         }
     }

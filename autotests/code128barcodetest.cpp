@@ -176,21 +176,23 @@ private Q_SLOTS:
 
     void testDimension()
     {
-        Prison::Barcode barcode(Prison::Code128);
-        QCOMPARE(barcode.format(), Prison::Code128);
-        QCOMPARE(barcode.dimensions(), Prison::Barcode::OneDimension);
+        auto barcode = Prison::Barcode::create(Prison::Code128);
+        QVERIFY(barcode);
+        QCOMPARE(barcode->format(), Prison::Code128);
+        QCOMPARE(barcode->dimensions(), Prison::Barcode::OneDimension);
     }
 
     void testSize()
     {
-        Prison::Barcode barcode(Prison::Code128);
-        QCOMPARE(barcode.format(), Prison::Code128);
-        barcode.setData(QStringLiteral("UNIT TEST"));
-        QCOMPARE(barcode.minimumSize(), QSize(154, 1));
-        QCOMPARE(barcode.preferredSize(1), QSize(308, 50));
-        QCOMPARE(barcode.preferredSize(2), QSize(154, 50));
-        QCOMPARE(barcode.toImage(barcode.preferredSize(1)).size(), QSize(308, 50));
-        QCOMPARE(barcode.toImage({1, 1}).isNull(), true);
+        auto barcode = Prison::Barcode::create(Prison::Code128);
+        QVERIFY(barcode);
+        QCOMPARE(barcode->format(), Prison::Code128);
+        barcode->setData(QStringLiteral("UNIT TEST"));
+        QCOMPARE(barcode->minimumSize(), QSize(154, 1));
+        QCOMPARE(barcode->preferredSize(1), QSize(308, 50));
+        QCOMPARE(barcode->preferredSize(2), QSize(154, 50));
+        QCOMPARE(barcode->toImage(barcode->preferredSize(1)).size(), QSize(308, 50));
+        QCOMPARE(barcode->toImage({1, 1}).isNull(), true);
     }
 
     void testRender_data()
@@ -208,9 +210,10 @@ private Q_SLOTS:
         QFETCH(QString, refName);
 
         {
-            Barcode code(Prison::Code128);
-            code.setData(QString::fromLatin1(input.constData(), input.size()));
-            const auto img = code.toImage(code.minimumSize());
+            auto code = Prison::Barcode::create(Prison::Code128);
+            QVERIFY(code);
+            code->setData(QString::fromLatin1(input.constData(), input.size()));
+            const auto img = code->toImage(code->minimumSize());
             img.save(refName);
 
             QImage ref(QStringLiteral(":/code128/") + refName);
@@ -219,9 +222,10 @@ private Q_SLOTS:
         }
 
         {
-            Barcode code(Prison::Code128);
-            code.setData(QString::fromLatin1(input.constData(), input.size()));
-            const auto img = code.toImage(code.minimumSize());
+            auto code = Prison::Barcode::create(Prison::Code128);
+            QVERIFY(code);
+            code->setData(QString::fromLatin1(input.constData(), input.size()));
+            const auto img = code->toImage(code->minimumSize());
             img.save(refName);
 
             QImage ref(QStringLiteral(":/code128/") + refName);

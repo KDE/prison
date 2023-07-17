@@ -78,13 +78,13 @@ int main(int argc, char *argv[])
         }
     }
 
-    Prison::Barcode barcode(Prison::DataMatrix);
-    if (barcode.format() == Prison::Null) {
+    auto barcode = Prison::Barcode::create(Prison::DataMatrix);
+    if (!barcode) {
         error(QStringLiteral("unsupported barcode type"), QString());
     }
 
-    barcode.setData(data);
-    QImage result = barcode.toImage(QSizeF(intsize, intsize));
+    barcode->setData(data);
+    QImage result = barcode->toImage(QSizeF(intsize, intsize));
     QImageWriter w(outputfile, outputformat.toLocal8Bit());
     if (!w.write(result)) {
         error(QStringLiteral("writing failed"), w.errorString());

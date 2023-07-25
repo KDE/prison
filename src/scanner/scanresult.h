@@ -87,6 +87,4 @@ private:
 
 }
 
-Q_DECLARE_METATYPE(Prison::ScanResult)
-
 #endif // PRISON_SCANRESULT_H

@@ -9,12 +9,8 @@
 #include "prisonscanner_export.h"
 #include "scanresult.h"
 
-#include <QObject>
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QAbstractVideoFilter>
-#else
-#include <QVideoSink>
-#endif
+#include <QObject>
 
 #include <memory>
 
@@ -30,20 +26,11 @@ class VideoScannerPrivate;
  *
  *  @since 5.94
  */
-class PRISONSCANNER_EXPORT VideoScanner
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    : public QAbstractVideoFilter
-#else
-    : public QObject
-#endif
+class PRISONSCANNER_EXPORT VideoScanner : public QAbstractVideoFilter
 {
     Q_OBJECT
     Q_PROPERTY(Prison::ScanResult result READ result NOTIFY resultChanged)
     Q_PROPERTY(Prison::Format::BarcodeFormats formats READ formats WRITE setFormats NOTIFY formatsChanged)
-
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-    Q_PROPERTY(QVideoSink *videoSink READ videoSink WRITE setVideoSink NOTIFY videoSinkChanged)
-#endif
 
 public:
     explicit VideoScanner(QObject *parent = nullptr);
@@ -62,16 +49,9 @@ public:
      */
     void setFormats(Format::BarcodeFormats formats);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     /// @cond internal
     QVideoFilterRunnable *createFilterRunnable() override;
     /// @endcond
-#else
-    /** The video sink being scanned for barcodes. */
-    QVideoSink *videoSink() const;
-    /** Sets the video sink to scan for barcodes. */
-    void setVideoSink(QVideoSink *sink);
-#endif
 
 Q_SIGNALS:
     /** Emitted whenever we get a new scan result, as long as any

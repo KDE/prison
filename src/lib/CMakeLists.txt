@@ -17,8 +17,6 @@ set_target_properties(KF6Prison PROPERTIES
 )
 
 target_sources(KF6Prison PRIVATE
-    abstractbarcode.cpp
-    abstractbarcode.h
     abstractbarcode_p.cpp
     aztecbarcode.cpp
     aztecbarcode_p.h
@@ -33,7 +31,6 @@ target_sources(KF6Prison PRIVATE
     code39barcode_p.h
     code93barcode.cpp
     code93barcode_p.h
-    prison.cpp
     prison.h
     qrcodebarcode.cpp
     qrcodebarcode_p.h
@@ -100,7 +97,6 @@ install(TARGETS KF6Prison EXPORT KF6PrisonTargets ${KF_INSTALL_TARGETS_DEFAULT_A
 
 ecm_generate_headers(Prison_CamelCase_HEADERS
     HEADER_NAMES
-    AbstractBarcode
     Barcode
     Prison
     REQUIRED_HEADERS Prison_HEADERS

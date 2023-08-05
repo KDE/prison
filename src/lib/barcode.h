@@ -10,6 +10,7 @@
 #include "prison_export.h"
 
 #include "prison.h"
+#include <qglobal.h>
 
 #include <memory>
 

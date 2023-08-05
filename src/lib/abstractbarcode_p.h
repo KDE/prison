@@ -10,6 +10,7 @@
 #include "barcode.h"
 #include "prison.h"
 
+#include <QImage>
 #include <QVariant>
 
 namespace Prison
@@ -27,13 +28,8 @@ public:
      */
     virtual QImage paintImage() = 0;
 
-    /** @see AbstractBarcode::preferredSize */
+    /** @see Barcode::preferredSize */
     virtual QSizeF preferredSize(qreal devicePixelRatio) const;
-
-    static inline AbstractBarcode *makeBarcode(AbstractBarcodePrivate *dd)
-    {
-        return new AbstractBarcode(dd);
-    }
 
     bool isEmpty() const;
     bool sizeTooSmall(const QSizeF &size) const;

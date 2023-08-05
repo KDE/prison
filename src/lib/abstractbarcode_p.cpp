@@ -5,7 +5,6 @@
 */
 
 #include "abstractbarcode_p.h"
-#include "abstractbarcode.h"
 
 #include <QColor>
 #include <QVariant>
@@ -47,11 +46,11 @@ void AbstractBarcodePrivate::recompute()
 QSizeF AbstractBarcodePrivate::preferredSize(qreal devicePixelRatio) const
 {
     switch (m_dimension) {
-    case AbstractBarcode::NoDimensions:
+    case Barcode::NoDimensions:
         return {};
-    case AbstractBarcode::OneDimension:
+    case Barcode::OneDimension:
         return QSizeF(m_cache.width() * (devicePixelRatio < 2 ? 2 : 1), std::max(m_cache.height(), 50));
-    case AbstractBarcode::TwoDimensions:
+    case Barcode::TwoDimensions:
         return m_cache.size() * (devicePixelRatio < 2 ? 4 : 2);
     }
     return {};

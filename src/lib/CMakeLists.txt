@@ -10,6 +10,8 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-prison.h.cmake ${CMAKE_CURRENT
 add_library(KF6Prison)
 add_library(KF6::Prison ALIAS KF6Prison)
 
+qt_extract_metatypes(KF6Prison)
+
 set_target_properties(KF6Prison PROPERTIES
     VERSION     ${PRISON_VERSION}
     SOVERSION   ${PRISON_SOVERSION}

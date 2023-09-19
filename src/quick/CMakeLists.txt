@@ -1,8 +1,9 @@
-add_library(prisonquickplugin SHARED
+ecm_add_qml_module(prisonquickplugin URI org.kde.prison VERSION 1.0 GENERATE_PLUGIN_SOURCE)
+
+target_sources(prisonquickplugin PRIVATE
     barcodequickitem.cpp
     barcodequickitem.h
-    prisonquickplugin.cpp
 )
 target_link_libraries(prisonquickplugin PRIVATE Qt6::Quick KF6::Prison)
-install(TARGETS prisonquickplugin DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/prison)
-install(FILES qmldir DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/prison)
+
+ecm_finalize_qml_module(prisonquickplugin)

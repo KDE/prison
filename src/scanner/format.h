@@ -49,7 +49,6 @@ Q_DECLARE_FLAGS(BarcodeFormats, BarcodeFormat)
 Q_FLAG_NS(BarcodeFormats)
 Q_DECLARE_OPERATORS_FOR_FLAGS(BarcodeFormats)
 }
-
 }
 
 #endif // PRISON_FORMAT_H

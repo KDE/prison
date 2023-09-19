@@ -6,6 +6,8 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-prison-scanner.h.in ${CMAKE_CU
 add_library(KF6PrisonScanner)
 add_library(KF6::PrisonScanner ALIAS KF6PrisonScanner)
 
+qt_extract_metatypes(KF6PrisonScanner)
+
 set_target_properties(KF6PrisonScanner PROPERTIES
     VERSION     ${PRISON_VERSION}
     SOVERSION   ${PRISON_SOVERSION}

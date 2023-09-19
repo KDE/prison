@@ -12,12 +12,16 @@
 #include <QColor>
 #include <QQuickPaintedItem>
 
+#include <qqmlregistration.h>
+
 namespace Prison
 {
 
 class BarcodeQuickItem : public QQuickPaintedItem
 {
     Q_OBJECT
+    QML_ELEMENT
+    QML_NAMED_ELEMENT(Barcode)
     Q_PROPERTY(QVariant content READ content WRITE setContent NOTIFY contentChanged)
     Q_PROPERTY(QJSValue barcodeType READ barcodeType WRITE setBarcodeType NOTIFY barcodeTypeChanged)
     Q_PROPERTY(QColor foregroundColor READ foregroundColor WRITE setForegroundColor NOTIFY foregroundColorChanged)

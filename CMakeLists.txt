@@ -33,8 +33,20 @@ option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, 
 add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
 
 set(REQUIRED_QT_VERSION 6.5.0)
+
+option(WITH_QUICK "Build QtQuick components" ON)
+option(WITH_MULTIMEDIA "Build scanner support" ON)
+
 find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core Gui)
-find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG OPTIONAL_COMPONENTS Quick Multimedia)
+
+if (WITH_QUICK)
+    find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Quick)
+endif()
+
+if (WITH_MULTIMEDIA)
+    find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Multimedia)
+endif()
+
 find_package(QRencode)
 set_package_properties(QRencode PROPERTIES
     PURPOSE "Required for generation of QRCode barcodes."

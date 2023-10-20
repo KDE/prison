@@ -647,7 +647,7 @@ QImage Code93Barcode::paintImage()
     const int quietZoneWidth = 10 * barWidth;
 
     // build one line of the result image
-    QVector<QRgb> line;
+    QList<QRgb> line;
     line.reserve(barWidth * barcode.size() + 2 * quietZoneWidth);
     line.insert(0, quietZoneWidth, m_background.rgba());
     for (int i = 0; i < barcode.size(); i++) {

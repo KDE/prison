@@ -152,7 +152,7 @@ QImage Code39Barcode::paintImage()
     const int quietZoneWidth = 10 * smallWidth;
 
     // one line of the result image
-    QVector<QRgb> line;
+    QList<QRgb> line;
     line.reserve(wide * largeWidth + narrow * smallWidth + 2 * quietZoneWidth);
     line.insert(0, quietZoneWidth, m_background.rgba());
     for (int i = 0; i < barcode.size(); i++) {

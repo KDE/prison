@@ -12,6 +12,7 @@
 
 #include <iostream>
 #include <qtextstream.h>
+#include <stdlib.h>
 
 void error(const QString &error, const QString &errormessage)
 {
@@ -89,4 +90,5 @@ int main(int argc, char *argv[])
     if (!w.write(result)) {
         error(QStringLiteral("writing failed"), w.errorString());
     }
+    return EXIT_SUCCESS;
 }

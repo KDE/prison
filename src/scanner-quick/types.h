@@ -16,9 +16,9 @@ struct VideoScannerForeign {
     QML_FOREIGN(Prison::VideoScanner)
 };
 
-struct FormatForeign {
-    Q_GADGET
-    QML_ELEMENT
-    QML_NAMED_ELEMENT(Format)
-    QML_FOREIGN_NAMESPACE(Prison::Format)
+namespace FormatForeign
+{
+Q_NAMESPACE
+QML_NAMED_ELEMENT(Format)
+QML_FOREIGN_NAMESPACE(Prison::Format)
 };

@@ -87,6 +87,7 @@ void VideoScannerWorker::slotScanFrame(VideoScannerFrame frame)
         break;
     case QVideoFrameFormat::Format_P010:
     case QVideoFrameFormat::Format_P016:
+    case QVideoFrameFormat::Format_YUV420P10:
         zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::Lum, frame.bytesPerLine(), 1}, hints);
         break;
 

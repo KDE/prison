@@ -129,9 +129,6 @@ void VideoScannerFrame::convertToImage()
 
 bool VideoScannerFrame::isVerticallyFlipped() const
 {
-#ifdef Q_OS_ANDROID
-    return true;
-#endif
     return m_verticallyFlipped;
 }
 

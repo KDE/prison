@@ -62,10 +62,6 @@ set_package_properties(ZXing PROPERTIES
     PURPOSE "Required for generation of PDF417 barcodes and for scanning of barcodes from live video feed."
     TYPE RECOMMENDED)
 
-if (Qt5_POSITION_INDEPENDENT_CODE)
-  set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-endif()
-
 ecm_setup_version(PROJECT VARIABLE_PREFIX PRISON
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/prison_version.h"
                         PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF6PrisonConfigVersion.cmake"

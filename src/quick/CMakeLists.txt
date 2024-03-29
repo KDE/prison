@@ -1,4 +1,4 @@
-ecm_add_qml_module(prisonquickplugin URI org.kde.prison VERSION 1.0 GENERATE_PLUGIN_SOURCE)
+ecm_add_qml_module(prisonquickplugin URI org.kde.prison VERSION 1.0 DEPENDENCIES QtQuick GENERATE_PLUGIN_SOURCE)
 
 target_sources(prisonquickplugin PRIVATE
     barcodequickitem.cpp

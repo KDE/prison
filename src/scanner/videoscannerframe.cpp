@@ -124,7 +124,11 @@ void VideoScannerFrame::convertToImage()
 
     Q_ASSERT(m_frame.isMapped());
     m_image = m_frame.toImage();
-    m_image.convertTo(QImage::Format_Grayscale8);
+}
+
+QImage VideoScannerFrame::image() const
+{
+    return m_image;
 }
 
 bool VideoScannerFrame::isVerticallyFlipped() const

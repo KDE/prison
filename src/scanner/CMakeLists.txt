@@ -16,6 +16,7 @@ set_target_properties(KF6PrisonScanner PROPERTIES
 
 target_sources(KF6PrisonScanner PRIVATE
     format.cpp
+    imagescanner.cpp
     scanresult.cpp
     videoscanner.cpp
     videoscannerframe.cpp
@@ -54,6 +55,7 @@ install(TARGETS KF6PrisonScanner EXPORT KF6PrisonTargets ${KF_INSTALL_TARGETS_DE
 ecm_generate_headers(PrisonScanner_CamelCase_HEADERS
     HEADER_NAMES
         Format
+        ImageScanner
         ScanResult
         VideoScanner
     OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/Prison

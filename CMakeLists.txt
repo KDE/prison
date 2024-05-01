@@ -73,7 +73,7 @@ ecm_set_disabled_deprecation_versions(
 
 add_subdirectory(src)
 if(BUILD_TESTING)
-    find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Test Widgets)
+    find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Test Concurrent Widgets)
     add_subdirectory(autotests)
     add_subdirectory(tests)
 endif()

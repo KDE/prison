@@ -9,6 +9,10 @@
 #include "scanresult.h"
 
 #include <QSharedData>
+#include <QTransform>
+
+#define ZX_USE_UTF8 1
+#include <ZXing/Result.h>
 
 namespace Prison
 {
@@ -16,10 +20,7 @@ namespace Prison
 class ScanResultPrivate : public QSharedData
 {
 public:
-    static inline ScanResultPrivate *get(const ScanResult &q)
-    {
-        return q.d.data();
-    }
+    [[nodiscard]] static ScanResult fromZXingResult(const ZXing::Result &zxRes, const QTransform &transform = QTransform());
 
     QVariant content;
     QRect boundingRect;

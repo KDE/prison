@@ -72,6 +72,11 @@ public:
      */
     void convertToImage();
 
+    /** Returns the frame as QImage.
+     *  Result is only valid after a call to convertToImage().
+     */
+    QImage image() const;
+
     /** The requested barcode formats. */
     Format::BarcodeFormats formats() const;
 

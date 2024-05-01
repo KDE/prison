@@ -5,6 +5,8 @@
 
 #include "config-prison-scanner.h"
 #include "format_p.h"
+#include "imagescanner_p.h"
+#include "scanresult.h"
 #include "scanresult_p.h"
 #include "videoscannerframe_p.h"
 #include "videoscannerworker_p.h"
@@ -15,7 +17,6 @@
 
 #define ZX_USE_UTF8 1
 #include <ZXing/ReadBarcode.h>
-#include <ZXing/TextUtfEncoding.h>
 
 using namespace Prison;
 
@@ -96,71 +97,22 @@ void VideoScannerWorker::slotScanFrame(VideoScannerFrame frame)
     case QVideoFrameFormat::Format_SamplerExternalOES:
     case QVideoFrameFormat::Format_SamplerRect:
         frame.convertToImage();
-        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::Lum, frame.bytesPerLine()}, hints);
+        zxRes = ImageScanner::readBarcode(frame.image(), frame.formats());
         break;
     }
     frame.unmap();
 
     // process scan result
-    ScanResult scanResult;
     if (zxRes.isValid()) {
-        auto res = ScanResultPrivate::get(scanResult);
-
-#if ZXING_VERSION < QT_VERSION_CHECK(1, 4, 0)
-        // distinguish between binary and text content
-        const auto hasWideChars = std::any_of(zxRes.text().begin(), zxRes.text().end(), [](auto c) {
-            return c > 255;
-        });
-        const auto hasControlChars = std::any_of(zxRes.text().begin(), zxRes.text().end(), [](auto c) {
-            return c < 0x20 && c != 0x0a && c != 0x0d;
-        });
-        if (hasWideChars || !hasControlChars) {
-            res->content = QString::fromStdString(ZXing::TextUtfEncoding::ToUtf8(zxRes.text()));
-        } else {
-            QByteArray b;
-            b.resize(zxRes.text().size());
-            std::copy(zxRes.text().begin(), zxRes.text().end(), b.begin());
-            res->content = b;
-        }
-#else
-        if (zxRes.contentType() == ZXing::ContentType::Text) {
-            res->content = QString::fromStdString(zxRes.text());
-        } else {
-            QByteArray b;
-            b.resize(zxRes.bytes().size());
-            std::copy(zxRes.bytes().begin(), zxRes.bytes().end(), b.begin());
-            res->content = b;
-        }
-#endif
-
-        // determine the bounding rect
-        // the cooridinates we get from ZXing are a polygon, we need to determine the
-        // bounding rect manually from its coordinates
-        const auto p = zxRes.position();
-        int x1 = std::numeric_limits<int>::max();
-        int y1 = std::numeric_limits<int>::max();
-        int x2 = std::numeric_limits<int>::min();
-        int y2 = std::numeric_limits<int>::min();
-        for (int i = 0; i < 4; ++i) {
-            x1 = std::min(x1, p[i].x);
-            y1 = std::min(y1, p[i].y);
-            x2 = std::max(x2, p[i].x);
-            y2 = std::max(y2, p[i].y);
-        }
-        res->boundingRect = QRect(QPoint(x1, y1), QPoint(x2, y2));
-
-        // apply frame transformations to the bounding rect
+        QTransform t;
         if (frame.isVerticallyFlipped()) {
-            QTransform t;
             t.scale(1, -1);
             t.translate(0, -frame.height());
-            res->boundingRect = t.mapRect(res->boundingRect);
         }
-
-        res->format = Format::toFormat(zxRes.format());
+        Q_EMIT result(ScanResultPrivate::fromZXingResult(zxRes, t));
+    } else {
+        Q_EMIT result(ScanResult());
     }
-
-    Q_EMIT result(scanResult);
 }
 
 void VideoScannerThread::run()

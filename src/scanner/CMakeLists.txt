@@ -23,7 +23,7 @@ target_sources(KF6PrisonScanner PRIVATE
     videoscannerworker.cpp
 )
 
-kde_source_files_enable_exceptions(videoscannerworker.cpp)
+kde_source_files_enable_exceptions(videoscannerworker.cpp imagescanner.cpp scanresult.cpp)
 
 ecm_generate_export_header(KF6PrisonScanner
     BASE_NAME PrisonScanner

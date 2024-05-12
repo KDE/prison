@@ -1,4 +1,3 @@
-maintainer: svuorela
 description: Barcode abstraction layer providing uniform access to generation of barcodes
 tier: 1
 type: solution

@@ -3,6 +3,8 @@
     SPDX-License-Identifier: MIT
 */
 
+#include "config-prison-scanner.h"
+
 #include "imagescanner.h"
 #include "format.h"
 #include "format_p.h"
@@ -27,7 +29,11 @@ ZXing::Result ImageScanner::readBarcode(const QImage &image, Format::BarcodeForm
     // handle formats ZXing supports directly
     switch (image.format()) {
     case QImage::Format_Invalid:
+#if ZXING_VERSION < QT_VERSION_CHECK(1, 4, 0)
+        return ZXing::Result(ZXing::DecodeStatus::FormatError);
+#else
         return {};
+#endif
     case QImage::Format_Mono:
     case QImage::Format_MonoLSB:
     case QImage::Format_Indexed8:
@@ -58,7 +64,11 @@ ZXing::Result ImageScanner::readBarcode(const QImage &image, Format::BarcodeForm
     case QImage::Format_A2RGB30_Premultiplied:
         break; // needs conversion
     case QImage::Format_Alpha8:
+#if ZXING_VERSION < QT_VERSION_CHECK(1, 4, 0)
+        return ZXing::Result(ZXing::DecodeStatus::FormatError);
+#else
         return {};
+#endif
     case QImage::Format_Grayscale8:
         return ZXing::ReadBarcode({image.bits(), image.width(), image.height(), ZXing::ImageFormat::Lum, (int)image.bytesPerLine()}, hints);
     case QImage::Format_Grayscale16:
@@ -78,7 +88,11 @@ ZXing::Result ImageScanner::readBarcode(const QImage &image, Format::BarcodeForm
         break; // needs conversion
 
     case QImage::NImageFormats: // silence warnings
+#if ZXING_VERSION < QT_VERSION_CHECK(1, 4, 0)
+        return ZXing::Result(ZXing::DecodeStatus::FormatError);
+#else
         return {};
+#endif
     }
 
     const auto converted = image.convertedTo(QImage::Format_Grayscale8);

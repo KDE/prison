@@ -29,6 +29,10 @@ ApplicationWindow {
     CaptureSession {
         camera: Camera {
             id: camera
+            active: true
+            function onErrorOccurred(error, errorString) {
+                console.log("Camera error: " + camera.errorString)
+            }
         }
         videoOutput: viewFinder
     }

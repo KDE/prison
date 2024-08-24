@@ -23,7 +23,6 @@ include(ECMAddTests)
 include(CMakePackageConfigHelpers)
 include(ECMSetupVersion)
 include(ECMQtDeclareLoggingCategory)
-include(ECMQmlModule)
 include(ECMDeprecationSettings)
 
 set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprecated API excluded from the build [default=0].")
@@ -39,6 +38,7 @@ option(WITH_MULTIMEDIA "Build scanner support" ON)
 find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core Gui)
 
 if (WITH_QUICK)
+    include(ECMQmlModule)
     find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Quick)
 endif()
 

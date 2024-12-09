@@ -15,7 +15,6 @@ namespace Prison
 {
 class BitVector;
 
-/** Aztec code generator. */
 class AztecBarcode : public AbstractBarcodePrivate
 {
 public:

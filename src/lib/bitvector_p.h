@@ -18,7 +18,10 @@ QDebug operator<<(QDebug dbg, const Prison::BitVector &v);
 
 namespace Prison
 {
-/** Vector for working with a set of bits without byte alignment. */
+/*!
+ * \internal
+ * Vector for working with a set of bits without byte alignment.
+ */
 class BitVector
 {
 public:

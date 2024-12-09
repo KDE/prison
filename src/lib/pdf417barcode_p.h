@@ -11,9 +11,11 @@
 
 namespace Prison
 {
-/** PDF417 barcode.
- *  @see https://en.wikipedia.org/wiki/PDF417
- *  @see ISO/IEC 15438
+/*!
+ * \internal
+ * PDF417 barcode.
+ * \sa https://en.wikipedia.org/wiki/PDF417
+ * \sa ISO/IEC 15438
  */
 class Pdf417Barcode : public AbstractBarcodePrivate
 {

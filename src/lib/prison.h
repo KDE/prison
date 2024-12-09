@@ -9,32 +9,35 @@
 
 #include "prison_export.h"
 
-/**
- * @namespace Prison
+/*!
+ * \namespace Prison
+ * \inheaderfile Prison/Prison
+ * \inmodule Prison
  *
- * Provides classes and methods for generating barcodes.
+ * \brief Provides classes and methods for generating barcodes.
  */
 namespace Prison
 {
-/**
+/*!
  * possible supported barcode types
+ *
+ * \value QRCode QRCode 2d barcode
+ * \value DataMatrix DataMatrix 2d barcode
+ * \value Aztec Aztec 2d barcode
+ * \value Code39 Code39 barcode
+ * \value Code93 Code93 barcode
+ * \value Code128 Code 128 barcode
+ * \value PDF417 PDF417 barcode
+ * \value EAN13 EAN13 barcode
  */
 enum BarcodeType {
-    /** QRCode 2d barcode */
     QRCode,
-    /** DataMatrix 2d barcode */
     DataMatrix,
-    /** Aztec 2d barcode */
     Aztec,
-    /** Code39 barcode */
     Code39,
-    /** Code93 barcode */
     Code93,
-    /** Code 128 barcode */
     Code128,
-    /** PDF417 barcode */
     PDF417,
-    /** EAN13 barcode */
     EAN13,
 };
 }

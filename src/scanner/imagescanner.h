@@ -16,29 +16,37 @@ namespace Prison
 
 class ScanResult;
 
-/** Scans a still image for barcodes.
+/*!
+ * \namespace Prison::ImageScanner
+ * \inheaderfile Prison/ImageScanner
+ * \inmodule PrisonScanner
  *
- *  @since 6.3
+ * \brief Scans a still image for barcodes.
+ *
+ * \since 6.3
  */
 namespace ImageScanner
 {
 
-/** Scan @p image for a barcode.
- *  This method is synchronous and expensive.
- *  For use in the main thread running this on a secondary thread is strongly recommended
- *  when processing larger images.
+/*!
+ * Scan \a image for a barcode.
  *
- *  @code
- *  QtConcurrent::run([&img]() { return ImageScanner::scan(img); }).then([](const ScanResult &result) {
- *    ...
- *  });
- *  @endcode
+ * This method is synchronous and expensive.
+ * For use in the main thread running this on a secondary thread is strongly recommended
+ * when processing larger images.
  *
- *  @param image The image to scan for barcodes, in any format.
- *  @param formats The barcode formats to look for. By default all supported formats
- *  are searched, limiting this improves performance and can improve result quality.
+ * \code
+ * QtConcurrent::run([&img]() { return ImageScanner::scan(img); }).then([](const ScanResult &result) {
+ *   ...
+ * });
+ * \endcode
  *
- *  @since 6.3
+ * \a image The image to scan for barcodes, in any format.
+ *
+ * \a formats The barcode formats to look for. By default all supported formats
+ * are searched, limiting this improves performance and can improve result quality.
+ *
+ * \since 6.3
  */
 [[nodiscard]] PRISONSCANNER_EXPORT ScanResult scan(const QImage &image, Format::BarcodeFormats formats = {});
 

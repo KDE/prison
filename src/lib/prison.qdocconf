@@ -1,0 +1,32 @@
+include($KDE_DOCS/global/qt-module-defaults.qdocconf)
+
+project = Prison
+description = Barcode Rendering
+
+documentationinheaders = true
+
+headerdirs += . ../quick
+sourcedirs += . ../quick
+
+outputformats = HTML
+
+depends += \
+    kde \
+    qtcore \
+    qtgui \
+    qtquick \
+    prisonscanner
+
+qhp.projects            = Prison
+
+qhp.Prison.file                = prison.qhp
+qhp.Prison.namespace           = org.kde.prison.$QT_VERSION_TAG
+qhp.Prison.virtualFolder       = prison
+qhp.Prison.indexTitle          = Prison
+qhp.Prison.indexRoot           =
+
+qhp.Prison.subprojects         = classes
+qhp.Prison.subprojects.classes.title = C++ Classes
+qhp.Prison.subprojects.classes.indexTitle = Prison C++ Classes
+qhp.Prison.subprojects.classes.selectors = class fake:headerfile
+qhp.Prison.subprojects.classes.sortPages = true

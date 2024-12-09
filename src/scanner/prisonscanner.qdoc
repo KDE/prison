@@ -1,0 +1,17 @@
+/*!
+    \module PrisonScanner
+    \title Prison Scanner C++ Classes
+    \ingroup modules
+    \cmakepackage KF6
+    \cmakecomponent Prison
+    \cmaketargetitem KF6::PrisonScanner
+
+    \brief Barcode Scanning.
+*/
+
+/*!
+    \qmlmodule org.kde.prison.scanner
+    \title Prison Scanner QML Types
+    \ingroup qmlmodules
+    \brief Barcode Scanning.
+*/

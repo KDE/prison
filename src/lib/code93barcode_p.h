@@ -11,20 +11,21 @@
 
 namespace Prison
 {
-/**
+/*!
+ * \internal
  * Code 93 Barcode generator
  */
 class Code93Barcode : public Prison::AbstractBarcodePrivate
 {
 public:
-    /**
+    /*!
      * creates a Code 93 generator
      */
     Code93Barcode();
     ~Code93Barcode() override;
-    /**
+    /*!
      * This function generates the barcode
-     * @return QImage containing a barcode, trying to approximate the requested sizes
+     * Returns QImage containing a barcode, trying to approximate the requested sizes
      */
     QImage paintImage() override;
 };

@@ -18,7 +18,10 @@ QDebug operator<<(QDebug dbg, const Prison::BitVector &v);
 
 namespace Prison
 {
-/** Vector for working with a set of bits without byte alignment. */
+/*!
+ * \internal
+ * Vector for working with a set of bits without byte alignment.
+ */
 class BitVector
 {
 public:
@@ -48,18 +51,18 @@ public:
         int m_index;
     };
 
-    /** Append the lowest @p bits of @p data with the least significant bit first. */
+    /* Append the lowest bits of data with the least significant bit first. */
     void appendLSB(int data, int bits);
-    /** Append the lowest @p bits of @p data with the most significant bit first. */
+    /* Append the lowest bits of data with the most significant bit first. */
     void appendMSB(int data, int bits);
     void appendBit(bool bit);
     void append(const BitVector &other);
-    /** Returns the bit at index @p index. */
+    /* Returns the bit at index index. */
     bool at(int index) const;
     void clear();
     void reserve(int size);
     int size() const;
-    /** Returns the value starting at @p index of size @p size. */
+    /* Returns the value starting at index of size size. */
     int valueAtMSB(int index, int size) const;
     iterator begin() const;
     iterator end() const;

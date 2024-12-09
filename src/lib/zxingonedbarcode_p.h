@@ -16,7 +16,10 @@
 
 namespace Prison
 {
-/** Generic support for ZXing 1D barcodes. */
+/*!
+ * \internal
+ * Generic support for ZXing 1D barcodes.
+ */
 template<ZXing::BarcodeFormat Format>
 class ZXingOneDBarcode : public AbstractBarcodePrivate
 {

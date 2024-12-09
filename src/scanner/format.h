@@ -11,19 +11,47 @@
 #include <QFlag>
 #include <QMetaType>
 
+/*!
+ * \namespace Prison
+ * \inmodule PrisonScanner
+ */
 namespace Prison
 {
 
-/**
- * Barcode formats detectable by Prison::VideoScanner.
+/*!
+ * \namespace Prison::Format
+ * \inheaderfile Prison/Format
+ * \inmodule PrisonScanner
  *
- * @see Prison::ScanResult.
- * @since 5.94
+ * \brief Barcode formats detectable by Prison::VideoScanner.
+ *
+ * \sa Prison::ScanResult.
+ * \since 5.94
  */
 namespace Format
 {
 Q_NAMESPACE_EXPORT(PRISONSCANNER_EXPORT)
-/** Barcode formats. */
+/*!
+ * \value NoFormat
+ * \value Aztec
+ * \value Codabar
+ * \value Code39
+ * \value Code93
+ * \value Code128
+ * \value DataBar
+ * \value DataBarExpanded
+ * \value DataMatrix
+ * \value EAN8
+ * \value EAN13
+ * \value ITF
+ * \value MaxiCode
+ * \value PDF417
+ * \value QRCode
+ * \value UPCA
+ * \value UPCE
+ *
+ * Barcode formats.
+ */
 enum BarcodeFormat {
     NoFormat = 0,
     Aztec = 1,

@@ -1,0 +1,23 @@
+/*!
+    \page prison-index.html
+    \title Prison
+
+    Barcode Scanning and Rendering
+
+    \section1 Using the Module
+
+    \include {module-use.qdocinc} {using the c++ api}
+
+    \section2 Building with CMake
+
+    \include {module-use.qdocinc} {building with cmake} {KF6} {Prison} {KF6::Prison}
+
+    \section1 API Reference
+
+    \list
+        \li \l{Prison C++ Classes}
+        \li \l{Prison QML Types}
+        \li \l{Prison Scanner C++ Classes}
+        \li \l{Prison Scanner QML Types}
+    \endlist
+*/

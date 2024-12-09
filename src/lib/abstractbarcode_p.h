@@ -21,14 +21,13 @@ public:
     explicit AbstractBarcodePrivate(Barcode::Dimensions dim);
     virtual ~AbstractBarcodePrivate();
 
-    /**
+    /*
      * Doing the actual painting of the image
-     * @param size unused - will be removed in KF6
-     * @return image with barcode, or null image
+     * Returns image with barcode, or null image
      */
     virtual QImage paintImage() = 0;
 
-    /** @see Barcode::preferredSize */
+    /* See Barcode::preferredSize */
     virtual QSizeF preferredSize(qreal devicePixelRatio) const;
 
     bool isEmpty() const;

@@ -11,21 +11,22 @@
 
 namespace Prison
 {
-/**
+/*!
+ * \internal
  * QRCode Barcode generator ; uses libqrencode to do the actual encoding
  * of the barcode.
  */
 class QRCodeBarcode : public AbstractBarcodePrivate
 {
 public:
-    /**
+    /*!
      * creates a QRCode generator
      */
     QRCodeBarcode();
     ~QRCodeBarcode() override;
-    /**
+    /*!
      * This is the function doing the actual work in generating the barcode
-     * @return QImage containing a QRCode, trying to approximate the requested sizes
+     * Returns QImage containing a QRCode, trying to approximate the requested sizes
      */
     QImage paintImage() override;
 };

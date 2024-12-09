@@ -12,7 +12,6 @@
 
 struct VideoScannerForeign {
     Q_GADGET
-    QML_ELEMENT
     QML_NAMED_ELEMENT(VideoScanner)
     QML_FOREIGN(Prison::VideoScanner)
 };

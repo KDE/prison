@@ -108,6 +108,8 @@ ecm_generate_headers(Prison_CamelCase_HEADERS
     OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/Prison
 )
 
+ecm_generate_qdoc(KF6Prison prison.qdocconf)
+
 set(_all_headers
     ${Prison_HEADERS}
     ${Prison_CamelCase_HEADERS}

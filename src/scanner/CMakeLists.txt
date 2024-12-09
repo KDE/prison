@@ -35,6 +35,8 @@ ecm_generate_export_header(KF6PrisonScanner
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
 
+ecm_generate_qdoc(KF6PrisonScanner prisonscanner.qdocconf)
+
 target_include_directories(KF6PrisonScanner
     INTERFACE
         "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/PrisonScanner>"

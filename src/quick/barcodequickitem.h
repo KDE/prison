@@ -17,23 +17,60 @@
 namespace Prison
 {
 
+/*!
+ * \qmltype Barcode
+ * \inqmlmodule org.kde.prison
+ * \inherits Item
+ *
+ * \brief Renders a barcode.
+ */
 class BarcodeQuickItem : public QQuickPaintedItem
 {
     Q_OBJECT
     QML_NAMED_ELEMENT(Barcode)
+
+    /*!
+     * \qmlproperty variant Barcode::content
+     */
     Q_PROPERTY(QVariant content READ content WRITE setContent NOTIFY contentChanged)
+
+    /*!
+     * \qmlproperty var Barcode::barcodeType
+     */
     Q_PROPERTY(QJSValue barcodeType READ barcodeType WRITE setBarcodeType NOTIFY barcodeTypeChanged)
+
+    /*!
+     * \qmlproperty color Barcode::foregroundColor
+     */
     Q_PROPERTY(QColor foregroundColor READ foregroundColor WRITE setForegroundColor NOTIFY foregroundColorChanged)
+
+    /*!
+     * \qmlproperty color Barcode::backgroundColor
+     */
     Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
+
+    /*!
+     * \qmlproperty dimensions Barcode::dimensions
+     *
+     * Possible values are
+     * \list
+     * \li NoDimensions,
+     * \li OneDimension,
+     * \li TwoDimensions,
+     * \endlist
+     */
     Q_PROPERTY(Dimensions dimensions READ dimensions NOTIFY dimensionsChanged)
-    /**
-     * @see Prison::Barcode::minimumSize()
-     * @since 5.69
+
+    /*!
+     * \qmlproperty real Barcode::minimumHeight
+     * \sa Prison::Barcode::minimumSize()
+     * \since 5.69
      */
     Q_PROPERTY(qreal minimumHeight READ minimumHeight NOTIFY implicitHeightChanged)
-    /**
-     * @see Prison::Barcode::minimumSize()
-     * @since 5.69
+    /*!
+     * \qmlproperty real Barcode::minimumWidth
+     * \sa Prison::Barcode::minimumSize()
+     * \since 5.69
      */
     Q_PROPERTY(qreal minimumWidth READ minimumWidth NOTIFY implicitWidthChanged)
 

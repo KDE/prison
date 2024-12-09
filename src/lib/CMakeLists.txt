@@ -108,6 +108,8 @@ ecm_generate_headers(Prison_CamelCase_HEADERS
     OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/Prison
 )
 
+ecm_generate_qdoc(KF6Prison prison.qdocconf)
+
 set(_all_headers
     ${Prison_HEADERS}
     ${Prison_CamelCase_HEADERS}
@@ -119,30 +121,3 @@ install(
     DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/Prison/Prison
     COMPONENT Devel
 )
-
-if(BUILD_QCH)
-    ecm_add_qch(
-        KF6Prison_QCH
-        NAME Prison
-        BASE_NAME KF6Prison
-        VERSION ${KF_VERSION}
-        ORG_DOMAIN org.kde
-        SOURCES # using only public headers, to cover only public API
-            ${Prison_HEADERS}
-        MD_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md"
-        LINK_QCHS
-            Qt6Gui_QCH
-        INCLUDE_DIRS
-            ${CMAKE_CURRENT_BINARY_DIR}
-        BLANK_MACROS
-            PRISON_EXPORT
-            PRISON_DEPRECATED
-            PRISON_DEPRECATED_EXPORT
-            "PRISON_DEPRECATED_VERSION(x, y, t)"
-            "PRISON_DEPRECATED_VERSION_BELATED(x, y, xt, yt, t)"
-        TAGFILE_INSTALL_DESTINATION ${KDE_INSTALL_QTQCHDIR}
-        QCH_INSTALL_DESTINATION ${KDE_INSTALL_QTQCHDIR}
-        COMPONENT Devel
-    )
-endif()
-

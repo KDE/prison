@@ -1,0 +1,18 @@
+/*!
+    \module Prison
+    \title Prison C++ Classes
+    \ingroup modules
+    \cmakepackage KF6
+    \cmakecomponent Prison
+
+    \brief Barcode Rendering.
+
+*/
+
+/*!
+    \qmlmodule org.kde.prison
+    \title Prison QML Types
+    \ingroup qmlmodules
+    \brief Barcode Rendering.
+
+*/

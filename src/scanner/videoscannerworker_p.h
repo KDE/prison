@@ -17,7 +17,9 @@ namespace Prison
 
 class VideoScannerFrame;
 
-/** Contains the actual barcode detecting/decoding work,
+/*!
+ * \internal
+ * Contains the actual barcode detecting/decoding work,
  *  to be run in a secondary thread.
  */
 class VideoScannerWorker : public QObject
@@ -34,7 +36,10 @@ public Q_SLOTS:
     void slotScanFrame(VideoScannerFrame frame);
 };
 
-/** Thread for executing the VideoScannerWorker. */
+/*!
+ * \internal
+ * Thread for executing the VideoScannerWorker.
+ */
 class VideoScannerThread : public QThread
 {
 public:

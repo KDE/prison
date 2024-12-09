@@ -11,22 +11,23 @@
 
 namespace Prison
 {
-/**
+/*!
+ * \internal
  * Code 39 Barcode generator
  */
 class Code39Barcode : public Prison::AbstractBarcodePrivate
 {
 public:
-    /**
+    /*!
      * creates a Code 39 generator
      */
     Code39Barcode();
     ~Code39Barcode() override;
 
 protected:
-    /**
+    /*!
      * This function generates the barcode
-     * @return QImage containing a barcode, trying to approximate the requested sizes, or a null QImage if it can't be painted within requested size
+     * Returns QImage containing a barcode, trying to approximate the requested sizes, or a null QImage if it can't be painted within requested size
      */
     QImage paintImage() override;
 };

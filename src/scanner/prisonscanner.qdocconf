@@ -1,0 +1,30 @@
+include($KDE_DOCS/global/qt-module-defaults.qdocconf)
+
+project = PrisonScanner
+description = Barcode Scanning
+
+documentationinheaders = true
+
+headerdirs += . ../scanner-quick
+sourcedirs += . ../scanner-quick
+
+outputformats = HTML
+
+depends += \
+    kde \
+    qtcore \
+    qtmultimedia
+
+qhp.projects            = PrisonScanner
+
+qhp.PrisonScanner.file                = prison.qhp
+qhp.PrisonScanner.namespace           = org.kde.prison.scanner.$QT_VERSION_TAG
+qhp.PrisonScanner.virtualFolder       = prisonscanner
+qhp.PrisonScanner.indexTitle          = Prison Scanner
+qhp.PrisonScanner.indexRoot           =
+
+qhp.PrisonScanner.subprojects         = classes
+qhp.PrisonScanner.subprojects.classes.title = C++ Classes
+qhp.PrisonScanner.subprojects.classes.indexTitle = Prison Scanner C++ Classes
+qhp.PrisonScanner.subprojects.classes.selectors = class fake:headerfile
+qhp.PrisonScanner.subprojects.classes.sortPages = true

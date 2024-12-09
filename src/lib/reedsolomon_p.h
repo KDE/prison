@@ -13,7 +13,10 @@ namespace Prison
 {
 class BitVector;
 
-/** Reed Solomon checksum generator. */
+/*!
+ * \internal
+ * Reed Solomon checksum generator.
+ */
 class ReedSolomon
 {
 public:
@@ -25,15 +28,15 @@ public:
         GF4096 = 0x1069,
     };
 
-    /** Initialize a Reed Solomon encoder with the Galois Field
-     *  described by the bit pattern of @p polynom, for generating
-     *  @p symbolCount error correction symbols.
+    /*! Initialize a Reed Solomon encoder with the Galois Field
+     *  described by the bit pattern of \a polynom, for generating
+     *  \a symbolCount error correction symbols.
      */
     explicit ReedSolomon(int polynom, int symbolCount);
     ReedSolomon(const ReedSolomon &) = delete;
     ~ReedSolomon();
 
-    /** Encode the content of @p input and return the resulting
+    /*! Encode the content of \a input and return the resulting
      *  code words.
      */
     BitVector encode(const BitVector &input) const;

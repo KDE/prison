@@ -15,8 +15,10 @@ namespace Prison
 {
 class BitVector;
 
-/** Code 128 barcode
- *  @see https://en.wikipedia.org/wiki/Code_128
+/*!
+ * \internal
+ * Code 128 barcode
+ * \sa https://en.wikipedia.org/wiki/Code_128
  */
 class Code128Barcode : public AbstractBarcodePrivate
 {

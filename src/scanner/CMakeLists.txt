@@ -35,6 +35,8 @@ ecm_generate_export_header(KF6PrisonScanner
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
 
+ecm_generate_qdoc(KF6PrisonScanner prisonscanner.qdocconf)
+
 target_include_directories(KF6PrisonScanner
     INTERFACE
         "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/PrisonScanner>"
@@ -70,29 +72,3 @@ install(
     DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/PrisonScanner/Prison
     COMPONENT Devel
 )
-
-if(BUILD_QCH)
-    ecm_add_qch(
-        KF6PrisonScanner_QCH
-        NAME PrisonScanner
-        BASE_NAME KF6PrisonScanner
-        VERSION ${KF_VERSION}
-        ORG_DOMAIN org.kde
-        SOURCES # using only public headers, to cover only public API
-            ${PrisonScanner_HEADERS}
-        MD_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md"
-        LINK_QCHS
-            Qt6Multimedia_QCH
-        INCLUDE_DIRS
-            ${CMAKE_CURRENT_BINARY_DIR}
-        BLANK_MACROS
-            PRISONSCANNER_EXPORT
-            PRISONSCANNER_DEPRECATED
-            PRISONSCANNER_DEPRECATED_EXPORT
-            "PRISONSCANNER_DEPRECATED_VERSION(x, y, t)"
-            "PRISONSCANNER_DEPRECATED_VERSION_BELATED(x, y, xt, yt, t)"
-        TAGFILE_INSTALL_DESTINATION ${KDE_INSTALL_QTQCHDIR}
-        QCH_INSTALL_DESTINATION ${KDE_INSTALL_QTQCHDIR}
-        COMPONENT Devel
-    )
-endif()

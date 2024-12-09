@@ -12,23 +12,24 @@
 
 namespace Prison
 {
-/**
+/*!
+ * \internal
  * This is a Datamatrix barcode generator that uses libdmtx
  * for the actual generation of barcodes.
  */
 class DataMatrixBarcode : public Prison::AbstractBarcodePrivate
 {
 public:
-    /**
+    /*!
      * creates a datamatrixbarcode generator
      */
     DataMatrixBarcode();
     ~DataMatrixBarcode() override;
 
 protected:
-    /**
+    /*!
      * This is the function doing the actual work in generating the barcode
-     * @return QImage containing a DataMatrix, trying to approximate the requested sizes
+     * Returns QImage containing a DataMatrix, trying to approximate the requested sizes
      */
     QImage paintImage() override;
 };

@@ -12,7 +12,7 @@ portingAid: false
 deprecated: false
 release: true
 libraries:
- - cmake: "KF6::Prison"
+    - cmake: "KF6::Prison"
 cmakename: KF6Prison
 
 public_lib: true

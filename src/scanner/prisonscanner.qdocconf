@@ -10,6 +10,8 @@ sourcedirs += . ../scanner-quick
 
 outputformats = HTML
 
+navigation.landingpage = "Prison"
+
 depends += \
     kde \
     qtcore \

@@ -19,14 +19,19 @@ depends += \
 
 qhp.projects            = PrisonScanner
 
-qhp.PrisonScanner.file                = prison.qhp
-qhp.PrisonScanner.namespace           = org.kde.prison.scanner.$QT_VERSION_TAG
+qhp.PrisonScanner.file                = prisonscanner.qhp
+qhp.PrisonScanner.namespace           = org.kde.prisonscanner.$QT_VERSION_TAG
 qhp.PrisonScanner.virtualFolder       = prisonscanner
 qhp.PrisonScanner.indexTitle          = Prison Scanner
 qhp.PrisonScanner.indexRoot           =
 
-qhp.PrisonScanner.subprojects         = classes
+qhp.PrisonScanner.subprojects         = classes qmltypes
 qhp.PrisonScanner.subprojects.classes.title = C++ Classes
 qhp.PrisonScanner.subprojects.classes.indexTitle = Prison Scanner C++ Classes
 qhp.PrisonScanner.subprojects.classes.selectors = class fake:headerfile
 qhp.PrisonScanner.subprojects.classes.sortPages = true
+
+qhp.PrisonScanner.subprojects.qmltypes.title = QML Types
+qhp.PrisonScanner.subprojects.qmltypes.indexTitle = Prison Scanner QML Types
+qhp.PrisonScanner.subprojects.qmltypes.selectors = qmltype
+qhp.PrisonScanner.subprojects.qmltypes.sortPages = true

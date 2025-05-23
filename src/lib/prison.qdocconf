@@ -27,8 +27,13 @@ qhp.Prison.virtualFolder       = prison
 qhp.Prison.indexTitle          = Prison
 qhp.Prison.indexRoot           =
 
-qhp.Prison.subprojects         = classes
+qhp.Prison.subprojects         = classes qmltypes
 qhp.Prison.subprojects.classes.title = C++ Classes
 qhp.Prison.subprojects.classes.indexTitle = Prison C++ Classes
 qhp.Prison.subprojects.classes.selectors = class fake:headerfile
 qhp.Prison.subprojects.classes.sortPages = true
+
+qhp.Prison.subprojects.qmltypes.title = QML Types
+qhp.Prison.subprojects.qmltypes.indexTitle = Prison QML Types
+qhp.Prison.subprojects.qmltypes.selectors = qmltype
+qhp.Prison.subprojects.qmltypes.sortPages = true

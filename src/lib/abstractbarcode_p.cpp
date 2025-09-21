@@ -7,7 +7,6 @@
 #include "abstractbarcode_p.h"
 
 #include <QColor>
-#include <QVariant>
 
 using namespace Prison;
 

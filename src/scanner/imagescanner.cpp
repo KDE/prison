@@ -5,9 +5,8 @@
 
 #include "config-prison-scanner.h"
 
-#include "imagescanner.h"
-#include "format.h"
 #include "format_p.h"
+#include "imagescanner.h"
 #include "imagescanner_p.h"
 #include "scanresult.h"
 #include "scanresult_p.h"

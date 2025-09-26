@@ -104,8 +104,8 @@ ecm_generate_headers(Prison_CamelCase_HEADERS
     Barcode
     Prison
     MeCard
-    SHARED_PREFIX Prison
     REQUIRED_HEADERS Prison_HEADERS
+    OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/Prison
 )
 
 ecm_generate_qdoc(KF6Prison prison.qdocconf)

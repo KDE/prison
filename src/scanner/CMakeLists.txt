@@ -60,7 +60,7 @@ ecm_generate_headers(PrisonScanner_CamelCase_HEADERS
         ImageScanner
         ScanResult
         VideoScanner
-    OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/Prison
+    SHARED_PREFIX Prison
     REQUIRED_HEADERS PrisonScanner_HEADERS
 )
 

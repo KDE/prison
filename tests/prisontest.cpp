@@ -16,18 +16,25 @@
 #include <QPushButton>
 #include <QSplitter>
 
+static void safeSetData(BarcodeExampleWidget *w, const QString &data)
+{
+    if (w) {
+        w->setData(data);
+    }
+}
+
 void main_window::data_changed()
 {
     QString result = m_lineedit->text();
-    m_dmw->setData(result);
-    m_qrw->setData(result);
-    m_39w->setData(result);
-    m_93w->setData(result);
-    m_dmcolor->setData(result);
-    m_qrcolor->setData(result);
-    m_39color->setData(result);
-    m_93color->setData(result);
-    m_nullw->setData(result);
+    safeSetData(m_dmw, result);
+    safeSetData(m_qrw, result);
+    safeSetData(m_39w, result);
+    safeSetData(m_93w, result);
+    safeSetData(m_dmcolor, result);
+    safeSetData(m_qrcolor, result);
+    safeSetData(m_39color, result);
+    safeSetData(m_93color, result);
+    safeSetData(m_nullw, result);
 }
 
 main_window::main_window()
@@ -41,16 +48,23 @@ main_window::main_window()
 
     QVBoxLayout *mainlay = new QVBoxLayout(this);
 
+    QSplitter *splitter = new QSplitter(Qt::Vertical);
+
     m_dmw = new BarcodeExampleWidget(Prison::DataMatrix, this);
+    splitter->addWidget(m_dmw);
     m_qrw = new BarcodeExampleWidget(Prison::QRCode, this);
+    splitter->addWidget(m_qrw);
     m_39w = new BarcodeExampleWidget(Prison::Code39, this);
+    splitter->addWidget(m_39w);
     m_93w = new BarcodeExampleWidget(Prison::Code93, this);
+    splitter->addWidget(m_93w);
     {
         auto dmcolorcode = Prison::Barcode::create(Prison::DataMatrix);
         if (dmcolorcode) {
             dmcolorcode->setForegroundColor(Qt::red);
             dmcolorcode->setBackgroundColor(Qt::darkBlue);
             m_dmcolor = new BarcodeExampleWidget(std::move(dmcolorcode), this);
+            splitter->addWidget(m_dmcolor);
         }
     }
     {
@@ -60,6 +74,7 @@ main_window::main_window()
             qrcolorcode->setBackgroundColor(Qt::darkBlue);
         }
         m_qrcolor = new BarcodeExampleWidget(std::move(qrcolorcode), this);
+        splitter->addWidget(m_qrcolor);
     }
     {
         auto c39colorcode = Prison::Barcode::create(Prison::Code39);
@@ -68,6 +83,7 @@ main_window::main_window()
             c39colorcode->setBackgroundColor(Qt::darkBlue);
         }
         m_39color = new BarcodeExampleWidget(std::move(c39colorcode), this);
+        splitter->addWidget(m_39color);
     }
     {
         auto c93colorcode = Prison::Barcode::create(Prison::Code93);
@@ -76,19 +92,10 @@ main_window::main_window()
             c93colorcode->setBackgroundColor(Qt::darkBlue);
         }
         m_93color = new BarcodeExampleWidget(std::move(c93colorcode), this);
+        splitter->addWidget(m_93color);
     }
 
     m_nullw = new BarcodeExampleWidget(std::nullopt, this);
-
-    QSplitter *splitter = new QSplitter(Qt::Vertical);
-    splitter->addWidget(m_dmw);
-    splitter->addWidget(m_qrw);
-    splitter->addWidget(m_39w);
-    splitter->addWidget(m_93w);
-    splitter->addWidget(m_dmcolor);
-    splitter->addWidget(m_qrcolor);
-    splitter->addWidget(m_39color);
-    splitter->addWidget(m_93color);
     splitter->addWidget(m_nullw);
 
     mainlay->addLayout(lay);

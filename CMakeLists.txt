@@ -27,7 +27,7 @@ include(ECMGenerateQDoc)
 
 set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprecated API excluded from the build [default=0].")
 
-set(REQUIRED_QT_VERSION 6.7.0)
+set(REQUIRED_QT_VERSION 6.8.0)
 
 option(WITH_QUICK "Build QtQuick components" ON)
 option(WITH_MULTIMEDIA "Build scanner support" ON)

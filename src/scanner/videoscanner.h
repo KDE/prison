@@ -34,8 +34,7 @@ class VideoScannerPrivate;
  *
  * \brief Scans a live video feed for barcodes.
  *
- * In Qt5 this can be added as a video filter to a VideoOutput element.
- * In Qt6 this can be connected to a QVideoSink object.
+ * This can be connected to a QVideoSink object.
  *
  * \since 5.94
  */

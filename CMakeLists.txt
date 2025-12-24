@@ -65,7 +65,7 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX PRISON
                         SOVERSION 6
 )
 ecm_set_disabled_deprecation_versions(
-    QT 6.10
+    QT 6.11
 )
 
 add_subdirectory(src)

@@ -33,7 +33,11 @@ void VideoScannerWorker::slotScanFrame(VideoScannerFrame frame)
 #else
     ZXing::Result zxRes;
 #endif
+#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
     ZXing::DecodeHints hints;
+#else
+    ZXing::ReaderOptions hints;
+#endif
     hints.setFormats(frame.formats() == Format::NoFormat ? ZXing::BarcodeFormats::all() : Format::toZXing(frame.formats()));
 
     frame.map();
@@ -44,20 +48,36 @@ void VideoScannerWorker::slotScanFrame(VideoScannerFrame frame)
     case QVideoFrameFormat::Format_ARGB8888:
     case QVideoFrameFormat::Format_ARGB8888_Premultiplied:
     case QVideoFrameFormat::Format_XRGB8888:
+#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
         zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::XRGB, frame.bytesPerLine()}, hints);
+#else
+        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::ARGB, frame.bytesPerLine()}, hints);
+#endif
         break;
     case QVideoFrameFormat::Format_BGRA8888:
     case QVideoFrameFormat::Format_BGRA8888_Premultiplied:
     case QVideoFrameFormat::Format_BGRX8888:
+#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
         zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::BGRX, frame.bytesPerLine()}, hints);
+#else
+        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::BGRA, frame.bytesPerLine()}, hints);
+#endif
         break;
     case QVideoFrameFormat::Format_ABGR8888:
     case QVideoFrameFormat::Format_XBGR8888:
+#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
         zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::XBGR, frame.bytesPerLine()}, hints);
+#else
+        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::ABGR, frame.bytesPerLine()}, hints);
+#endif
         break;
     case QVideoFrameFormat::Format_RGBA8888:
     case QVideoFrameFormat::Format_RGBX8888:
+#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
         zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::RGBX, frame.bytesPerLine()}, hints);
+#else
+        zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::RGBA, frame.bytesPerLine()}, hints);
+#endif
         break;
     case QVideoFrameFormat::Format_AYUV:
     case QVideoFrameFormat::Format_AYUV_Premultiplied:

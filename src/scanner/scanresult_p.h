@@ -6,13 +6,19 @@
 #ifndef PRISON_SCANRESULT_P_H
 #define PRISON_SCANRESULT_P_H
 
+#include "config-prison-scanner.h"
+
 #include "scanresult.h"
 
 #include <QSharedData>
 #include <QTransform>
 
 #define ZX_USE_UTF8 1
+#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
 #include <ZXing/Result.h>
+#else
+#include <ZXing/Barcode.h>
+#endif
 
 namespace Prison
 {

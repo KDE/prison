@@ -16,13 +16,16 @@
 #define ZX_USE_UTF8 1
 #include <ZXing/BarcodeFormat.h>
 #include <ZXing/ReadBarcode.h>
-#include <ZXing/Result.h>
 
 using namespace Prison;
 
 ZXing::Result ImageScanner::readBarcode(const QImage &image, Format::BarcodeFormats formats)
 {
+#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
     ZXing::DecodeHints hints;
+#else
+    ZXing::ReaderOptions hints;
+#endif
     hints.setFormats(formats == Format::NoFormat ? ZXing::BarcodeFormats::all() : Format::toZXing(formats));
 
     // handle formats ZXing supports directly
@@ -40,7 +43,11 @@ ZXing::Result ImageScanner::readBarcode(const QImage &image, Format::BarcodeForm
     case QImage::Format_RGB32:
     case QImage::Format_ARGB32:
     case QImage::Format_ARGB32_Premultiplied:
+#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
         return ZXing::ReadBarcode({image.bits(), image.width(), image.height(), ZXing::ImageFormat::XRGB, (int)image.bytesPerLine()}, hints);
+#else
+        return ZXing::ReadBarcode({image.bits(), image.width(), image.height(), ZXing::ImageFormat::ARGB, (int)image.bytesPerLine()}, hints);
+#endif
     case QImage::Format_RGB16:
     case QImage::Format_ARGB8565_Premultiplied:
     case QImage::Format_RGB666:
@@ -56,7 +63,11 @@ ZXing::Result ImageScanner::readBarcode(const QImage &image, Format::BarcodeForm
     case QImage::Format_RGBX8888:
     case QImage::Format_RGBA8888:
     case QImage::Format_RGBA8888_Premultiplied:
+#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
         return ZXing::ReadBarcode({image.bits(), image.width(), image.height(), ZXing::ImageFormat::RGBX, (int)image.bytesPerLine()}, hints);
+#else
+        return ZXing::ReadBarcode({image.bits(), image.width(), image.height(), ZXing::ImageFormat::RGBA, (int)image.bytesPerLine()}, hints);
+#endif
     case QImage::Format_BGR30:
     case QImage::Format_A2BGR30_Premultiplied:
     case QImage::Format_RGB30:
@@ -84,6 +95,7 @@ ZXing::Result ImageScanner::readBarcode(const QImage &image, Format::BarcodeForm
     case QImage::Format_RGBX32FPx4:
     case QImage::Format_RGBA32FPx4:
     case QImage::Format_RGBA32FPx4_Premultiplied:
+    case QImage::Format_CMYK8888:
         break; // needs conversion
 
     case QImage::NImageFormats: // silence warnings

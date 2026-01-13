@@ -29,6 +29,8 @@ set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprec
 
 set(REQUIRED_QT_VERSION 6.8.0)
 
+option(WITH_DMTX "Build with DataMatrix generation support" ON)
+option(WITH_ZXING "Build with barcode scanning and PDF417 generation support" ON)
 option(WITH_QUICK "Build QtQuick components" ON)
 option(WITH_MULTIMEDIA "Build scanner support" ON)
 
@@ -47,19 +49,23 @@ find_package(QRencode)
 set_package_properties(QRencode PROPERTIES
     PURPOSE "Required for generation of QRCode barcodes."
     TYPE REQUIRED)
-find_package(Dmtx)
-set_package_properties(Dmtx PROPERTIES
-    PURPOSE "Required for generation of Data Matrix barcodes."
-    TYPE RECOMMENDED)
-foreach(ver 3.0 2.0 1.2.0)
-    find_package(ZXing ${ver} CONFIG QUIET)
-    if (TARGET ZXing::ZXing)
-        break()
-    endif()
-endforeach()
-set_package_properties(ZXing PROPERTIES
-    PURPOSE "Required for generation of PDF417 barcodes and for scanning of barcodes from live video feed."
-    TYPE RECOMMENDED)
+if (WITH_DMTX)
+    find_package(Dmtx)
+    set_package_properties(Dmtx PROPERTIES
+        PURPOSE "Required for generation of Data Matrix barcodes."
+        TYPE REQUIRED)
+endif()
+if (WITH_ZXING)
+    foreach(ver 3.0 2.0 1.2.0)
+        find_package(ZXing ${ver} CONFIG QUIET)
+        if (TARGET ZXing::ZXing)
+            break()
+        endif()
+    endforeach()
+    set_package_properties(ZXing PROPERTIES
+        PURPOSE "Required for generation of PDF417 barcodes and for scanning of barcodes from live video feed."
+        TYPE REQUIRED)
+endif()
 
 ecm_setup_version(PROJECT VARIABLE_PREFIX PRISON
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/prison_version.h"

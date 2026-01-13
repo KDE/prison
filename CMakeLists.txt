@@ -29,6 +29,8 @@ set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprec
 
 set(REQUIRED_QT_VERSION 6.8.0)
 
+option(WITH_DMTX "Make libdmtx a required dependency" ON)
+option(WITH_ZXING "Make ZXing a required dependency" ON)
 option(WITH_QUICK "Build QtQuick components" ON)
 option(WITH_MULTIMEDIA "Build scanner support" ON)
 
@@ -48,16 +50,26 @@ set_package_properties(QRencode PROPERTIES
     PURPOSE "Required for generation of QRCode barcodes."
     TYPE REQUIRED)
 find_package(Dmtx)
+if (WITH_DMTX)
+    set(DMTX_PACKAGE_TYPE "REQUIRED")
+else()
+    set(DMTX_PACKAGE_TYPE "RECOMMENDED")
+endif()
 set_package_properties(Dmtx PROPERTIES
     PURPOSE "Required for generation of Data Matrix barcodes."
-    TYPE RECOMMENDED)
+    TYPE ${DMTX_PACKAGE_TYPE})
 find_package(ZXing 2.0)
 if (NOT TARGET ZXing::ZXing)
   find_package(ZXing 1.2.0)
 endif()
+if (WITH_ZXING)
+    set(ZXING_PACKAGE_TYPE "REQUIRED")
+else()
+    set(ZXING_PACKAGE_TYPE "RECOMMENDED")
+endif()
 set_package_properties(ZXing PROPERTIES
     PURPOSE "Required for generation of PDF417 barcodes and for scanning of barcodes from live video feed."
-    TYPE RECOMMENDED)
+    TYPE ${ZXING_PACKAGE_TYPE})
 
 ecm_setup_version(PROJECT VARIABLE_PREFIX PRISON
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/prison_version.h"

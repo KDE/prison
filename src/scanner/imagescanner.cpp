@@ -19,7 +19,11 @@
 
 using namespace Prison;
 
+#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
 ZXing::Result ImageScanner::readBarcode(const QImage &image, Format::BarcodeFormats formats)
+#else
+ZXing::Barcode ImageScanner::readBarcode(const QImage &image, Format::BarcodeFormats formats)
+#endif
 {
 #if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
     ZXing::DecodeHints hints;

@@ -25,8 +25,11 @@ namespace Prison
 namespace ImageScanner
 {
 
+#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
 [[nodiscard]] ZXing::Result readBarcode(const QImage &image, Format::BarcodeFormats formats);
-
+#else
+[[nodiscard]] ZXing::Barcode readBarcode(const QImage &image, Format::BarcodeFormats formats);
+#endif
 }
 }
 

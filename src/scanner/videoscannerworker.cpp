@@ -30,8 +30,10 @@ void VideoScannerWorker::slotScanFrame(VideoScannerFrame frame)
 {
 #if ZXING_VERSION < QT_VERSION_CHECK(1, 4, 0)
     ZXing::Result zxRes(ZXing::DecodeStatus::FormatError);
-#else
+#elif ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
     ZXing::Result zxRes;
+#else
+    ZXing::Barcode zxRes;
 #endif
 #if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
     ZXing::DecodeHints hints;

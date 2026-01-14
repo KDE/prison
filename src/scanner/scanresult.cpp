@@ -10,7 +10,9 @@
 #include "scanresult_p.h"
 
 #define ZX_USE_UTF8 1
+#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
 #include <ZXing/TextUtfEncoding.h>
+#endif
 
 using namespace Prison;
 
@@ -68,7 +70,11 @@ QRect ScanResult::boundingRect() const
     return d->boundingRect;
 }
 
+#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
 ScanResult ScanResultPrivate::fromZXingResult(const ZXing::Result &zxRes, const QTransform &transform)
+#else
+ScanResult ScanResultPrivate::fromZXingResult(const ZXing::Barcode &zxRes, const QTransform &transform)
+#endif
 {
     ScanResult res;
     if (!zxRes.isValid()) {

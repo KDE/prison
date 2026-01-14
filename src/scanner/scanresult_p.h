@@ -26,7 +26,11 @@ namespace Prison
 class ScanResultPrivate : public QSharedData
 {
 public:
+#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
     [[nodiscard]] static ScanResult fromZXingResult(const ZXing::Result &zxRes, const QTransform &transform = QTransform());
+#else
+    [[nodiscard]] static ScanResult fromZXingResult(const ZXing::Barcode &zxRes, const QTransform &transform = QTransform());
+#endif
 
     QVariant content;
     QRect boundingRect;

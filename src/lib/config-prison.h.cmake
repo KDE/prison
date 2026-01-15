@@ -10,4 +10,23 @@
 #cmakedefine01 HAVE_DMTX
 #cmakedefine01 HAVE_ZXING
 
+// ensure to not clash with the ZXING_* macros of zxing itself!
+#define KZXING_VERSION_CHECK(major, minor, patch) ((major<<16)|(minor<<8)|(patch))
+
+#define KZXING_VERSION_MAJOR @ZXing_VERSION_MAJOR@
+#define KZXING_VERSION_MINOR @ZXing_VERSION_MINOR@
+#define KZXING_VERSION_PATCH @ZXing_VERSION_PATCH@
+
+// TODO remove once there is a version bump in ZXing for 3.0
+#if KZXING_VERSION_MAJOR == 2 && KZXING_VERSION_MINOR == 3 && KZXING_VERSION_PATCH == 0
+#if __has_include(<ZXing/CreateBarcode.h>)
+#undef KZXING_VERSION_MAJOR
+#define KZXING_VERSION_MAJOR 3
+#undef KZXING_VERSION_MINOR
+#define KZXING_VERSION_MINOR 0
+#endif
+#endif
+
+#define KZXING_VERSION KZXING_VERSION_CHECK(KZXING_VERSION_MAJOR, KZXING_VERSION_MINOR, KZXING_VERSION_PATCH)
+
 #endif

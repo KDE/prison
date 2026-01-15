@@ -10,7 +10,10 @@
 
 namespace ZXing
 {
+class Barcode;
 class BitMatrix;
+class CreatorOptions;
+class Image;
 }
 
 class QColor;
@@ -32,9 +35,17 @@ std::wstring toStdWString(const QVariant &data);
 /*!
  * \internal
  *
+ * Create a barcode from the given data, using binary or text format as appropriate.
+ */
+ZXing::Barcode createBarcode(const QVariant &data, const ZXing::CreatorOptions &options);
+
+/*!
+ * \internal
+ *
  * Convert the bitmatrix output of ZXing to a QImage.
  */
 QImage toImage(const ZXing::BitMatrix &matrix, const QColor &foreground, const QColor &background);
+QImage toImage(const ZXing::Image &img, const QColor &foreground, const QColor &background);
 }
 
 }

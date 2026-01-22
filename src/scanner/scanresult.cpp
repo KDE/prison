@@ -98,7 +98,14 @@ ScanResult ScanResultPrivate::fromZXingResult(const ZXing::Barcode &zxRes, const
         res.d->content = b;
     }
 #else
-    if (zxRes.contentType() == ZXing::ContentType::Text) {
+    bool isText = zxRes.contentType() == ZXing::ContentType::Text;
+    if (zxRes.contentType() == ZXing::ContentType::GS1) {
+        isText = std::ranges::none_of(zxRes.text(), [](auto c) {
+            return c < 0x20 && c != 0x0a && c != 0x0d;
+        });
+    }
+
+    if (isText) {
         res.d->content = QString::fromStdString(zxRes.text());
     } else {
         QByteArray b;

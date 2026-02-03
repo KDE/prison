@@ -10,6 +10,8 @@
 #cmakedefine01 HAVE_DMTX
 #cmakedefine01 HAVE_ZXING
 
+#if HAVE_ZXING
+
 // ensure to not clash with the ZXING_* macros of zxing itself!
 #define KZXING_VERSION_CHECK(major, minor, patch) ((major<<16)|(minor<<8)|(patch))
 
@@ -28,5 +30,7 @@
 #endif
 
 #define KZXING_VERSION KZXING_VERSION_CHECK(KZXING_VERSION_MAJOR, KZXING_VERSION_MINOR, KZXING_VERSION_PATCH)
+
+#endif
 
 #endif

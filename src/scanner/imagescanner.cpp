@@ -30,7 +30,13 @@ ZXing::Barcode ImageScanner::readBarcode(const QImage &image, Format::BarcodeFor
 #else
     ZXing::ReaderOptions hints;
 #endif
+#if ZXING_VERSION < QT_VERSION_CHECK(3, 0, 0)
     hints.setFormats(formats == Format::NoFormat ? ZXing::BarcodeFormats::all() : Format::toZXing(formats));
+#else
+    if (formats != Format::NoFormat) {
+        hints.setFormats(Format::toZXing(formats));
+    }
+#endif
 
     // handle formats ZXing supports directly
     switch (image.format()) {

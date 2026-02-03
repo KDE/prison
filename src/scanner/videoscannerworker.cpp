@@ -40,7 +40,13 @@ void VideoScannerWorker::slotScanFrame(VideoScannerFrame frame)
 #else
     ZXing::ReaderOptions hints;
 #endif
+#if ZXING_VERSION < QT_VERSION_CHECK(3, 0, 0)
     hints.setFormats(frame.formats() == Format::NoFormat ? ZXing::BarcodeFormats::all() : Format::toZXing(frame.formats()));
+#else
+    if (frame.formats() != Format::NoFormat) {
+        hints.setFormats(Format::toZXing(frame.formats()));
+    }
+#endif
 
     frame.map();
     switch (frame.pixelFormat()) {

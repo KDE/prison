@@ -3,6 +3,8 @@
     SPDX-License-Identifier: MIT
 */
 
+#include "config-prison-scanner.h"
+
 #include "format_p.h"
 
 using namespace Prison;
@@ -34,10 +36,19 @@ static constexpr const format_map_t format_map[] = {
 
 ZXing::BarcodeFormats Format::toZXing(Format::BarcodeFormats formats)
 {
+#if ZXING_VERSION < QT_VERSION_CHECK(3, 0, 0)
     ZXing::BarcodeFormats f;
+#else
+    std::vector<ZXing::BarcodeFormat> f;
+#endif
+
     for (auto m : format_map) {
         if (m.format & formats) {
+#if ZXING_VERSION < QT_VERSION_CHECK(3, 0, 0)
             f |= m.zxFormat;
+#else
+            f.push_back(m.zxFormat);
+#endif
         }
     }
     return f;

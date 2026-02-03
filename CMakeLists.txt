@@ -51,10 +51,12 @@ find_package(Dmtx)
 set_package_properties(Dmtx PROPERTIES
     PURPOSE "Required for generation of Data Matrix barcodes."
     TYPE RECOMMENDED)
-find_package(ZXing 2.0)
-if (NOT TARGET ZXing::ZXing)
-  find_package(ZXing 1.2.0)
-endif()
+foreach(ver 3.0 2.0 1.2.0)
+    find_package(ZXing ${ver} CONFIG QUIET)
+    if (TARGET ZXing::ZXing)
+        break()
+    endif()
+endforeach()
 set_package_properties(ZXing PROPERTIES
     PURPOSE "Required for generation of PDF417 barcodes and for scanning of barcodes from live video feed."
     TYPE RECOMMENDED)

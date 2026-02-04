@@ -19,29 +19,29 @@
 
 using namespace Prison;
 
-#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
+#if KZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
 ZXing::Result ImageScanner::readBarcode(const QImage &image, Format::BarcodeFormats formats)
 #else
 ZXing::Barcode ImageScanner::readBarcode(const QImage &image, Format::BarcodeFormats formats)
 #endif
 {
-#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
+#if KZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
     ZXing::DecodeHints hints;
 #else
     ZXing::ReaderOptions hints;
 #endif
-#if ZXING_VERSION < QT_VERSION_CHECK(3, 0, 0)
-    hints.setFormats(formats == Format::NoFormat ? ZXing::BarcodeFormats::all() : Format::toZXing(formats));
-#else
     if (formats != Format::NoFormat) {
         hints.setFormats(Format::toZXing(formats));
-    }
+#if KZXING_VERSION < QT_VERSION_CHECK(3, 0, 0)
+    } else {
+        hints.setFormats(ZXing::BarcodeFormats::all());
 #endif
+    }
 
     // handle formats ZXing supports directly
     switch (image.format()) {
     case QImage::Format_Invalid:
-#if ZXING_VERSION < QT_VERSION_CHECK(1, 4, 0)
+#if KZXING_VERSION < QT_VERSION_CHECK(1, 4, 0)
         return ZXing::Result(ZXing::DecodeStatus::FormatError);
 #else
         return {};
@@ -53,7 +53,7 @@ ZXing::Barcode ImageScanner::readBarcode(const QImage &image, Format::BarcodeFor
     case QImage::Format_RGB32:
     case QImage::Format_ARGB32:
     case QImage::Format_ARGB32_Premultiplied:
-#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
+#if KZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
         return ZXing::ReadBarcode({image.bits(), image.width(), image.height(), ZXing::ImageFormat::XRGB, (int)image.bytesPerLine()}, hints);
 #else
         return ZXing::ReadBarcode({image.bits(), image.width(), image.height(), ZXing::ImageFormat::ARGB, (int)image.bytesPerLine()}, hints);
@@ -73,7 +73,7 @@ ZXing::Barcode ImageScanner::readBarcode(const QImage &image, Format::BarcodeFor
     case QImage::Format_RGBX8888:
     case QImage::Format_RGBA8888:
     case QImage::Format_RGBA8888_Premultiplied:
-#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
+#if KZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
         return ZXing::ReadBarcode({image.bits(), image.width(), image.height(), ZXing::ImageFormat::RGBX, (int)image.bytesPerLine()}, hints);
 #else
         return ZXing::ReadBarcode({image.bits(), image.width(), image.height(), ZXing::ImageFormat::RGBA, (int)image.bytesPerLine()}, hints);
@@ -84,7 +84,7 @@ ZXing::Barcode ImageScanner::readBarcode(const QImage &image, Format::BarcodeFor
     case QImage::Format_A2RGB30_Premultiplied:
         break; // needs conversion
     case QImage::Format_Alpha8:
-#if ZXING_VERSION < QT_VERSION_CHECK(1, 4, 0)
+#if KZXING_VERSION < QT_VERSION_CHECK(1, 4, 0)
         return ZXing::Result(ZXing::DecodeStatus::FormatError);
 #else
         return {};
@@ -109,7 +109,7 @@ ZXing::Barcode ImageScanner::readBarcode(const QImage &image, Format::BarcodeFor
         break; // needs conversion
 
     case QImage::NImageFormats: // silence warnings
-#if ZXING_VERSION < QT_VERSION_CHECK(1, 4, 0)
+#if KZXING_VERSION < QT_VERSION_CHECK(1, 4, 0)
         return ZXing::Result(ZXing::DecodeStatus::FormatError);
 #else
         return {};

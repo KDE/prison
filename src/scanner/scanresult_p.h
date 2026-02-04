@@ -14,7 +14,7 @@
 #include <QTransform>
 
 #define ZX_USE_UTF8 1
-#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
+#if KZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
 #include <ZXing/Result.h>
 #else
 #include <ZXing/Barcode.h>
@@ -26,7 +26,7 @@ namespace Prison
 class ScanResultPrivate : public QSharedData
 {
 public:
-#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
+#if KZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
     [[nodiscard]] static ScanResult fromZXingResult(const ZXing::Result &zxRes, const QTransform &transform = QTransform());
 #else
     [[nodiscard]] static ScanResult fromZXingResult(const ZXing::Barcode &zxRes, const QTransform &transform = QTransform());

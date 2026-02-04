@@ -28,25 +28,25 @@ VideoScannerWorker::VideoScannerWorker(QObject *parent)
 
 void VideoScannerWorker::slotScanFrame(VideoScannerFrame frame)
 {
-#if ZXING_VERSION < QT_VERSION_CHECK(1, 4, 0)
+#if KZXING_VERSION < QT_VERSION_CHECK(1, 4, 0)
     ZXing::Result zxRes(ZXing::DecodeStatus::FormatError);
-#elif ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
+#elif KZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
     ZXing::Result zxRes;
 #else
     ZXing::Barcode zxRes;
 #endif
-#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
+#if KZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
     ZXing::DecodeHints hints;
 #else
     ZXing::ReaderOptions hints;
 #endif
-#if ZXING_VERSION < QT_VERSION_CHECK(3, 0, 0)
-    hints.setFormats(frame.formats() == Format::NoFormat ? ZXing::BarcodeFormats::all() : Format::toZXing(frame.formats()));
-#else
     if (frame.formats() != Format::NoFormat) {
         hints.setFormats(Format::toZXing(frame.formats()));
-    }
+#if KZXING_VERSION < QT_VERSION_CHECK(3, 0, 0)
+    } else {
+        hints.setFormats(ZXing::BarcodeFormats::all());
 #endif
+    }
 
     frame.map();
     switch (frame.pixelFormat()) {
@@ -56,7 +56,7 @@ void VideoScannerWorker::slotScanFrame(VideoScannerFrame frame)
     case QVideoFrameFormat::Format_ARGB8888:
     case QVideoFrameFormat::Format_ARGB8888_Premultiplied:
     case QVideoFrameFormat::Format_XRGB8888:
-#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
+#if KZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
         zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::XRGB, frame.bytesPerLine()}, hints);
 #else
         zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::ARGB, frame.bytesPerLine()}, hints);
@@ -65,7 +65,7 @@ void VideoScannerWorker::slotScanFrame(VideoScannerFrame frame)
     case QVideoFrameFormat::Format_BGRA8888:
     case QVideoFrameFormat::Format_BGRA8888_Premultiplied:
     case QVideoFrameFormat::Format_BGRX8888:
-#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
+#if KZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
         zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::BGRX, frame.bytesPerLine()}, hints);
 #else
         zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::BGRA, frame.bytesPerLine()}, hints);
@@ -73,7 +73,7 @@ void VideoScannerWorker::slotScanFrame(VideoScannerFrame frame)
         break;
     case QVideoFrameFormat::Format_ABGR8888:
     case QVideoFrameFormat::Format_XBGR8888:
-#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
+#if KZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
         zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::XBGR, frame.bytesPerLine()}, hints);
 #else
         zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::ABGR, frame.bytesPerLine()}, hints);
@@ -81,7 +81,7 @@ void VideoScannerWorker::slotScanFrame(VideoScannerFrame frame)
         break;
     case QVideoFrameFormat::Format_RGBA8888:
     case QVideoFrameFormat::Format_RGBX8888:
-#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
+#if KZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
         zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::RGBX, frame.bytesPerLine()}, hints);
 #else
         zxRes = ZXing::ReadBarcode({frame.bits(), frame.width(), frame.height(), ZXing::ImageFormat::RGBA, frame.bytesPerLine()}, hints);

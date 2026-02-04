@@ -10,7 +10,7 @@
 #include "scanresult_p.h"
 
 #define ZX_USE_UTF8 1
-#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
+#if KZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
 #include <ZXing/TextUtfEncoding.h>
 #endif
 
@@ -70,7 +70,7 @@ QRect ScanResult::boundingRect() const
     return d->boundingRect;
 }
 
-#if ZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
+#if KZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
 ScanResult ScanResultPrivate::fromZXingResult(const ZXing::Result &zxRes, const QTransform &transform)
 #else
 ScanResult ScanResultPrivate::fromZXingResult(const ZXing::Barcode &zxRes, const QTransform &transform)
@@ -81,7 +81,7 @@ ScanResult ScanResultPrivate::fromZXingResult(const ZXing::Barcode &zxRes, const
         return res;
     }
 
-#if ZXING_VERSION < QT_VERSION_CHECK(1, 4, 0)
+#if KZXING_VERSION < QT_VERSION_CHECK(1, 4, 0)
     // distinguish between binary and text content
     const auto hasWideChars = std::any_of(zxRes.text().begin(), zxRes.text().end(), [](auto c) {
         return c > 255;

@@ -81,23 +81,6 @@ ScanResult ScanResultPrivate::fromZXingResult(const ZXing::Barcode &zxRes, const
         return res;
     }
 
-#if KZXING_VERSION < QT_VERSION_CHECK(1, 4, 0)
-    // distinguish between binary and text content
-    const auto hasWideChars = std::any_of(zxRes.text().begin(), zxRes.text().end(), [](auto c) {
-        return c > 255;
-    });
-    const auto hasControlChars = std::any_of(zxRes.text().begin(), zxRes.text().end(), [](auto c) {
-        return c < 0x20 && c != 0x0a && c != 0x0d;
-    });
-    if (hasWideChars || !hasControlChars) {
-        res.d->content = QString::fromStdString(ZXing::TextUtfEncoding::ToUtf8(zxRes.text()));
-    } else {
-        QByteArray b;
-        b.resize(zxRes.text().size());
-        std::copy(zxRes.text().begin(), zxRes.text().end(), b.begin());
-        res.d->content = b;
-    }
-#else
     bool isText = zxRes.contentType() == ZXing::ContentType::Text;
     if (zxRes.contentType() == ZXing::ContentType::GS1) {
         isText = std::ranges::none_of(zxRes.text(), [](auto c) {
@@ -113,7 +96,6 @@ ScanResult ScanResultPrivate::fromZXingResult(const ZXing::Barcode &zxRes, const
         std::copy(zxRes.bytes().begin(), zxRes.bytes().end(), b.begin());
         res.d->content = b;
     }
-#endif
 
     // determine the bounding rect
     // the cooridinates we get from ZXing are a polygon, we need to determine the

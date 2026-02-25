@@ -41,11 +41,7 @@ ZXing::Barcode ImageScanner::readBarcode(const QImage &image, Format::BarcodeFor
     // handle formats ZXing supports directly
     switch (image.format()) {
     case QImage::Format_Invalid:
-#if KZXING_VERSION < QT_VERSION_CHECK(1, 4, 0)
-        return ZXing::Result(ZXing::DecodeStatus::FormatError);
-#else
         return {};
-#endif
     case QImage::Format_Mono:
     case QImage::Format_MonoLSB:
     case QImage::Format_Indexed8:
@@ -84,11 +80,7 @@ ZXing::Barcode ImageScanner::readBarcode(const QImage &image, Format::BarcodeFor
     case QImage::Format_A2RGB30_Premultiplied:
         break; // needs conversion
     case QImage::Format_Alpha8:
-#if KZXING_VERSION < QT_VERSION_CHECK(1, 4, 0)
-        return ZXing::Result(ZXing::DecodeStatus::FormatError);
-#else
         return {};
-#endif
     case QImage::Format_Grayscale8:
         return ZXing::ReadBarcode({image.bits(), image.width(), image.height(), ZXing::ImageFormat::Lum, (int)image.bytesPerLine()}, hints);
     case QImage::Format_Grayscale16:
@@ -109,11 +101,7 @@ ZXing::Barcode ImageScanner::readBarcode(const QImage &image, Format::BarcodeFor
         break; // needs conversion
 
     case QImage::NImageFormats: // silence warnings
-#if KZXING_VERSION < QT_VERSION_CHECK(1, 4, 0)
-        return ZXing::Result(ZXing::DecodeStatus::FormatError);
-#else
         return {};
-#endif
     }
 
     const auto converted = image.convertedTo(QImage::Format_Grayscale8);

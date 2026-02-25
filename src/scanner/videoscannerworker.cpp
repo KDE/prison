@@ -28,9 +28,7 @@ VideoScannerWorker::VideoScannerWorker(QObject *parent)
 
 void VideoScannerWorker::slotScanFrame(VideoScannerFrame frame)
 {
-#if KZXING_VERSION < QT_VERSION_CHECK(1, 4, 0)
-    ZXing::Result zxRes(ZXing::DecodeStatus::FormatError);
-#elif KZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
+#if KZXING_VERSION < QT_VERSION_CHECK(2, 3, 0)
     ZXing::Result zxRes;
 #else
     ZXing::Barcode zxRes;

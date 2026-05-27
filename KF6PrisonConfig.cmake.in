@@ -2,5 +2,8 @@
 
 include(CMakeFindDependencyMacro)
 find_dependency(Qt6Gui @REQUIRED_QT_VERSION@)
+if(@WITH_MULTIMEDIA@)
+    find_dependency(Qt6Multimedia @REQUIRED_QT_VERSION@)
+endif()
 
 include("${CMAKE_CURRENT_LIST_DIR}/KF6PrisonTargets.cmake")

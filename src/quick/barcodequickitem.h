@@ -84,6 +84,8 @@ public:
         Code128 = Prison::Code128,
         PDF417 = Prison::PDF417,
         EAN13 = Prison::EAN13,
+        ITF = Prison::ITF,
+        Codabar = Prison::Codabar,
     };
     Q_ENUM(BarcodeType)
     explicit BarcodeQuickItem(QQuickItem *parent = nullptr);

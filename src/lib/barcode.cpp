@@ -60,6 +60,16 @@ std::optional<Barcode> Barcode::create(Prison::BarcodeType format)
         d = std::make_unique<ZXingOneDBarcode<ZXing::BarcodeFormat::EAN13>>();
 #endif
         break;
+    case Prison::ITF:
+#if HAVE_ZXING
+        d = std::make_unique<ZXingOneDBarcode<ZXing::BarcodeFormat::ITF>>();
+#endif
+        break;
+    case Prison::Codabar:
+#if HAVE_ZXING
+        d = std::make_unique<ZXingOneDBarcode<ZXing::BarcodeFormat::Codabar>>();
+#endif
+        break;
     }
 
     if (d) {

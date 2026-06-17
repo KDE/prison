@@ -24,7 +24,7 @@ Rectangle {
             }
             ComboBox {
                 id: typeCombobox
-                model: [ "QRCode", "DataMatrix", "Aztec", "Code39", "Code93", "Code128", "PDF417", "EAN13" ]
+                model: [ "QRCode", "DataMatrix", "Aztec", "Code39", "Code93", "Code128", "PDF417", "EAN13", "ITF", "Codabar"]
                 currentIndex: 3
             }
             Button {

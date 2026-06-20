@@ -5,7 +5,7 @@ project(prison VERSION ${KF_VERSION})
 
 # ECM setup
 include(FeatureSummary)
-find_package(ECM 6.29.0 NO_MODULE)
+find_package(ECM 6.30.0 NO_MODULE)
 set_package_properties(ECM PROPERTIES TYPE REQUIRED DESCRIPTION "Extra CMake Modules." URL "https://commits.kde.org/extra-cmake-modules")
 feature_summary(WHAT REQUIRED_PACKAGES_NOT_FOUND FATAL_ON_MISSING_REQUIRED_PACKAGES)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${ECM_MODULE_PATH}")
@@ -24,6 +24,7 @@ include(ECMSetupVersion)
 include(ECMQtDeclareLoggingCategory)
 include(ECMDeprecationSettings)
 include(ECMGenerateQDoc)
+include(ECMInstalledLibraryCheck)
 
 set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprecated API excluded from the build [default=0].")
 
@@ -91,9 +92,18 @@ configure_package_config_file(
   INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
 )
 
+set(_private_find_modules)
+if (NOT BUILD_SHARED_LIBS)
+    list(APPEND _private_find_modules "${CMAKE_CURRENT_SOURCE_DIR}/cmake/FindQRencode.cmake")
+    if (WITH_DMTX)
+        list(APPEND _private_find_modules "${CMAKE_CURRENT_SOURCE_DIR}/cmake/FindDmtx.cmake")
+    endif()
+endif()
+
 install(FILES
   "${CMAKE_CURRENT_BINARY_DIR}/KF6PrisonConfig.cmake"
   "${CMAKE_CURRENT_BINARY_DIR}/KF6PrisonConfigVersion.cmake"
+  ${_private_find_modules}
   DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
   COMPONENT Devel
 )

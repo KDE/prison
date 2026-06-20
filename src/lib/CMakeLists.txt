@@ -121,3 +121,29 @@ install(
     DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/Prison/Prison
     COMPONENT Devel
 )
+
+set(_extra_check_deps)
+if (NOT BUILD_SHARED_LIBS)
+    list(APPEND _extra_check_deps QRencode)
+    if(TARGET Dmtx::Dmtx)
+        list(APPEND _extra_check_deps Dmtx)
+    endif()
+    if(TARGET ZXing::ZXing)
+        list(APPEND _extra_check_deps ZXing ${ZXing_VERSION})
+    endif()
+endif()
+
+ecm_add_installed_library_check(KF6Prison
+    PACKAGE_NAME "KF6Prison"
+    PACKAGE_TARGET_NAMESPACE "KF6::"
+    EXTRA_DEPENDENCIES ${_extra_check_deps}
+)
+
+ecm_installed_library_check_include_strings(KF6Prison
+    HEADERS ${Prison_CamelCase_HEADERS}
+    PREFIX Prison
+)
+
+ecm_installed_library_check_version_preprocessor_macros(KF6Prison
+    PREFIX PRISON
+)

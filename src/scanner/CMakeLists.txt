@@ -72,3 +72,24 @@ install(
     DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/PrisonScanner/Prison
     COMPONENT Devel
 )
+
+ecm_add_installed_library_check(KF6PrisonScanner
+    PACKAGE_NAME "KF6Prison"
+    PACKAGE_VERSION ${PRISON_VERSION}
+    PACKAGE_TARGET_NAMESPACE "KF6::"
+    # CMake config file shared with KF6Prison, most consumers only use that
+    # would not prefer to have CMake config file still check for Qt6Multimedia
+    # TODO: itnroduce separate CMake config file for KF6PrisonScanner
+    EXTRA_DEPENDENCIES Qt6Multimedia ${REQUIRED_QT_VERSION}
+)
+
+ecm_installed_library_check_include_strings(KF6PrisonScanner
+    HEADERS ${PrisonScanner_CamelCase_HEADERS}
+    PREFIX Prison
+)
+
+ecm_installed_library_check_version_preprocessor_macros(KF6PrisonScanner
+    PREFIX PRISON
+    VERSION ${PRISON_VERSION}
+    SILENT
+)

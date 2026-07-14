@@ -10,7 +10,7 @@
 #include <QImage>
 #include <QObject>
 #include <QTest>
-#include <QtConcurrent>
+#include <QtConcurrentRun>
 
 using namespace Qt::Literals::StringLiterals;
 using namespace Prison;

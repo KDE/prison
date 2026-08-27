@@ -91,9 +91,18 @@ configure_package_config_file(
   INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
 )
 
+set(_private_find_modules)
+if (NOT BUILD_SHARED_LIBS)
+    list(APPEND _private_find_modules "${CMAKE_CURRENT_SOURCE_DIR}/cmake/FindQRencode.cmake")
+    if (WITH_DMTX)
+        list(APPEND _private_find_modules "${CMAKE_CURRENT_SOURCE_DIR}/cmake/FindDmtx.cmake")
+    endif()
+endif()
+
 install(FILES
   "${CMAKE_CURRENT_BINARY_DIR}/KF6PrisonConfig.cmake"
   "${CMAKE_CURRENT_BINARY_DIR}/KF6PrisonConfigVersion.cmake"
+  ${_private_find_modules}
   DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
   COMPONENT Devel
 )
@@ -103,6 +112,36 @@ install(EXPORT KF6PrisonTargets
   FILE KF6PrisonTargets.cmake
   NAMESPACE KF6::
 )
+
+if (WITH_MULTIMEDIA)
+    set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF6PrisonScanner")
+
+    configure_package_config_file(
+        "${CMAKE_CURRENT_SOURCE_DIR}/KF6PrisonScannerConfig.cmake.in"
+        "${CMAKE_CURRENT_BINARY_DIR}/KF6PrisonScannerConfig.cmake"
+        INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
+    )
+
+    write_basic_package_version_file(
+        "${CMAKE_CURRENT_BINARY_DIR}/KF6PrisonScannerConfigVersion.cmake"
+        VERSION ${PROJECT_VERSION}
+        COMPATIBILITY AnyNewerVersion
+    )
+
+    install(FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/KF6PrisonScannerConfig.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/KF6PrisonScannerConfigVersion.cmake"
+        ${_private_find_modules}
+        DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
+        COMPONENT Devel
+    )
+
+    install(EXPORT KF6PrisonScannerTargets
+        DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
+        FILE KF6PrisonScannerTargets.cmake
+        NAMESPACE KF6::
+    )
+endif()
 
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/prison_version.h

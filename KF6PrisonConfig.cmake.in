@@ -3,4 +3,28 @@
 include(CMakeFindDependencyMacro)
 find_dependency(Qt6Gui @REQUIRED_QT_VERSION@)
 
+# backward compat for KF6::PrisonScanner target provided by this config
+if(@WITH_MULTIMEDIA@ AND KF6Prison_FIND_VERSION VERSION_LESS 6.31.0)
+    set(_KF6PRISON_BACKWARDCOMPAT_FIND TRUE)
+    find_dependency(KF6PrisonScanner @PRISON_VERSION@)
+    set(_KF6PRISON_BACKWARDCOMPAT_FIND)
+endif()
+
+if (NOT @BUILD_SHARED_LIBS@)
+    # add access to internal Find modules
+    list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}")
+
+    find_dependency(QRencode)
+    if(@WITH_DMTX@)
+        find_dependency(Dmtx)
+    endif()
+    if(@WITH_ZXING@)
+        # matching the version used
+        find_dependency(ZXing @ZXing_VERSION@)
+    endif()
+
+    # clean-up CMAKE_MODULE_PATH
+    list(REMOVE_ITEM CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}")
+endif()
+
 include("${CMAKE_CURRENT_LIST_DIR}/KF6PrisonTargets.cmake")

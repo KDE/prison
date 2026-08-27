@@ -1,0 +1,17 @@
+@PACKAGE_INIT@
+
+if (_KF6PRISON_BACKWARDCOMPAT_FIND)
+    # provide only targets by legacy
+    include("${CMAKE_CURRENT_LIST_DIR}/KF6PrisonScannerTargets.cmake")
+    return()
+endif()
+
+include(CMakeFindDependencyMacro)
+find_dependency(Qt6Multimedia @REQUIRED_QT_VERSION@)
+
+if (NOT @BUILD_SHARED_LIBS@)
+    # matching the version used
+    find_dependency(ZXing @ZXing_VERSION@)
+endif()
+
+include("${CMAKE_CURRENT_LIST_DIR}/KF6PrisonScannerTargets.cmake")

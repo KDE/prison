@@ -52,7 +52,7 @@ target_link_libraries(KF6PrisonScanner
         ZXing::ZXing
 )
 
-install(TARGETS KF6PrisonScanner EXPORT KF6PrisonTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS KF6PrisonScanner EXPORT KF6PrisonScannerTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
 
 ecm_generate_headers(PrisonScanner_CamelCase_HEADERS
     HEADER_NAMES

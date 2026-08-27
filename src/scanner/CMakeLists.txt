@@ -72,3 +72,17 @@ install(
     DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/PrisonScanner/Prison
     COMPONENT Devel
 )
+
+ecm_add_installed_library_check(KF6PrisonScanner
+    PACKAGE_NAME "KF6PrisonScanner"
+    PACKAGE_TARGET_NAMESPACE "KF6::"
+)
+
+ecm_installed_library_check_include_strings(KF6PrisonScanner
+    HEADERS ${PrisonScanner_CamelCase_HEADERS}
+    PREFIX Prison
+)
+
+ecm_installed_library_check_version_preprocessor_macros(KF6PrisonScanner
+    PREFIX PRISON
+)

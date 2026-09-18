@@ -33,7 +33,7 @@ Prison is currently using [libdmtx](https://github.com/dmtx/libdmtx) for generat
 [DataMatrix](https://en.wikipedia.org/wiki/Datamatrix) barcodes,
 [libqrencode](https://fukuchi.org/works/qrencode/) for generation
 of [QRCode](https://en.wikipedia.org/wiki/QR_Code) barcodes and
-[ZXing](https://github.com/nu-book/zxing-cpp) for generating
+[zxing-cpp](https://github.com/zxing-cpp/zxing-cpp) for generating
 [EAN13 and PDF417](https://en.wikipedia.org/wiki/PDF417) barcodes.
 
 # Prison Scanner
@@ -50,5 +50,5 @@ the QML API.
 
 ## Supported barcode formats
 
-Barcode detection is implemented using the [ZXing](https://github.com/nu-book/zxing-cpp)
-library, all formats supported by ZXing can be detected.
+Barcode detection is implemented using the [zxing-cpp](https://github.com/zxing-cpp/zxing-cpp)
+library, all formats supported by zxing-cpp can be detected.

@@ -28,7 +28,7 @@ include(ECMInstalledLibraryCheck)
 
 set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprecated API excluded from the build [default=0].")
 
-set(REQUIRED_QT_VERSION 6.9.0)
+set(REQUIRED_QT_VERSION 6.10.0)
 
 option(WITH_DMTX "Build with DataMatrix generation support" ON)
 option(WITH_ZXING "Build with barcode scanning and PDF417 generation support" ON)

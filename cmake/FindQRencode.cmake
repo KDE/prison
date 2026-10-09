@@ -39,7 +39,6 @@ find_path(QRencode_INCLUDE_DIRS qrencode.h)
 include(FindPackageHandleStandardArgs)
 
 find_package_handle_standard_args(QRencode
-    FOUND_VAR QRencode_FOUND
     REQUIRED_VARS QRencode_LIBRARIES QRencode_INCLUDE_DIRS
 )
 

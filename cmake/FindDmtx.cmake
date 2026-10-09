@@ -39,7 +39,6 @@ find_library(Dmtx_LIBRARIES NAMES dmtx)
 include(FindPackageHandleStandardArgs)
 
 find_package_handle_standard_args(Dmtx
-    FOUND_VAR Dmtx_FOUND
     REQUIRED_VARS Dmtx_LIBRARIES Dmtx_INCLUDE_DIRS
 )
 

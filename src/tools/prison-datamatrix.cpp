@@ -10,7 +10,6 @@
 #include <QImageWriter>
 #include <QStringList>
 
-#include <iostream>
 #include <qtextstream.h>
 #include <stdlib.h>
 
